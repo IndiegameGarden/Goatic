@@ -1,4 +1,4 @@
-// (c) 2010-2014 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+// (c) 2010-2016 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Game1")]
 [assembly: AssemblyProduct("Game1")]
-[assembly: AssemblyDescription("Game description here")]
+[assembly: AssemblyDescription("TODO Game description here")]
 [assembly: AssemblyCompany("IndiegameGarden.com")]
-[assembly: AssemblyCopyright("Copyright © IndiegameGarden.com 2010-2014")]
+[assembly: AssemblyCopyright("Copyright © IndiegameGarden.com 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
