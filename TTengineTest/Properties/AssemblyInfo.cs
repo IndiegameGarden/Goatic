@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TTengine")]
-[assembly: AssemblyProduct("TTengine")]
+[assembly: AssemblyTitle("TTengineTest")]
+[assembly: AssemblyProduct("TTengineTest")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("Microsoft")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("579b78f7-84e5-44c3-bc3d-06b5d1fabff4")]
+[assembly: Guid("d8fe5673-eb00-4d8b-8d83-f0012a8f4b42")]
 
 // Version information for an assembly consists of the following four values:
 //

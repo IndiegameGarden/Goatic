@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TTengine")]
-[assembly: AssemblyProduct("TTengine")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("Artemis")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("Artemis")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("579b78f7-84e5-44c3-bc3d-06b5d1fabff4")]
+[assembly: Guid("7f8f3bf1-082c-43f5-9492-e2e6f2d1f9ab")]
 
 // Version information for an assembly consists of the following four values:
 //
