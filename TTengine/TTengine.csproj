@@ -41,8 +41,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Behaviors\RandomWanderBehavior.cs" />
     <Compile Include="Comps\AnimatedSpriteComp.cs" />
     <Compile Include="Comps\AudioComp.cs" />
