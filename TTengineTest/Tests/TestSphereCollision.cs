@@ -11,7 +11,7 @@ namespace TTengineTest
     /// <summary>
     /// Test the sphere-shape collision system
     /// </summary>
-    class TestSphereCollision : Test
+    public class TestSphereCollision : Test
     {
 
         public override void Create()

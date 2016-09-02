@@ -62,6 +62,10 @@
       <Project>{ac0f66a6-2ea0-4af2-b641-4ba813ebf738}</Project>
       <Name>Artemis</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TTengineTest\TTengineTest.csproj">
+      <Project>{9c1c5f40-f9e8-40ee-b536-ebf8daf58335}</Project>
+      <Name>TTengineTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TTengine\TTengine.csproj">
       <Project>{639b4e0f-f18d-482a-b82d-78464b07f60d}</Project>
       <Name>TTengine</Name>

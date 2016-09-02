@@ -13,6 +13,7 @@ using TTengine.Comps;
 using TTengine.Behaviors;
 using TTengine.Modifiers;
 using TTengine.Util;
+using TTengineTest;
 
 using Artemis;
 using Artemis.Interface;
@@ -25,8 +26,10 @@ namespace Game1
     /// </summary>
     public class Game1 : TTGame
     {
+        const int SPARE_SCREEN_HEIGHT = 256;
+
         public Game1Factory Factory;
-        public Entity IntroChannel, GameChannel;
+        public Entity GameChannel, LevelChannel, BackgroundChannel, GuiChannel;
 
         public Game1()
         {
@@ -51,27 +54,27 @@ namespace Game1
 
         protected override void LoadContent()
         {
-            //IntroChannel = Game1Factory.CreateChannel(Color.Black);
-            GameChannel = Game1Factory.CreateChannel(Color.Black);
+            // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
+            GameChannel = Game1Factory.CreateChannel(Color.Black, 1366, 768 + SPARE_SCREEN_HEIGHT);
+            // create level/background channels of same size
+            LevelChannel = Game1Factory.CreateChannel(GameChannel);
+            BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
+            // GuiChannel =
+            Game1Factory.BuildTo(GameChannel);
 
-            var scr = GameChannel.GetComponent<ScreenComp>();
+            var scr = GameChannel.GetComponent<WorldComp>().Screen;
             scr.BackgroundColor = Color.White;
 
-            // add framerate counter
-            Game1Factory.CreateFrameRateCounter(Color.Black);
+            // apply magic scaling to screen resolution
+            Game1Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
 
-            // add several sprites             
-            for (float x = 0.1f; x < 1.6f; x += 0.3f)
-            {
-                for (float y = 0.1f; y < 1f; y += 0.24f)
-                {
-                    var pos = new Vector2(x * scr.Width, y * scr.Height);
-                    Factory.CreateHyperActiveBall(pos);
-                    Factory.CreateMovingTextlet(pos,"This is the\nTTengine test. !@#$1234");
-                    //break;
-                }
-                //break;
-            }
+            // add framerate counter
+            Game1Factory.CreateFrameRateCounter(Color.Black, SPARE_SCREEN_HEIGHT/2 );
+
+            // add content 
+            Test t = new TestSphereCollision();
+            t.Create();
+
 
             base.LoadContent();
         }                  

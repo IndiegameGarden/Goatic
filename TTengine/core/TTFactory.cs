@@ -15,6 +15,11 @@ namespace TTengine.Core
     /// The TTengine's Factory to create new basic Entities (may be half-baked, 
     /// to further customize) with customizable output to which EntityWorld or
     /// Screen the items are built.
+    /// Factory's methods are 
+    ///     Create....(input) for new entity creation
+    ///     Add....(Entity e, input)   for adding elements to existing item
+    ///     BuildTo(...)               for changing the build destination of the factory
+    ///     Process...(Entity e, parameters)    for processing an entity
     /// </summary>
     public class TTFactory
     {
@@ -195,9 +200,9 @@ namespace TTengine.Core
         /// which that World renders, which can be then shown as a sprite. Parameters are same as for CreateScreenlet() above.
 		/// In summary: A World inside a Sprite.
         /// </summary>
-        /// <param name="backgroundColor"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        /// <param name="backgroundColor">Background drawing color</param>
+        /// <param name="width">Channel's screen width or if not given or 0 will use RenderBuffer width</param>
+        /// <param name="height">Channel's screen height or if not given or 0 will use for RenderBuffer height</param>
         /// <returns></returns>
         public static Entity CreateChannel(Color backgroundColor,
                                         int width = 0, int height = 0)
@@ -219,6 +224,18 @@ namespace TTengine.Core
             e.AddComponent(wc);
             e.Refresh();
             return e;
+        }
+
+        /// <summary>
+        /// Create a new channel with same properties as an existing (template) channel. Color and size will
+        /// be the same.
+        /// </summary>
+        /// <param name="templateChannel">Existing channel to use as template for color and size.</param>
+        /// <returns></returns>
+        public static Entity CreateChannel(Entity templateChannel) 
+        {
+            var sc = templateChannel.GetComponent<ScreenComp>();
+            return CreateChannel(sc.BackgroundColor, sc.Width, sc.Height);
         }
 
         /// <summary>
@@ -268,10 +285,10 @@ namespace TTengine.Core
         /// Creates a new FrameRateCounter. TODO: screen position set.
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateFrameRateCounter(Color textColor)
+        public static Entity CreateFrameRateCounter(Color textColor, int pixelsOffsetVertical = 0)
         {
             var e = TTFactory.CreateTextlet("##");
-            e.GetComponent<PositionComp>().Position = new Vector2(2f, 2f);
+            e.GetComponent<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
             e.GetComponent<DrawComp>().DrawColor = textColor;
             AddScript(e, new Util.FrameRateCounter(e.GetComponent<TextComp>()));
             e.Refresh();
@@ -372,6 +389,60 @@ namespace TTengine.Core
             {
                 scriptCode(ctx);
             }
+
+        }
+
+        /// <summary>
+        /// Apply a channel fit (scale, move) such that the channelToFit will be centered in
+        /// and shrunk or stretched to the extent that it optimally fits parentChannel.
+        /// </summary>
+        /// <param name="channelToFit"></param>
+        /// <param name="parentChannel"></param>
+        public static void ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
+                                             bool canShrink = true, int maxPixelsCutOffVertical = 0)
+        {
+            var scrToFit = channelToFit.GetComponent<WorldComp>().Screen;
+            PositionComp pos = channelToFit.GetComponent<PositionComp>();
+            SpriteComp spr = channelToFit.GetComponent<SpriteComp>();
+            ScaleComp scl = channelToFit.GetComponent<ScaleComp>();
+            var parentScr = parentChannel.GetComponent<WorldComp>().Screen;
+            float scale = 1.0f;
+
+            // if no scale comp yet, add one
+            if (scl == null)
+            {
+                scl = new ScaleComp();
+                channelToFit.AddComponent(scl);
+            }
+
+            // position channel to the middle of parent.
+            pos.Position = parentScr.Center;
+            spr.CenterToMiddle();
+
+            // squeeze in to fit width
+            if (canShrink && scrToFit.Width > parentScr.Width)
+            {
+                scale = ((float)parentScr.Width) / ((float)scrToFit.Width);
+                // squeeze in to fit height
+                if ((((scrToFit.Height - maxPixelsCutOffVertical) * scale)) > (parentScr.Height * scale))
+                {
+                    scale *= ((float)parentScr.Height) / ((float)(scrToFit.Height - maxPixelsCutOffVertical));
+                }
+            }
+
+            // expand to fit width
+            if (canStretch && scrToFit.Width < parentScr.Width)
+            {
+                scale = ((float)parentScr.Width) / ((float)scrToFit.Width);
+                // squeeze in to fit height
+                if ((scale * (float)scrToFit.Height - (float)maxPixelsCutOffVertical) > parentScr.Height)
+                {
+                    scale *= ((float)parentScr.Height) / ((float)(scrToFit.Height-maxPixelsCutOffVertical)) ;
+                }
+            }
+
+            // apply scale
+            scl.Scale = scale;
 
         }
 
