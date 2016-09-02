@@ -119,6 +119,9 @@ namespace TTengine.Comps
         /// <value>The Y.</value>
         public float Y { get; set; }
 
+        /// <summary>
+        /// The z coordinate, which corresponds to the 'depth' of an item 0f...1f (front .... back)
+        /// </summary>
         public float Depth { get; set; }
 
         public void CleanUp()

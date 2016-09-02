@@ -11,7 +11,7 @@ namespace TTengineTest
     /// <summary>
     /// Shader test showing sprites that use different shaders, including no-shader.
     /// </summary>
-    class TestMixedShaders : Test
+    public class TestMixedShaders : Test
     {
 
         public override void Create()

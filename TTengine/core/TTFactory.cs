@@ -234,7 +234,7 @@ namespace TTengine.Core
         /// <returns></returns>
         public static Entity CreateChannel(Entity templateChannel) 
         {
-            var sc = templateChannel.GetComponent<ScreenComp>();
+            ScreenComp sc = templateChannel.GetComponent<WorldComp>().Screen;
             return CreateChannel(sc.BackgroundColor, sc.Width, sc.Height);
         }
 

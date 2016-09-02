@@ -34,7 +34,8 @@ namespace TTengine.Comps
         /// <summary>Flag whether the Entity is visible currently (i.e. is being drawn or not)</summary>
         public bool IsVisible = true;
 
-        /// <summary>drawing depth of graphics 0f (front)....1f (back)</summary>
+        /// <summary>drawing depth of graphics 0f (front)....1f (back). WARNING: this value is overwritten
+        /// each update by various Systems. Use PositionComp.Depth to modify item depth.</summary>
         public float LayerDepth = 0.5f;
 
         /// <summary>Color for drawing, setting this will replace Alpha value with DrawColor.A</summary>

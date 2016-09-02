@@ -26,6 +26,12 @@ namespace Game1
     /// </summary>
     public class Game1 : TTGame
     {
+        /// <summary>
+        /// number of 'extra' pixels in total (adding ones above and below the screen) for showing a little bit more of the
+        /// current game screen, for people who have monitors with a somewhat higher number of pixels vertically e.g. 4:3 aspect
+        /// ratio instead of 16:9 widescreen. Game code has to ensure no crucial items (GUI elements, text) are plotted in these
+        /// areas.
+        /// </summary>
         const int SPARE_SCREEN_HEIGHT = 256;
 
         public Game1Factory Factory;
@@ -56,25 +62,39 @@ namespace Game1
         {
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
             GameChannel = Game1Factory.CreateChannel(Color.Black, 1366, 768 + SPARE_SCREEN_HEIGHT);
-            // create level/background channels of same size
-            LevelChannel = Game1Factory.CreateChannel(GameChannel);
-            BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
-            // GuiChannel =
             Game1Factory.BuildTo(GameChannel);
 
+            // create level/background channels of same size
+            BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
+            BackgroundChannel.GetComponent<PositionComp>().Depth = 0.7f;
+            BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
+            BackgroundChannel.Tag = "BackgroundChannel";
+            LevelChannel = Game1Factory.CreateChannel(GameChannel);
+            LevelChannel.GetComponent<PositionComp>().Depth = 0.5f;
+            LevelChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
+            LevelChannel.Tag = "LevelChannel";
+            // GuiChannel = TODO
+
             var scr = GameChannel.GetComponent<WorldComp>().Screen;
-            scr.BackgroundColor = Color.White;
+            scr.BackgroundColor = Color.Black;
 
             // apply magic scaling to screen resolution
             Game1Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
 
             // add framerate counter
-            Game1Factory.CreateFrameRateCounter(Color.Black, SPARE_SCREEN_HEIGHT/2 );
+            Game1Factory.CreateFrameRateCounter(Color.White, SPARE_SCREEN_HEIGHT/2 );
+
+            Game1Factory.BuildTo(LevelChannel);
 
             // add content 
             Test t = new TestSphereCollision();
             t.Create();
 
+            // test bg content
+            Game1Factory.BuildTo(BackgroundChannel);
+            t = new TestMixedShaders();
+            t.Channel = BackgroundChannel;
+            t.Create();
 
             base.LoadContent();
         }                  

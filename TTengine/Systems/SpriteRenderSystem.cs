@@ -77,6 +77,10 @@ namespace TTengine.Systems
             TTSpriteBatch sb = scr.SpriteBatch;
 
             // draw sprite
+            if (entity.Tag.Equals("LevelChannel"))
+            {
+                float dummy = 3.0f;
+            }
             sb.Draw(spriteComp.Texture, drawComp.DrawPosition, null, drawComp.DrawColor,
                 drawComp.DrawRotation, spriteComp.Center, drawComp.DrawScale, SpriteEffects.None, drawComp.LayerDepth);
 
