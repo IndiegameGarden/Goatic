@@ -61,7 +61,7 @@ namespace Game1
         protected override void LoadContent()
         {
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
-            GameChannel = Game1Factory.CreateChannel(Color.Black, 1366, 768 + SPARE_SCREEN_HEIGHT);
+            GameChannel = Game1Factory.CreateChannel(Color.Transparent, 1366, 668 + SPARE_SCREEN_HEIGHT);
             Game1Factory.BuildTo(GameChannel);
 
             // create level/background channels of same size
@@ -69,7 +69,7 @@ namespace Game1
             BackgroundChannel.GetComponent<PositionComp>().Depth = 0.7f;
             BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
             BackgroundChannel.Tag = "BackgroundChannel";
-            LevelChannel = Game1Factory.CreateChannel(GameChannel);
+            LevelChannel = Game1Factory.CreateChannel(Color.Transparent,800,600); //GameChannel);
             LevelChannel.GetComponent<PositionComp>().Depth = 0.5f;
             LevelChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
             LevelChannel.Tag = "LevelChannel";
