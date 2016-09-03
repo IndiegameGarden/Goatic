@@ -329,7 +329,7 @@ namespace TTengine.Comps
                 file = Texture2D.FromStream(graphics, titleStream);                
             }
             
-            //Setup a render target to hold our final texture which will have premulitplied alpha values
+            //Setup a render target to hold our final texture which will have premultiplied alpha values
             result = new RenderTarget2D(graphics, file.Width, file.Height);
 
             lock (graphics)

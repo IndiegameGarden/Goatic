@@ -37,13 +37,7 @@ namespace TTengine.Core
 
         public ScreenComp(RenderTarget2D renderTarget)
         {
-            BlendState blend = new BlendState();
-            blend.AlphaBlendFunction = BlendFunction.Add;
-            blend.AlphaSourceBlend = Blend.SourceAlpha;
-            blend.AlphaDestinationBlend = Blend.InverseSourceAlpha;
-            blend.ColorSourceBlend = Blend.SourceAlpha;
-            blend.ColorDestinationBlend = Blend.InverseSourceAlpha;
-            SpriteBatch = new TTSpriteBatch(TTGame.Instance.GraphicsDevice, blend);
+            SpriteBatch = new TTSpriteBatch(TTGame.Instance.GraphicsDevice);
             this.renderTarget = renderTarget;
             InitScreenDimensions();
         }

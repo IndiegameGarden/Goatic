@@ -64,11 +64,21 @@ namespace Game1
             GameChannel = Game1Factory.CreateChannel(Color.Transparent, 1366, 668 + SPARE_SCREEN_HEIGHT);
             Game1Factory.BuildTo(GameChannel);
 
+            BlendState blend = new BlendState();
+            blend.AlphaBlendFunction = BlendFunction.Add;
+            blend.AlphaSourceBlend = Blend.One;
+            blend.AlphaDestinationBlend = Blend.InverseSourceAlpha;
+            blend.ColorSourceBlend = Blend.One;
+            blend.ColorDestinationBlend = Blend.InverseSourceAlpha;
+
+            GameChannel.GetComponent<WorldComp>().Screen.SpriteBatch.blendState = blend; // custom blending of my sub-channels
+
             // create level/background channels of same size
             BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
             BackgroundChannel.GetComponent<PositionComp>().Depth = 0.7f;
             BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
             BackgroundChannel.Tag = "BackgroundChannel";
+            
             LevelChannel = Game1Factory.CreateChannel(Color.Transparent,800,600); //GameChannel);
             LevelChannel.GetComponent<PositionComp>().Depth = 0.5f;
             LevelChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
