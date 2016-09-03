@@ -46,9 +46,9 @@ namespace TTengine.Systems
         public override void Process(Entity entity, ScreenComp screenComp)
         {
             TTGame.Instance.GraphicsDevice.SetRenderTarget(screenComp.RenderTarget);
-            //if (screenComp.BackgroundColor.A != 0)
-            TTGame.Instance.GraphicsDevice.Clear(screenComp.BackgroundColor);
             TTSpriteBatch sb = screenComp.SpriteBatch;
+            if (sb.effect == null)      // dont clear for FXScreenlets, since they borrow other's RenderBuffer.
+                TTGame.Instance.GraphicsDevice.Clear(screenComp.BackgroundColor);            
             sb.End(); 
         }
 

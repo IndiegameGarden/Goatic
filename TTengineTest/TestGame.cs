@@ -42,6 +42,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestTextureSamplingShader());
             DoTest(new TestTransparentChannels());
             DoTest(new TestRelativeMotion());
             DoTest(new TestMultiChannels());
@@ -52,7 +53,6 @@ namespace TTengineTest
             DoTest(new TestContentLoad());
             DoTest(new TestTargetMotion());
             DoTest(new TestScaling());            
-            DoTest(new TestTextureSamplingShader());
             DoTest(new TestBTAI());
             DoTest(new TestSphereCollision());
             DoTest(new TestAnimatedSprite());
