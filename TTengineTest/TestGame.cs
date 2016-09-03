@@ -42,6 +42,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestTransparentChannels());
             DoTest(new TestRelativeMotion());
             DoTest(new TestMultiChannels());
             DoTest(new TestGamepad());

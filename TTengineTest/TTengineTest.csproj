@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Tests\TestTransparentChannels.cs" />
     <Compile Include="Tests\TestPostEffects.cs" />
     <Compile Include="Tests\TestGamepad.cs" />
     <Compile Include="Tests\TestMixedShaders.cs" />

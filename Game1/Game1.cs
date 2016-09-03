@@ -71,22 +71,23 @@ namespace Game1
             blend.ColorSourceBlend = Blend.One;
             blend.ColorDestinationBlend = Blend.InverseSourceAlpha;
 
-            GameChannel.GetComponent<WorldComp>().Screen.SpriteBatch.blendState = blend; // custom blending of my sub-channels
+            var scr = GameChannel.GetComponent<WorldComp>().Screen;
+            scr.BackgroundColor = Color.Black;
+            //GameChannel.GetComponent<WorldComp>().Screen.SpriteBatch.blendState = blend; // custom blending of my sub-channels
+            //GameChannel.GetComponent<WorldComp>().Screen.SpriteBatch.spriteSortMode = SpriteSortMode.BackToFront;
 
             // create level/background channels of same size
             BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
             BackgroundChannel.GetComponent<PositionComp>().Depth = 0.7f;
-            BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
+            BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Black;
             BackgroundChannel.Tag = "BackgroundChannel";
             
             LevelChannel = Game1Factory.CreateChannel(Color.Transparent,800,600); //GameChannel);
             LevelChannel.GetComponent<PositionComp>().Depth = 0.5f;
-            LevelChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Transparent;
+            LevelChannel.GetComponent<WorldComp>().Screen.BackgroundColor = new Color(255,255,255,1); // Transparent;
             LevelChannel.Tag = "LevelChannel";
             // GuiChannel = TODO
 
-            var scr = GameChannel.GetComponent<WorldComp>().Screen;
-            scr.BackgroundColor = Color.Black;
 
             // apply magic scaling to screen resolution
             Game1Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
