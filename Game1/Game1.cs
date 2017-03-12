@@ -61,20 +61,13 @@ namespace Game1
         protected override void LoadContent()
         {
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
-            GameChannel = Game1Factory.CreateChannel(Color.Transparent, 1366, 668 + SPARE_SCREEN_HEIGHT);
+            const int SCREEN_SIZE_X = 1366;
+            const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
+            GameChannel = Game1Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             Game1Factory.BuildTo(GameChannel);
-
-            BlendState blend = new BlendState();
-            blend.AlphaBlendFunction = BlendFunction.Add;
-            blend.AlphaSourceBlend = Blend.One;
-            blend.AlphaDestinationBlend = Blend.InverseSourceAlpha;
-            blend.ColorSourceBlend = Blend.One;
-            blend.ColorDestinationBlend = Blend.InverseSourceAlpha;
 
             var scr = GameChannel.GetComponent<WorldComp>().Screen;
             scr.BackgroundColor = Color.Black;
-            //GameChannel.GetComponent<WorldComp>().Screen.SpriteBatch.blendState = blend; // custom blending of my sub-channels
-            //GameChannel.GetComponent<WorldComp>().Screen.SpriteBatch.spriteSortMode = SpriteSortMode.BackToFront;
 
             // create level/background channels of same size
             BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
@@ -82,12 +75,10 @@ namespace Game1
             BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Black;
             BackgroundChannel.Tag = "BackgroundChannel";
             
-            LevelChannel = Game1Factory.CreateChannel(Color.Transparent,800,600); //GameChannel);
+            LevelChannel = Game1Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             LevelChannel.GetComponent<PositionComp>().Depth = 0.5f;
-            LevelChannel.GetComponent<WorldComp>().Screen.BackgroundColor = new Color(255,255,255,1); // Transparent;
             LevelChannel.Tag = "LevelChannel";
             // GuiChannel = TODO
-
 
             // apply magic scaling to screen resolution
             Game1Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
@@ -103,7 +94,7 @@ namespace Game1
 
             // test bg content
             Game1Factory.BuildTo(BackgroundChannel);
-            t = new TestMixedShaders();
+            t = new TestLinearMotion();
             t.Channel = BackgroundChannel;
             t.Create();
 

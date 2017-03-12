@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 namespace TTengineTest
 {
     /// <summary>Testing the linear motion of objects on screen</summary>
-    class TestLinearMotion : Test
+    public class TestLinearMotion : Test
     {
         const float MOVE_SPEED_MULTIPLIER = 80f;
 
