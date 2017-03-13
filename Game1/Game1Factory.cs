@@ -112,5 +112,81 @@ namespace Game1
         {
             ctx.Entity.GetComponent<DrawComp>().DrawRotation = (float)value;
         }
+
+        /// <summary>
+        /// create an active ball with given position and random velocity and some weird (AI) behaviors
+        /// </summary>
+        /// <returns></returns>
+        public Entity CreateMovingBall(Vector2 pos, Vector2 velo)
+        {
+            var ball = CreateBall(0.96f + 0.08f * (float)rnd.NextDouble());
+
+            // position and velocity set
+            ball.GetComponent<PositionComp>().Position = pos;
+            ball.GetComponent<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
+            ball.GetComponent<VelocityComp>().Velocity2D = velo;
+            ball.Refresh(); // TODO check all .Refresh() calls to see which ones are needed and which not.
+            return ball;
+        }
+
+        public Entity CreateMovingBall(Vector3 pos, Vector2 velo)
+        {
+            return CreateMovingBall(new Vector2(pos.X, pos.Y), velo);
+        }
+
+        public Entity CreateRotatingBall(Vector2 pos, Vector2 velo, double rotSpeed)
+        {
+            var ball = CreateMovingBall(pos, velo);
+            ball.GetComponent<ScaleComp>().Scale = 0.7;
+            var rc = new RotateComp();
+            rc.RotateSpeed = rotSpeed;
+            ball.AddComponent(rc);
+            return ball;
+        }
+
+        public static Entity CreateHypnoScreenlet()
+        {
+            var e = CreateFxScreenlet("Hypno");
+            AddScript(e, ScriptHypno );
+            return e;
+        }
+
+        static void ScriptHypno(ScriptContext ctx)
+        {
+            float z = 17f - 15f * (float)Math.Sin(MathHelper.TwoPi * 0.03324 * ctx.SimTime);
+            var effect = ctx.Entity.GetComponent<ScreenComp>().SpriteBatch.effect;
+            effect.Parameters["Zoom"].SetValue(z);
+            effect.Parameters["Time"].SetValue((float)ctx.SimTime);
+        }
+
+        public static Entity CreateMandelbrotScreenlet()
+        {
+            var e = CreateFxScreenlet("MandelbrotJulia");
+            AddScript(e, ScriptMandelbrotFx );
+            return e;
+        }
+
+        static void ScriptMandelbrotFx(ScriptContext ctx)
+        {
+            var effect = ctx.Entity.GetComponent<ScreenComp>().SpriteBatch.effect;
+            effect.Parameters["Zoom"].SetValue((float)( 3 - ctx.SimTime/20.0 ));
+        }
+
+        public static Entity CreateJuliaScreenlet()
+        {
+            var e = CreateFxScreenlet("MandelbrotJulia");
+            var fx = e.GetComponent<ScreenComp>().SpriteBatch.effect;
+            fx.CurrentTechnique = fx.Techniques[1]; // select Julia
+            AddScript(e, ScriptJuliaFx);
+            return e;
+        }
+
+        static void ScriptJuliaFx(ScriptContext ctx)
+        {
+            var effect = ctx.Entity.GetComponent<ScreenComp>().SpriteBatch.effect;
+            var t = (float) ctx.SimTime;
+            effect.Parameters["JuliaSeed"].SetValue( new Vector2(0.39f - t * 0.004f , -0.2f + t * 0.003f) );
+        }
+
     }
 }

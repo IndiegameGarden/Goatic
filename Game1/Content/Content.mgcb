@@ -61,3 +61,9 @@
 /processorParam:TextureFormat=Compressed
 /build:TTFrameRateCounter.spritefont
 
+#begin MandelbrotJulia.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:MandelbrotJulia.fx
+

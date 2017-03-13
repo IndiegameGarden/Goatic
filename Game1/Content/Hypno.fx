@@ -11,7 +11,7 @@ float3 ColorScale = float3(4,5,6);
 // internal stuff
 sampler TextureSampler : register(s0);
 
-float4 Hypno_PixelShader(float2 texCoord : TEXCOORD0) : COLOR0
+float4 Hypno_PixelShader(float4 position : SV_Position, float4 color : COLOR0, float2 texCoord : TEXCOORD0) : COLOR0
 {
 	// sample existing pixel into p
 	float4 p = tex2D(TextureSampler,texCoord); 
@@ -23,13 +23,13 @@ float4 Hypno_PixelShader(float2 texCoord : TEXCOORD0) : COLOR0
 	float4 hypnoColor = float4(sin(val * ColorScale.x), sin(val * ColorScale.y), sin(val * ColorScale.z), 1) ;
 
 	// render the resulting pixel by mixing
-	return DrawColor.a * p + (1-DrawColor.a) * hypnoColor;
+	return hypnoColor; // DrawColor.a * p + (1 - DrawColor.a) * hypnoColor;
 }
 
 technique Hypno_Technique
 {
     pass Pass1
     {
-        PixelShader = compile ps_4_0_level_9_1 Hypno_PixelShader();
+        PixelShader = compile ps_4_0 Hypno_PixelShader();
     }
 }

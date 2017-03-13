@@ -94,9 +94,18 @@ namespace Game1
 
             // test bg content
             Game1Factory.BuildTo(BackgroundChannel);
-            t = new TestLinearMotion();
-            t.Channel = BackgroundChannel;
-            t.Create();
+
+            var fxScreen = Game1Factory.CreateHypnoScreenlet();
+            Game1Factory.BuildTo(fxScreen);
+            Factory.CreateRotatingBall(new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
+
+            var fxScreen2 = Game1Factory.CreateMandelbrotScreenlet();
+            Game1Factory.BuildTo(fxScreen2);
+            Factory.CreateRotatingBall(new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
+
+            var fxScreen3 = Game1Factory.CreateJuliaScreenlet();
+            Game1Factory.BuildTo(fxScreen3);
+            Factory.CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
 
             base.LoadContent();
         }                  
