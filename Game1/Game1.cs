@@ -1,23 +1,13 @@
-// (c) 2010-2016 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
-
-using System;
-using System.Collections.Generic;
+// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using TTengine.Core;
 using TTengine.Comps;
-using TTengine.Behaviors;
-using TTengine.Modifiers;
-using TTengine.Util;
 using TTengineTest;
 
 using Artemis;
-using Artemis.Interface;
-using TreeSharp;
 
 namespace Game1
 {

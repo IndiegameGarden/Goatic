@@ -1,6 +1,6 @@
+// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 //
-// MandelbrotJulia.fx
-// Fractal rendering shader based on the code from
+// MandelbrotJulia.fx - Fractal rendering shader based on the code from
 // from http://blog.nostatic.org/2009/09/fractal-rendering-on-gpu-mandelbrot-and.html
 
 sampler TextureSampler : register(s0);
