@@ -56,17 +56,17 @@ namespace Game1
             GameChannel = Game1Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             Game1Factory.BuildTo(GameChannel);
 
-            var scr = GameChannel.GetComponent<WorldComp>().Screen;
+            var scr = GameChannel.C<WorldComp>().Screen;
             scr.BackgroundColor = Color.Black;
 
             // create level/background channels of same size
             BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
-            BackgroundChannel.GetComponent<PositionComp>().Depth = 0.7f;
-            BackgroundChannel.GetComponent<WorldComp>().Screen.BackgroundColor = Color.Black;
+            BackgroundChannel.C<PositionComp>().Depth = 0.7f;
+            BackgroundChannel.C<WorldComp>().Screen.BackgroundColor = Color.Black;
             BackgroundChannel.Tag = "BackgroundChannel";
             
             LevelChannel = Game1Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
-            LevelChannel.GetComponent<PositionComp>().Depth = 0.5f;
+            LevelChannel.C<PositionComp>().Depth = 0.5f;
             LevelChannel.Tag = "LevelChannel";
             // GuiChannel = TODO
 

@@ -256,7 +256,7 @@ namespace Artemis
         /// </summary>
         /// <typeparam name="T">the expected return component type.</typeparam>
         /// <returns>component that matches, or null if none is found.</returns>
-        public T GetComponent<T>() where T : IComponent
+        public T C<T>() where T : IComponent
         {
             return (T)this.entityManager.GetComponent(this, ComponentType<T>.CType);
         }

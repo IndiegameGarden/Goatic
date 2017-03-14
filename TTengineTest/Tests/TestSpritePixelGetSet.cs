@@ -23,7 +23,7 @@ namespace TTengineTest
             // sprite
             var velo = new Vector2(5f, 3f);
             var spr = Factory.CreateMovingBall(new Vector2(335f, 350f), velo);
-            spr.GetComponent<ScaleComp>().Scale = 10f;
+            spr.C<ScaleComp>().Scale = 10f;
 
             // add script to sprite
             TestFactory.AddScript(spr, ChangePixelsRandomlyScript);
@@ -37,7 +37,7 @@ namespace TTengineTest
         void ChangePixelsRandomlyScript(ScriptContext context)
         {
             // pick a random pixel
-            var sc = context.Entity.GetComponent<SpriteComp>();
+            var sc = context.Entity.C<SpriteComp>();
             int x = RandomMath.RandomIntBetween(0, (int)sc.Width);
             int y = RandomMath.RandomIntBetween(0, (int)sc.Height);
             Color c = sc.GetPixel(x, y);

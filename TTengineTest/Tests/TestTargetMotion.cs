@@ -17,8 +17,8 @@ namespace TTengineTest
             velo *= MOVE_SPEED_MULTIPLIER;
             var ball = Factory.CreateMovingBall(pos, velo );
             ball.AddComponent(new TargetMotionComp());
-            ball.GetComponent<TargetMotionComp>().Target = new Vector2(800f, 500f);
-            ball.GetComponent<TargetMotionComp>().TargetVelocity = 2*MOVE_SPEED_MULTIPLIER;
+            ball.C<TargetMotionComp>().Target = new Vector2(800f, 500f);
+            ball.C<TargetMotionComp>().TargetVelocity = 2*MOVE_SPEED_MULTIPLIER;
             ball.Refresh();
         }
 

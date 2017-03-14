@@ -24,19 +24,19 @@ namespace TTengineTest
             BuildToDefault();
             // create a first child channel - should become transparent
             var ch1 = TestFactory.CreateChannel(Color.Transparent, 600, 400);
-			ch1.GetComponent<PositionComp>().Position = new Vector2(50f, 50f);
-            Color c1 = ch1.GetComponent<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
+			ch1.C<PositionComp>().Position = new Vector2(50f, 50f);
+            Color c1 = ch1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
             TestFactory.AddScript(ch1, ScriptInspectTextureColor);
-            ch1.GetComponent<WorldComp>().Screen.Zoom = 0.5f;
+            ch1.C<WorldComp>().Screen.Zoom = 0.5f;
 
             // second item - a regular sprite with transparency RUNTIME LOADED
             var spr1 = TestFactory.CreateSpritelet("red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
-            spr1.GetComponent<PositionComp>().Position = new Vector2(800f, 50f);
-            Color c2 = spr1.GetComponent<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
+            spr1.C<PositionComp>().Position = new Vector2(800f, 50f);
+            Color c2 = spr1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
 
             // 3rd item - a regular compiled content sprite with transparency content pipeline loaded
             var spr2 = TestFactory.CreateSpritelet("red-circle_frank-tschakert"); 
-            spr2.GetComponent<PositionComp>().Position = new Vector2(1050f, 50f);
+            spr2.C<PositionComp>().Position = new Vector2(1050f, 50f);
 
 			// for channel, build the content into it.
 			BuildTo(ch1);
@@ -48,7 +48,7 @@ namespace TTengineTest
         void ScriptInspectTextureColor(ScriptContext ctx)
         {
             var e = ctx.Entity;
-            var sc = e.GetComponent<SpriteComp>();
+            var sc = e.C<SpriteComp>();
             Color c1 = sc.GetPixel(0, 0);
             if (c1.A != 0)
             {

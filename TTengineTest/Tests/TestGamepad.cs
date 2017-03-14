@@ -24,10 +24,10 @@ namespace TTengineTest
         void ScriptMoveByGamepad(ScriptContext ctx)
         {
             var e = ctx.Entity;
-            var vc = e.GetComponent<VelocityComp>();
+            var vc = e.C<VelocityComp>();
             float spd = (float)(195 * ctx.Dt);
 
-            var dir = e.GetComponent<PlayerInputComp>();
+            var dir = e.C<PlayerInputComp>();
 
             if (dir.Direction.Y < 0f)
                 vc.Y -= spd;

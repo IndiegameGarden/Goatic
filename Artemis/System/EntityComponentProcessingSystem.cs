@@ -72,7 +72,7 @@ namespace Artemis.System
         {
             foreach (Entity entity in entities.Values)
             {
-                this.Process(entity, entity.GetComponent<T>());
+                this.Process(entity, entity.C<T>());
             }
         }
     }
@@ -113,7 +113,7 @@ namespace Artemis.System
         {
             foreach (Entity entity in entities.Values)
             {
-                this.Process(entity, entity.GetComponent<T1>(), entity.GetComponent<T2>());
+                this.Process(entity, entity.C<T1>(), entity.C<T2>());
             }
         }
     }
@@ -159,7 +159,7 @@ namespace Artemis.System
         {
             foreach (Entity entity in entities.Values)
             {
-                this.Process(entity, entity.GetComponent<T1>(), entity.GetComponent<T2>(), entity.GetComponent<T3>());
+                this.Process(entity, entity.C<T1>(), entity.C<T2>(), entity.C<T3>());
             }
         }
     }
@@ -206,7 +206,7 @@ namespace Artemis.System
         {
             foreach (Entity entity in entities.Values)
             {
-                this.Process(entity, entity.GetComponent<T1>(), entity.GetComponent<T2>(), entity.GetComponent<T3>(), entity.GetComponent<T4>());
+                this.Process(entity, entity.C<T1>(), entity.C<T2>(), entity.C<T3>(), entity.C<T4>());
             }
         }
     }
@@ -256,7 +256,7 @@ namespace Artemis.System
         {
             foreach (Entity entity in entities.Values)
             {
-                this.Process(entity, entity.GetComponent<T1>(), entity.GetComponent<T2>(), entity.GetComponent<T3>(), entity.GetComponent<T4>(), entity.GetComponent<T5>());
+                this.Process(entity, entity.C<T1>(), entity.C<T2>(), entity.C<T3>(), entity.C<T4>(), entity.C<T5>());
             }
         }
     }

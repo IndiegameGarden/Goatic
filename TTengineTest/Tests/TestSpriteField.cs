@@ -16,9 +16,9 @@ namespace TTengineTest
             e.AddComponent(new VelocityComp());
             e.Refresh();
 
-            e.GetComponent<VelocityComp>().Velocity2D = new Vector2(5f, 5f);
+            e.C<VelocityComp>().Velocity2D = new Vector2(5f, 5f);
 
-            SpriteFieldComp sfc = e.GetComponent<SpriteFieldComp>();
+            SpriteFieldComp sfc = e.C<SpriteFieldComp>();
             sfc.FieldPos = new Vector2(0f, 0f);
             sfc.NumberSpritesX = 43;
             sfc.NumberSpritesY = 33;

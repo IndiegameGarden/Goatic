@@ -23,7 +23,7 @@ namespace TTengineTest
                     var velo = Vector2.Zero;
                     velo *= MOVE_SPEED_MULTIPLIER;
                     var ball = Factory.CreateMovingBall(new Vector2(x, y), velo );
-                    ball.GetComponent<ScaleComp>().Scale = 0.19;
+                    ball.C<ScaleComp>().Scale = 0.19;
                     var rc = new RotateComp();
                     rc.RotateSpeed = spd;
                     ball.AddComponent(rc);

@@ -20,12 +20,12 @@ namespace TTengineTest
 
             var p = new Vector2(0f, 100f);
             var t = Factory.CreateTextlet(p, "XNA Content pipeline", Color.Black);
-            t.GetComponent<ScaleComp>().Scale = 0.5f;
-            b1.GetComponent<PositionComp>().AddChild(t.GetComponent<PositionComp>());
+            t.C<ScaleComp>().Scale = 0.5f;
+            b1.C<PositionComp>().AddChild(t.C<PositionComp>());
 
             var t2 = Factory.CreateTextlet(p, "Runtime loaded PNG", Color.Black);
-            t2.GetComponent<ScaleComp>().Scale = 0.5f;
-            b2.GetComponent<PositionComp>().AddChild(t2.GetComponent<PositionComp>());
+            t2.C<ScaleComp>().Scale = 0.5f;
+            b2.C<PositionComp>().AddChild(t2.C<PositionComp>());
         }
 
     }

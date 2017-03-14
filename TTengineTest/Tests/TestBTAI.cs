@@ -20,8 +20,8 @@ namespace TTengineTest
         public override void Create()
         {
             var ball = Factory.CreateBall(1);
-            ball.GetComponent<PositionComp>().Position = new Vector2(300f, 300f);
-            ball.GetComponent<VelocityComp>().Velocity2D = new Vector2(25f, 25f);
+            ball.C<PositionComp>().Position = new Vector2(300f, 300f);
+            ball.C<VelocityComp>().Velocity2D = new Vector2(25f, 25f);
 
             // Behavior Tree AI
             BTAIComp ai = new BTAIComp();

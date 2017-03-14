@@ -54,13 +54,13 @@ namespace TTengine.Core
         {
             if (e.HasComponent<WorldComp>())
             {
-                var wc = e.GetComponent<WorldComp>();
+                var wc = e.C<WorldComp>();
                 BuildWorld = wc.World;
                 if (wc.Screen != null)
                     BuildScreen = wc.Screen;
             }
             if (e.HasComponent<ScreenComp>())
-                BuildScreen = e.GetComponent<ScreenComp>();
+                BuildScreen = e.C<ScreenComp>();
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace TTengine.Core
         /// <returns></returns>
         public static Entity CreateChannel(Entity templateChannel) 
         {
-            ScreenComp sc = templateChannel.GetComponent<WorldComp>().Screen;
+            ScreenComp sc = templateChannel.C<WorldComp>().Screen;
             return CreateChannel(sc.BackgroundColor, sc.Width, sc.Height);
         }
 
@@ -288,9 +288,9 @@ namespace TTengine.Core
         public static Entity CreateFrameRateCounter(Color textColor, int pixelsOffsetVertical = 0)
         {
             var e = TTFactory.CreateTextlet("##");
-            e.GetComponent<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
-            e.GetComponent<DrawComp>().DrawColor = textColor;
-            AddScript(e, new Util.FrameRateCounter(e.GetComponent<TextComp>()));
+            e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
+            e.C<DrawComp>().DrawColor = textColor;
+            AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
             e.Refresh();
             return e;
         }
@@ -299,7 +299,7 @@ namespace TTengine.Core
         {
             if (!e.HasComponent<ScriptComp>())
                 e.AddComponent(new ScriptComp());
-            var sc = e.GetComponent<ScriptComp>();
+            var sc = e.C<ScriptComp>();
             sc.Add(script);
         }
 
@@ -316,7 +316,7 @@ namespace TTengine.Core
                 e.AddComponent(new ScriptComp());
                 e.Refresh();
             }
-            var sc = e.GetComponent<ScriptComp>();
+            var sc = e.C<ScriptComp>();
             var script = new BasicScript(scriptCode);
             sc.Add(script);
             return script;
@@ -336,7 +336,7 @@ namespace TTengine.Core
                 e.AddComponent(new ScriptComp());
                 e.Refresh();
             }
-            var sc = e.GetComponent<ScriptComp>();
+            var sc = e.C<ScriptComp>();
             var script = new ModifierScript(scriptCode, func);
             sc.Add(script);
             return script;
@@ -356,7 +356,7 @@ namespace TTengine.Core
                 e.AddComponent(new ScriptComp());
                 e.Refresh();
             }
-            var sc = e.GetComponent<ScriptComp>();
+            var sc = e.C<ScriptComp>();
             var script = new VectorModifierScript(scriptCode, func);
             sc.Add(script);
             return script;
@@ -401,11 +401,11 @@ namespace TTengine.Core
         public static void ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
                                              bool canShrink = true, int maxPixelsCutOffVertical = 0)
         {
-            var scrToFit = channelToFit.GetComponent<WorldComp>().Screen;
-            PositionComp pos = channelToFit.GetComponent<PositionComp>();
-            SpriteComp spr = channelToFit.GetComponent<SpriteComp>();
-            ScaleComp scl = channelToFit.GetComponent<ScaleComp>();
-            var parentScr = parentChannel.GetComponent<WorldComp>().Screen;
+            var scrToFit = channelToFit.C<WorldComp>().Screen;
+            PositionComp pos = channelToFit.C<PositionComp>();
+            SpriteComp spr = channelToFit.C<SpriteComp>();
+            ScaleComp scl = channelToFit.C<ScaleComp>();
+            var parentScr = parentChannel.C<WorldComp>().Screen;
             float scale = 1.0f;
 
             // if no scale comp yet, add one

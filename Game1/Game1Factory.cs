@@ -54,8 +54,8 @@ namespace Game1
             var ball = CreateBall(0.08f + 0.07f * (float)rnd.NextDouble());
 
             // position and velocity set
-            ball.GetComponent<PositionComp>().Position = pos;
-            ball.GetComponent<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
+            ball.C<PositionComp>().Position = pos;
+            ball.C<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
 
             /*
             // duration of entity
@@ -92,16 +92,16 @@ namespace Game1
         public Entity CreateMovingTextlet(Vector2 pos, string text)
         {
             var t = CreateTextlet(text);
-            t.GetComponent<PositionComp>().Position = pos;
-            t.GetComponent<DrawComp>().DrawColor = Color.Black;
-            t.GetComponent<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
-            t.GetComponent<ScaleComp>().Scale = 0.5;
+            t.C<PositionComp>().Position = pos;
+            t.C<DrawComp>().DrawColor = Color.Black;
+            t.C<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
+            t.C<ScaleComp>().Scale = 0.5;
             return t;
         }
 
         public void RotateModifierScript(ScriptContext ctx, double value)
         {
-            ctx.Entity.GetComponent<DrawComp>().DrawRotation = (float)value;
+            ctx.Entity.C<DrawComp>().DrawRotation = (float)value;
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Game1
             var ball = CreateBall(0.96f + 0.08f * (float)rnd.NextDouble());
 
             // position and velocity set
-            ball.GetComponent<PositionComp>().Position = pos;
-            ball.GetComponent<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
-            ball.GetComponent<VelocityComp>().Velocity2D = velo;
+            ball.C<PositionComp>().Position = pos;
+            ball.C<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
+            ball.C<VelocityComp>().Velocity2D = velo;
             ball.Refresh(); // TODO check all .Refresh() calls to see which ones are needed and which not.
             return ball;
         }
@@ -128,7 +128,7 @@ namespace Game1
         public Entity CreateRotatingBall(Vector2 pos, Vector2 velo, double rotSpeed)
         {
             var ball = CreateMovingBall(pos, velo);
-            ball.GetComponent<ScaleComp>().Scale = 0.7;
+            ball.C<ScaleComp>().Scale = 0.7;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
             ball.AddComponent(rc);
@@ -145,7 +145,7 @@ namespace Game1
         static void ScriptHypno(ScriptContext ctx)
         {
             float z = 17f - 15f * (float)Math.Sin(MathHelper.TwoPi * 0.03324 * ctx.SimTime);
-            var effect = ctx.Entity.GetComponent<ScreenComp>().SpriteBatch.effect;
+            var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             effect.Parameters["Zoom"].SetValue(z);
             effect.Parameters["Time"].SetValue((float)ctx.SimTime);
         }
@@ -159,14 +159,14 @@ namespace Game1
 
         static void ScriptMandelbrotFx(ScriptContext ctx)
         {
-            var effect = ctx.Entity.GetComponent<ScreenComp>().SpriteBatch.effect;
+            var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             effect.Parameters["Zoom"].SetValue((float)( 3 - ctx.SimTime/20.0 ));
         }
 
         public static Entity CreateJuliaScreenlet()
         {
             var e = CreateFxScreenlet("MandelbrotJulia");
-            var fx = e.GetComponent<ScreenComp>().SpriteBatch.effect;
+            var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
             AddScript(e, ScriptJuliaFx);
             return e;
@@ -174,7 +174,7 @@ namespace Game1
 
         static void ScriptJuliaFx(ScriptContext ctx)
         {
-            var effect = ctx.Entity.GetComponent<ScreenComp>().SpriteBatch.effect;
+            var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             var t = (float) ctx.SimTime;
             effect.Parameters["JuliaSeed"].SetValue( new Vector2(0.39f - t * 0.004f , -0.2f + t * 0.003f) );
         }

@@ -23,9 +23,9 @@ namespace TTengineTest
             {
                 float radius = RandomMath.RandomBetween(0.1f, 0.5f);
                 var ball = Factory.CreateBall(radius);
-                ball.GetComponent<PositionComp>().Position = new Vector2(150f * (i % BALLS_PER_ROW),
+                ball.C<PositionComp>().Position = new Vector2(150f * (i % BALLS_PER_ROW),
                                                                     200f * (float)Math.Floor((double)(i / BALLS_PER_ROW)));
-                ball.GetComponent<VelocityComp>().Velocity2D = RandomMath.RandomDirection() * 30f;
+                ball.C<VelocityComp>().Velocity2D = RandomMath.RandomDirection() * 30f;
                 ball.AddComponent(new SphereShapeComp(radius * 250f));
 
                 TestFactory.AddScript(ball, BallColorSetScript);
@@ -38,8 +38,8 @@ namespace TTengineTest
         /// <param name="ctx"></param>
         void BallColorSetScript(ScriptContext ctx)
         {
-            var sc = ctx.Entity.GetComponent<SphereShapeComp>();
-            var dc = ctx.Entity.GetComponent<DrawComp>();
+            var sc = ctx.Entity.C<SphereShapeComp>();
+            var dc = ctx.Entity.C<DrawComp>();
             float c = Math.Max(1f - sc.Colliders.Count * 0.2f, 0f);
             dc.DrawColor = new Color(c,c,c);
         }

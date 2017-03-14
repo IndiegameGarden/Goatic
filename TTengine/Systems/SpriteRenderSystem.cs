@@ -70,7 +70,7 @@ namespace TTengine.Systems
             // update drawpos interpolated
             var p = posComp.PositionAbs;
             if (entity.HasComponent<VelocityComp>())
-                p += (float)TTGame.Instance.TimeLag * entity.GetComponent<VelocityComp>().Velocity2D;
+                p += (float)TTGame.Instance.TimeLag * entity.C<VelocityComp>().Velocity2D;
             drawComp.DrawPosition = scr.ToPixels(p);
             drawComp.LayerDepth = posComp.Depth; 
 

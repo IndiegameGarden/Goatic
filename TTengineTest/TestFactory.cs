@@ -50,7 +50,7 @@ namespace TTengineTest
         public Entity CreateBall(double radius)
         {
             Entity e = CreateSpritelet(this.BallSprite);
-            e.GetComponent<SpriteComp>().CenterToMiddle();
+            e.C<SpriteComp>().CenterToMiddle();
             e.AddComponent(new ScaleComp(radius));
             return e;
         }
@@ -64,9 +64,9 @@ namespace TTengineTest
             var ball = CreateBall(0.96f + 0.08f * (float)rnd.NextDouble());
 
             // position and velocity set
-            ball.GetComponent<PositionComp>().Position = pos;
-            ball.GetComponent<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
-            ball.GetComponent<VelocityComp>().Velocity2D = velo;
+            ball.C<PositionComp>().Position = pos;
+            ball.C<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
+            ball.C<VelocityComp>().Velocity2D = velo;
             ball.Refresh(); // TODO check all .Refresh() calls to see which ones are needed and which not.
             return ball;
         }
@@ -79,7 +79,7 @@ namespace TTengineTest
         public Entity CreateRotatingBall(Vector2 pos, Vector2 velo, double rotSpeed)
         {
             var ball = CreateMovingBall(pos, velo);
-            ball.GetComponent<ScaleComp>().Scale = 0.7;
+            ball.C<ScaleComp>().Scale = 0.7;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
             ball.AddComponent(rc);
@@ -89,10 +89,10 @@ namespace TTengineTest
         public Entity CreateTextlet(Vector2 pos, string text, Color col)
         {
             var txt = CreateTextlet(text);
-            txt.GetComponent<PositionComp>().Position = pos;
-            txt.GetComponent<PositionComp>().Depth = 0f + 0.1f * ((float)rnd.NextDouble()); // random Z position
-            txt.GetComponent<DrawComp>().DrawColor = col;
-            txt.GetComponent<ScaleComp>().Scale = 0.8;
+            txt.C<PositionComp>().Position = pos;
+            txt.C<PositionComp>().Depth = 0f + 0.1f * ((float)rnd.NextDouble()); // random Z position
+            txt.C<DrawComp>().DrawColor = col;
+            txt.C<ScaleComp>().Scale = 0.8;
             return txt;
         }
 

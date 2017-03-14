@@ -39,7 +39,7 @@ namespace TTengine.Util
         {
             timer.CountUp();
             int frameRateAvg = 0;
-            double timeTotal = ctx.Entity.GetComponent<ScriptComp>().SimTime;
+            double timeTotal = ctx.Entity.C<ScriptComp>().SimTime;
 
             if (timer.TimeTotal > 0)
                 frameRateAvg = (int)( (double)timer.CountTotal / timeTotal );
