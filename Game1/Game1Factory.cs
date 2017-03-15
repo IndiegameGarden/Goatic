@@ -13,22 +13,11 @@ namespace Game1
 {
     public class Game1Factory: TTFactory
     {
-        private static Game1Factory _instance = null;
         private Game1 _game;
 
-        private Game1Factory(Game1 game)
+        public Game1Factory(Game1 game)
         {
             _game = game;
-        }
-
-        public static Game1Factory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new Game1Factory(TTGame.Instance as Game1);
-                return _instance as Game1Factory;
-            }
         }
 
         protected Random rnd = new Random();
@@ -135,14 +124,14 @@ namespace Game1
             return ball;
         }
 
-        public static Entity CreateHypnoScreenlet()
+        public Entity CreateHypnoScreenlet()
         {
             var e = CreateFxScreenlet("Hypno");
             AddScript(e, ScriptHypno );
             return e;
         }
 
-        static void ScriptHypno(ScriptContext ctx)
+        void ScriptHypno(ScriptContext ctx)
         {
             float z = 17f - 15f * (float)Math.Sin(MathHelper.TwoPi * 0.03324 * ctx.SimTime);
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
@@ -150,20 +139,20 @@ namespace Game1
             effect.Parameters["Time"].SetValue((float)ctx.SimTime);
         }
 
-        public static Entity CreateMandelbrotScreenlet()
+        public Entity CreateMandelbrotScreenlet()
         {
             var e = CreateFxScreenlet("MandelbrotJulia");
             AddScript(e, ScriptMandelbrotFx );
             return e;
         }
 
-        static void ScriptMandelbrotFx(ScriptContext ctx)
+        void ScriptMandelbrotFx(ScriptContext ctx)
         {
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             effect.Parameters["Zoom"].SetValue((float)( 3 - ctx.SimTime/20.0 ));
         }
 
-        public static Entity CreateJuliaScreenlet()
+        public Entity CreateJuliaScreenlet()
         {
             var e = CreateFxScreenlet("MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
@@ -172,7 +161,7 @@ namespace Game1
             return e;
         }
 
-        static void ScriptJuliaFx(ScriptContext ctx)
+        void ScriptJuliaFx(ScriptContext ctx)
         {
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             var t = (float) ctx.SimTime;

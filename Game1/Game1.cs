@@ -9,6 +9,9 @@ using TTengineTest;
 
 using Artemis;
 
+using Game1.Comps;
+using Game1.Levels;
+
 namespace Game1
 {
     /// <summary>
@@ -24,8 +27,13 @@ namespace Game1
         /// </summary>
         const int SPARE_SCREEN_HEIGHT = 256;
 
-        public Game1Factory Factory;
+        public static Game1Factory Factory;
         public Entity GameChannel, LevelChannel, BackgroundChannel, GuiChannel;
+
+        public static Game1 InstanceG
+        {
+            get { return Instance as Game1; }
+        }
 
         public Game1()
         {
@@ -34,7 +42,7 @@ namespace Game1
 
         protected override void Initialize()
         {
-            Factory = Game1Factory.Instance;
+            Factory = new Game1Factory(this);
 
             base.Initialize();
         }
@@ -82,20 +90,14 @@ namespace Game1
             Test t = new TestSphereCollision();
             t.Create();
 
+            // add builder entity (test level building)
+            var e = Game1Factory.CreateEntity();
+            e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
+            e.Refresh();
+
             // test bg content
             Game1Factory.BuildTo(BackgroundChannel);
 
-            var fxScreen = Game1Factory.CreateHypnoScreenlet();
-            Game1Factory.BuildTo(fxScreen);
-            Factory.CreateRotatingBall(new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
-
-            var fxScreen2 = Game1Factory.CreateMandelbrotScreenlet();
-            Game1Factory.BuildTo(fxScreen2);
-            Factory.CreateRotatingBall(new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
-
-            var fxScreen3 = Game1Factory.CreateJuliaScreenlet();
-            Game1Factory.BuildTo(fxScreen3);
-            Factory.CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
 
             base.LoadContent();
         }                  
