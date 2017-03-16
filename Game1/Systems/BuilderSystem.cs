@@ -23,6 +23,7 @@ namespace Game1.Systems
 
         public override void UnloadContent()
         {
+            this.IsEnabled = false;
             if (bgBuilder != null)
                 bgBuilder.Stop();
             bgBuilder = null;
@@ -31,18 +32,22 @@ namespace Game1.Systems
 
         protected override bool CheckProcessing()
         {
+            bool c = base.CheckProcessing();
+            if (!c)
+                return false;
             // don't add new jobs while the builder is busy.
             if (bgBuilder.IsBusy())
                 return false;
             else
-                return base.CheckProcessing();
+                return true;
         }
 
         public override void Process(Entity entity, BuilderComp bc)
         {
-            // add any active buildercomp as a new job, if not busy
-            if (!bgBuilder.IsBusy())
+            // add any active buildercomp as a new job, if not busy and if not already triggered
+            if (!bc.HasTriggered && !bgBuilder.IsBusy())
             {
+                bc.HasTriggered = true;
                 bgBuilder.AddJob(bc);
             }
         }

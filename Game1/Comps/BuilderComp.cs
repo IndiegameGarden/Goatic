@@ -10,6 +10,7 @@ namespace Game1.Comps
     public class BuilderComp: IComponent
     {
         public BuildScriptDelegate BuildScript;
+        public bool HasTriggered = false;
 
         public BuilderComp(BuildScriptDelegate buildScript)
         {

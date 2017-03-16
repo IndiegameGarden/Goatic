@@ -51,7 +51,10 @@ namespace Game1
         {
             KeyboardState kb = Keyboard.GetState();
             if (kb.IsKeyDown(Keys.Escape))
+            {
+                UnloadContent();
                 Exit();
+            }
 
             base.Update(gameTime);
         }
@@ -93,14 +96,22 @@ namespace Game1
             // add builder entity (test level building)
             var e = Game1Factory.CreateEntity();
             e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
-            e.Refresh();
 
             // test bg content
             Game1Factory.BuildTo(BackgroundChannel);
 
 
             base.LoadContent();
-        }                  
+        }
+
+        protected override void UnloadContent()
+        {
+            BackgroundChannel.C<WorldComp>().World.UnloadContent();
+            LevelChannel.C<WorldComp>().World.UnloadContent();
+            GameChannel.C<WorldComp>().World.UnloadContent();
+
+            base.UnloadContent();
+        }
     }
 
 }

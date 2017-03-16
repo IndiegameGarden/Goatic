@@ -12,9 +12,9 @@ namespace Game1.Systems
     /// </summary>
     public class BackgroundBuilder
     {
-        Queue<BuilderComp> jobQ = new Queue<BuilderComp>();
-        Thread thread = null;
-        bool isRunning = true;
+        static Queue<BuilderComp> jobQ = new Queue<BuilderComp>();
+        static Thread thread = null;
+        static bool isRunning = true;
         int checkIntervalMs = 0;
         BuilderSystem builderSystem = null;
 
@@ -26,12 +26,14 @@ namespace Game1.Systems
         {
             this.builderSystem = parentSystem;
             this.checkIntervalMs = checkIntervalMs;
-            StartSystemThread();
+            if (thread == null)
+                StartSystemThread();
         }
 
         protected void StartSystemThread()
         {
             thread = new Thread(new ThreadStart(RunSystemMainloop));
+            thread.Name = "BackgroundBuilder";
             thread.Priority = ThreadPriority.BelowNormal;
             thread.Start();
         }
@@ -39,6 +41,7 @@ namespace Game1.Systems
         public void Stop()
         {
             isRunning = false;
+            thread.Join();
         }
 
         public bool IsBusy()
