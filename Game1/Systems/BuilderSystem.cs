@@ -30,6 +30,7 @@ namespace Game1.Systems
             base.UnloadContent();
         }
 
+        /*
         protected override bool CheckProcessing()
         {
             bool c = base.CheckProcessing();
@@ -41,14 +42,16 @@ namespace Game1.Systems
             else
                 return true;
         }
+        */
 
         public override void Process(Entity entity, BuilderComp bc)
         {
             // add any active buildercomp as a new job, if not busy and if not already triggered
-            if (!bc.HasTriggered && !bgBuilder.IsBusy())
+            if (!bc.HasTriggered /*&& !bgBuilder.IsBusy()*/ )
             {
                 bc.HasTriggered = true;
-                bgBuilder.AddJob(bc);
+                //bgBuilder.AddJob(bc); // FIXME testing in-thread building now
+                bc.BuildScript();
             }
         }
     }

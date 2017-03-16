@@ -1,6 +1,7 @@
 ﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
+using TTengine.Util;
 
 namespace Game1
 {
