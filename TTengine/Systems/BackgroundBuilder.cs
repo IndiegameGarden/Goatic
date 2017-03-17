@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using Microsoft.Xna.Framework;
 
-using Game1.Comps;
+using TTengine.Comps;
 
-namespace Game1.Systems
+namespace TTengine.Systems
 {
     /// <summary>
     /// A threaded builder that works in the background, used by BuilderSystem.

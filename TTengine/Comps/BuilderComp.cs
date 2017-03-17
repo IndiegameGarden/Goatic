@@ -3,7 +3,7 @@
 using Artemis;
 using Artemis.Interface;
 
-namespace Game1.Comps
+namespace TTengine.Comps
 {
     public delegate void BuildScriptDelegate();
 

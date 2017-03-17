@@ -5,9 +5,8 @@ using Artemis.Attributes;
 using Artemis.Manager;
 using Artemis.System;
 using TTengine.Comps;
-using Game1.Comps;
 
-namespace Game1.Systems
+namespace TTengine.Systems
 {
     /// <summary>System that builds new entities in a background thread.</summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.BuilderSystem)]
@@ -49,10 +48,11 @@ namespace Game1.Systems
             // add any active buildercomp as a new job, if not busy and if not already triggered
             if (!bc.HasTriggered /*&& !bgBuilder.IsBusy()*/ )
             {
-                bc.HasTriggered = true;
-                //bgBuilder.AddJob(bc); // FIXME testing in-thread building now
-                bc.BuildScript();
+                bc.HasTriggered = true; // flag so it is not triggered again.
+                bgBuilder.AddJob(bc); // separate builder thread building
+                //bc.BuildScript(); // test: in-current-thread building
             }
+
         }
     }
 

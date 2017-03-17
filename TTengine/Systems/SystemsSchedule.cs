@@ -24,7 +24,8 @@ namespace TTengine.Systems
             RotateToDrawrotateSystem = 3,
             BlinkSystem         = 3,
             ExpirationSystem    = 3,
-            CollisionSystem     = 4;
+            CollisionSystem     = 4,
+            BuilderSystem       = 10;
 
         // Systems in DRAW loop
         public const int

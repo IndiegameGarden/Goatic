@@ -42,6 +42,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestBuilderSystem());
             DoTest(new TestTextureSamplingShader());
             DoTest(new TestTransparentChannels());
             DoTest(new TestRelativeMotion());
@@ -49,7 +50,7 @@ namespace TTengineTest
             DoTest(new TestGamepad());
             DoTest(new TestModifiers());
             DoTest(new TestZoomedScreenlet());
-            DoTest(new TestAudioBasics()); //FIXME?
+            DoTest(new TestAudioBasics()); //FIXME? audio plays too soon
             DoTest(new TestContentLoad());
             DoTest(new TestTargetMotion());
             DoTest(new TestScaling());            
@@ -67,6 +68,15 @@ namespace TTengineTest
 
         }
 
+        protected override void UnloadContent()
+        {
+            foreach(Entity c in testChannels)
+            {
+                c.C<WorldComp>().World.UnloadContent();
+            }
+            base.UnloadContent();
+        }
+
         protected override void Initialize()
         {
             Factory = TestFactory.Instance;
@@ -80,6 +90,7 @@ namespace TTengineTest
             KeyboardState kb = Keyboard.GetState();
             if (kb.IsKeyDown(Keys.Escape) && !kbOld.IsKeyDown(Keys.Escape))
             {
+                UnloadContent();
                 Exit();
             }
             

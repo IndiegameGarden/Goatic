@@ -9,7 +9,6 @@ using TTengineTest;
 
 using Artemis;
 
-using Game1.Comps;
 using Game1.Levels;
 
 namespace Game1

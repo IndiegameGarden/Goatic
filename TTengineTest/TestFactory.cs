@@ -71,6 +71,20 @@ namespace TTengineTest
             return ball;
         }
 
+        public Entity CreateMovingBallEntityDisabled(Vector2 pos, Vector2 velo, double radius)
+        {
+            Entity e = CreateEntity();
+            e.IsEnabled = false;
+            e.AddComponent(new PositionComp());
+            e.AddComponent(new VelocityComp());
+            e.AddComponent(new DrawComp(BuildScreen));
+            var spriteComp = new SpriteComp(this.BallSprite);
+            e.AddComponent(spriteComp);
+            e.C<SpriteComp>().CenterToMiddle();
+            e.AddComponent(new ScaleComp(radius));
+            return e;
+        }
+
         public Entity CreateMovingBall(Vector3 pos, Vector2 velo)
         {
             return CreateMovingBall(new Vector2(pos.X, pos.Y), velo);
