@@ -1,11 +1,13 @@
-﻿// (c) 2010-2015 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using Artemis;
 using TTengine.Comps;
+using TTengine.Systems;
 using TTengine.Modifiers;
 using TTMusicEngine.Soundevents;
 
@@ -24,23 +26,17 @@ namespace TTengine.Core
     public class TTFactory
     {
         /// <summary>The Artemis entity world currently used for building new Entities in.</summary>
-        public static EntityWorld BuildWorld;
+        public EntityWorld BuildWorld;
 
         /// <summary>The Screen that newly built Entities in factory will by default render to.</summary>
-        public static ScreenComp BuildScreen;
+        public ScreenComp BuildScreen;
 
-        private static TTGame _game = null;
-
-        static TTFactory() {
-            _game = TTGame.Instance;
-        }
-
-        public static void BuildTo(EntityWorld world)
+        public void BuildTo(EntityWorld world)
         {
             BuildWorld = world;
         }
 
-        public static void BuildTo(ScreenComp screen)
+        public void BuildTo(ScreenComp screen)
         {
             BuildScreen = screen;
         }
@@ -50,7 +46,7 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="e">an Entity which may contain a WorldComp, a ScreenComp, or both. In case of both,
         /// the Entity is a Channel.</param>
-        public static void BuildTo(Entity e)
+        public void BuildTo(Entity e)
         {
             if (e.HasComponent<WorldComp>())
             {
@@ -65,24 +61,79 @@ namespace TTengine.Core
 
         /// <summary>
         /// Create simplest Entity without components within the EntityWorld currently selected
-        /// for Entity construction
+        /// for Entity construction.
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateEntity()
+        public Entity CreateEntity()
         {
-            return BuildWorld.CreateEntity();
+            Entity e = BuildWorld.CreateEntity();
+            return e;
+        }
+
+        /// <summary>
+        /// Create simplest Entity without components within the EntityWorld currently selected
+        /// for Entity construction. By default, the Entity is not enabled until it is
+        /// Finalized.
+        /// </summary>
+        /// <returns></returns>
+        public Entity CreateEntityDisabled()
+        {
+            Entity e = BuildWorld.CreateEntity();
+            e.IsEnabled = false;
+            return e;
+        }
+
+        /// <summary>
+        /// Finalize Entity after having constructed all its components. This will enable it, later,
+        /// via the RefresherSystem (and its calling thread) so not immediately.
+        /// </summary>
+        /// <param name="e">Entity to finalize and soon after activate.</param>
+        public void Finalize(Entity e)
+        {
+            e.IsEnabled = true;
+            RefresherSystem.AddToQueue(e,typeof(RefresherSystem));
+        }
+
+        /// <summary>
+        /// Finalize Entity immediately after having constructed all its components. This will enable it,
+        /// now in the current calling thread. Don't use this from a background thread which doesn't run
+        /// the Artemis ECS.
+        /// </summary>
+        /// <param name="e">Entity to finalize and activate now.</param>
+        public void FinalizeNow(Entity e)
+        {
+            e.IsEnabled = true;
+            e.Refresh();
+        }
+
+        /// <summary>
+        /// Finalize all Entities in an entire World, immediately in current thread.
+        /// </summary>
+        /// <param name="e">Entity containing a World within a WorldComp.</param>
+        public void FinalizeWorld(Entity e)
+        {
+            FinalizeNow(e);
+            var wc = e.C<WorldComp>();
+            if (wc != null)
+            {
+                var ae = wc.World.EntityManager.ActiveEntities;
+                foreach (Entity activeEntity in ae.Where(activeEntity => activeEntity != null))
+                {
+                    activeEntity.Refresh();
+                }
+
+            }
         }
 
         /// <summary>
         /// Create a Gamelet, which is an Entity with position and velocity, but no shape/drawability (yet).
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateGamelet()
+        public Entity CreateGamelet()
         {
             Entity e = CreateEntity();
             e.AddComponent(new PositionComp());
             e.AddComponent(new VelocityComp());
-            e.Refresh();
             return e;
         }
 
@@ -90,11 +141,10 @@ namespace TTengine.Core
         /// Create a Drawlet, which is a moveable, drawable Entity
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateDrawlet()
+        public Entity CreateDrawlet()
         {
             Entity e = CreateGamelet();
             e.AddComponent(new DrawComp(BuildScreen));
-            e.Refresh();
             return e;
         }
 
@@ -105,12 +155,11 @@ namespace TTengine.Core
         /// extension given eg "ball.png", the uncompiled file will be loaded at runtime. If no extension
         /// given eg "ball", precompiled XNA content will be loaded (.xnb files).</param>
         /// <returns></returns>
-        public static Entity CreateSpritelet(string graphicsFile)
+        public Entity CreateSpritelet(string graphicsFile)
         {
             Entity e = CreateDrawlet();
             var spriteComp = new SpriteComp(graphicsFile);
             e.AddComponent(spriteComp);
-            e.Refresh();
             return e;
         }
 
@@ -118,12 +167,11 @@ namespace TTengine.Core
         /// Create a Spritelet with texture based on the contents of a Screen
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateSpritelet(ScreenComp screen)
+        public Entity CreateSpritelet(ScreenComp screen)
         {
             Entity e = CreateDrawlet();
             var spriteComp = new SpriteComp(screen);
             e.AddComponent(spriteComp);
-            e.Refresh();
             return e;
         }
 
@@ -135,18 +183,17 @@ namespace TTengine.Core
         /// <param name="NspritesY">Number of sprites in vertical direction (Y) in the atlas</param>
         /// <param name="animType">Animation type chosen from AnimationType class</param>
         /// <returns></returns>
-        public static Entity CreateAnimatedSpritelet(string atlasBitmapFile, int NspritesX, int NspritesY, 
+        public Entity CreateAnimatedSpritelet(string atlasBitmapFile, int NspritesX, int NspritesY, 
                                                      AnimationType animType = AnimationType.NORMAL )
         {
             Entity e = CreateDrawlet();
             var spriteComp = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
             spriteComp.AnimType = animType;
             e.AddComponent(spriteComp);
-            e.Refresh();
             return e;
         }
 
-        public static Entity CreateSpriteField(string fieldBitmapFile, string spriteBitmapFile)
+        public Entity CreateSpriteField(string fieldBitmapFile, string spriteBitmapFile)
         {
             Entity e = CreateDrawlet();
             var spriteFieldComp = new SpriteFieldComp(fieldBitmapFile);
@@ -154,7 +201,6 @@ namespace TTengine.Core
             spriteFieldComp.FieldSpacing = new Vector2(spriteComp.Width, spriteComp.Height);
             e.AddComponent(spriteComp);
             e.AddComponent(spriteFieldComp);
-            e.Refresh();
             return e;
         }
 
@@ -164,13 +210,12 @@ namespace TTengine.Core
         /// <param name="text"></param>
         /// <param name="fontName"></param>
         /// <returns></returns>
-        public static Entity CreateTextlet(string text, string fontName = "Font1")
+        public Entity CreateTextlet(string text, string fontName = "Font1")
         {
             Entity e = CreateDrawlet();
             e.AddComponent(new ScaleComp());
             TextComp tc = new TextComp(text, fontName);
             e.AddComponent(tc);
-            e.Refresh();
             return e;
         }
 
@@ -183,7 +228,7 @@ namespace TTengine.Core
         /// <param name="height">Screenlet height, if not given uses default backbuffer height</param>
         /// <param name="width">Screenlet width, if not given uses default backbuffer width</param>
         /// <returns>Newly created Entity with a ScreenComp.</returns>
-        public static Entity CreateScreenlet(Color backgroundColor, bool hasRenderBuffer = false,
+        public Entity CreateScreenlet(Color backgroundColor, bool hasRenderBuffer = false,
                                         int width = 0, int height = 0)
         {
             var sc = new ScreenComp(hasRenderBuffer, width, height);
@@ -191,7 +236,6 @@ namespace TTengine.Core
             var e = CreateEntity();
             e.AddComponent(sc);
             e.AddComponent(new DrawComp(BuildScreen));
-            e.Refresh();
             return e;
         }
 
@@ -204,7 +248,7 @@ namespace TTengine.Core
         /// <param name="width">Channel's screen width or if not given or 0 will use RenderBuffer width</param>
         /// <param name="height">Channel's screen height or if not given or 0 will use for RenderBuffer height</param>
         /// <returns></returns>
-        public static Entity CreateChannel(Color backgroundColor,
+        public Entity CreateChannel(Color backgroundColor,
                                         int width = 0, int height = 0)
         {
 			var wc = new WorldComp(); // create world
@@ -215,14 +259,12 @@ namespace TTengine.Core
 			wc.Screen = sc;				// store the Screen as part of the World
 			sc.BackgroundColor = backgroundColor;
 			screenlet.AddComponent (sc);
-			screenlet.Refresh ();
 
 			// create the channel Entity, based on Spritelet
 			var e = CreateSpritelet(sc);
 
 			// make this spritelet into a Channel by adding the World
             e.AddComponent(wc);
-            e.Refresh();
             return e;
         }
 
@@ -232,7 +274,7 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="templateChannel">Existing channel to use as template for color and size.</param>
         /// <returns></returns>
-        public static Entity CreateChannel(Entity templateChannel) 
+        public Entity CreateChannel(Entity templateChannel) 
         {
             ScreenComp sc = templateChannel.C<WorldComp>().Screen;
             return CreateChannel(sc.BackgroundColor, sc.Width, sc.Height);
@@ -242,16 +284,15 @@ namespace TTengine.Core
         /// Creates an FX Screenlet that renders a layer with shader Effect to the current active BuildScreen
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateFxScreenlet(String effectFile)
+        public Entity CreateFxScreenlet(String effectFile)
         {
-            var fx = _game.Content.Load<Effect>(effectFile);
+            var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
 
             var e = CreateEntity();
             e.AddComponent(sc);
             //e.AddComponent(new DrawComp(sc));
-            e.Refresh();
             return e;
         }
 
@@ -260,11 +301,10 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="script"></param>
         /// <returns></returns>
-        public static Entity CreateScriptlet(IScript script)
+        public Entity CreateScriptlet(IScript script)
         {
             var e = CreateEntity();
             e.AddComponent(new ScriptComp(script));
-            e.Refresh();
             return e;
         }
 
@@ -273,11 +313,10 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="soundScript"></param>
         /// <returns></returns>
-        public static Entity CreateAudiolet(SoundEvent soundScript)
+        public Entity CreateAudiolet(SoundEvent soundScript)
         {
             var e = CreateEntity();
             e.AddComponent(new AudioComp(soundScript));
-            e.Refresh();
             return e;
         }
 
@@ -285,17 +324,16 @@ namespace TTengine.Core
         /// Creates a new FrameRateCounter. TODO: screen position set.
         /// </summary>
         /// <returns></returns>
-        public static Entity CreateFrameRateCounter(Color textColor, int pixelsOffsetVertical = 0)
+        public Entity CreateFrameRateCounter(Color textColor, int pixelsOffsetVertical = 0)
         {
-            var e = TTFactory.CreateTextlet("##");
+            var e = CreateTextlet("##");
             e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
             e.C<DrawComp>().DrawColor = textColor;
             AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
-            e.Refresh();
             return e;
         }
 
-        public static void AddScript(Entity e, IScript script)
+        public void AddScript(Entity e, IScript script)
         {
             if (!e.HasComponent<ScriptComp>())
                 e.AddComponent(new ScriptComp());
@@ -309,12 +347,11 @@ namespace TTengine.Core
         /// <param name="e">The Entity to add script to</param>
         /// <param name="scriptCode">Script to run</param>
         /// <returns>IScript object created from the function</returns>
-        public static BasicScript AddScript(Entity e, ScriptDelegate scriptCode)
+        public BasicScript AddScript(Entity e, ScriptDelegate scriptCode)
         {
             if (!e.HasComponent<ScriptComp>())
             {
                 e.AddComponent(new ScriptComp());
-                e.Refresh();
             }
             var sc = e.C<ScriptComp>();
             var script = new BasicScript(scriptCode);
@@ -329,12 +366,11 @@ namespace TTengine.Core
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <param name="func">Function whose value will be passed in ScriptContext.FunctionValue to script</param>
         /// <returns></returns>
-        public static ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode, IFunction func)
+        public ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode, IFunction func)
         {
             if (!e.HasComponent<ScriptComp>())
             {
                 e.AddComponent(new ScriptComp());
-                e.Refresh();
             }
             var sc = e.C<ScriptComp>();
             var script = new ModifierScript(scriptCode, func);
@@ -349,12 +385,11 @@ namespace TTengine.Core
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <param name="func">Function whose value will be passed in ScriptContext.FunctionValue to script</param>
         /// <returns></returns>
-        public static VectorModifierScript AddModifier(Entity e, VectorModifierDelegate scriptCode, IVectorFunction func)
+        public VectorModifierScript AddModifier(Entity e, VectorModifierDelegate scriptCode, IVectorFunction func)
         {
             if (!e.HasComponent<ScriptComp>())
             {
                 e.AddComponent(new ScriptComp());
-                e.Refresh();
             }
             var sc = e.C<ScriptComp>();
             var script = new VectorModifierScript(scriptCode, func);
@@ -368,7 +403,7 @@ namespace TTengine.Core
         /// <param name="e">Entity to add modifier script to</param>
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <returns></returns>
-        public static ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode)
+        public ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode)
         {
             return AddModifier(e, scriptCode, null);
         }
@@ -398,7 +433,7 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="channelToFit"></param>
         /// <param name="parentChannel"></param>
-        public static void ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
+        public void ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
                                              bool canShrink = true, int maxPixelsCutOffVertical = 0)
         {
             var scrToFit = channelToFit.C<WorldComp>().Screen;

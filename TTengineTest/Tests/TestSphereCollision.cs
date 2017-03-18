@@ -28,7 +28,7 @@ namespace TTengineTest
                 ball.C<VelocityComp>().Velocity2D = RandomMath.RandomDirection() * 30f;
                 ball.AddComponent(new SphereShapeComp(radius * 250f));
 
-                TestFactory.AddScript(ball, BallColorSetScript);
+                Factory.AddScript(ball, BallColorSetScript);
             }
         }
 

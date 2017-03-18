@@ -16,26 +16,26 @@ namespace TTengineTest
         public override void Create()
         {
             // put some content in the background channel
-            var chbg = TestFactory.CreateChannel(this.BackgroundColor);            
+            var chbg = Factory.CreateChannel(this.BackgroundColor);            
             BuildTo(chbg);
             var t0 = new TestSphereCollision();
             t0.Create();
 
             BuildToDefault();
             // create a first child channel - should become transparent
-            var ch1 = TestFactory.CreateChannel(Color.Transparent, 600, 400);
+            var ch1 = Factory.CreateChannel(Color.Transparent, 600, 400);
 			ch1.C<PositionComp>().Position = new Vector2(50f, 50f);
             Color c1 = ch1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
-            TestFactory.AddScript(ch1, ScriptInspectTextureColor);
+            Factory.AddScript(ch1, ScriptInspectTextureColor);
             ch1.C<WorldComp>().Screen.Zoom = 0.5f;
 
             // second item - a regular sprite with transparency RUNTIME LOADED
-            var spr1 = TestFactory.CreateSpritelet("red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
+            var spr1 = Factory.CreateSpritelet("red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
             spr1.C<PositionComp>().Position = new Vector2(800f, 50f);
             Color c2 = spr1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
 
             // 3rd item - a regular compiled content sprite with transparency content pipeline loaded
-            var spr2 = TestFactory.CreateSpritelet("red-circle_frank-tschakert"); 
+            var spr2 = Factory.CreateSpritelet("red-circle_frank-tschakert"); 
             spr2.C<PositionComp>().Position = new Vector2(1050f, 50f);
 
 			// for channel, build the content into it.

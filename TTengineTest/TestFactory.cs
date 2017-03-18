@@ -20,27 +20,10 @@ namespace TTengineTest
     /// </summary>
     public class TestFactory: TTFactory
     {
-        private static TestFactory _instance = null;
-        private TestGame _game;
-
-        private TestFactory(TestGame game)
-        {
-            _game = game;
-        }
-
-        public static TestFactory Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new TestFactory(TTGame.Instance as TestGame);
-                return _instance as TestFactory;
-            }
-        }
+        /// <summary>Can change here the sprite name used for creating all Ball type entities</summary>
+        public string BallSprite = "red-circle_frank-tschakert";
 
         protected Random rnd = new Random();
-
-        public string BallSprite = "red-circle_frank-tschakert";
 
         /// <summary>
         /// create a ball Spritelet that can be scaled
@@ -67,7 +50,6 @@ namespace TTengineTest
             ball.C<PositionComp>().Position = pos;
             ball.C<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
             ball.C<VelocityComp>().Velocity2D = velo;
-            ball.Refresh(); // TODO check all .Refresh() calls to see which ones are needed and which not.
             return ball;
         }
 

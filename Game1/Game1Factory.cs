@@ -73,7 +73,6 @@ namespace Game1
             ball.GetComponent<ScriptComp>().SimTime = 10 * rnd.NextDouble();
             */
 
-            ball.Refresh();
             return ball;
 
         }
@@ -105,7 +104,6 @@ namespace Game1
             ball.C<PositionComp>().Position = pos;
             ball.C<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
             ball.C<VelocityComp>().Velocity2D = velo;
-            ball.Refresh(); // TODO check all .Refresh() calls to see which ones are needed and which not.
             return ball;
         }
 

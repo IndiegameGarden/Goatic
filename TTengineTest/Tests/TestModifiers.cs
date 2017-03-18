@@ -26,17 +26,17 @@ namespace TTengineTest
             sineFunc.Frequency = 0.5;
             sineFunc.Amplitude = 0.25;
             sineFunc.Offset = 1;
-            TestFactory.AddModifier(ball, MyScaleModifierScript, sineFunc);
+            Factory.AddModifier(ball, MyScaleModifierScript, sineFunc);
 
             // modifier script to adapt rotation
-            TestFactory.AddModifier(ball, MyRotateModifierScript);
+            Factory.AddModifier(ball, MyRotateModifierScript);
 
             // ball 2
             var ball2 = Factory.CreateMovingBall(new Vector2(695f, 450f), velo);
             ball2.C<ScaleComp>().Scale = 0.5;
 
             // script with anonymous delegate code block - for rotation
-            TestFactory.AddScript(ball2, delegate(ScriptContext ctx) { 
+            Factory.AddScript(ball2, delegate(ScriptContext ctx) { 
                     ctx.Entity.C<DrawComp>().DrawRotation = (float)ctx.SimTime; 
                 });
 
@@ -47,7 +47,7 @@ namespace TTengineTest
             targFunc.Target = new Vector2(0f, 0f);
             targFunc.CurrentValue = ball2.C<PositionComp>().Position;
             targFunc.Speed = 40;
-            TestFactory.AddModifier(ball2,
+            Factory.AddModifier(ball2,
                 delegate(ScriptContext ctx, Vector2 pos) { ctx.Entity.C<PositionComp>().Position = pos; },
                 targFunc);
 

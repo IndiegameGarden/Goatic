@@ -85,6 +85,7 @@
     <Compile Include="Systems\BlinkSystem.cs" />
     <Compile Include="Systems\AudioFadingSystem.cs" />
     <Compile Include="Systems\BuilderSystem.cs" />
+    <Compile Include="Systems\RefresherSystem.cs" />
     <Compile Include="Systems\SpriteCollisionSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
     <Compile Include="Systems\TargetMotionSystem.cs" />

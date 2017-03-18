@@ -17,8 +17,8 @@ namespace TTengineTest
     {
         public override void Create()
         {
-            TestFactory.CreateAudiolet(Test_Sample());
-            //TestFactory.CreateAudiolet(Test_Repeat());
+            Factory.CreateAudiolet(Test_Sample());
+            //Factory.CreateAudiolet(Test_Repeat());
         }
 
         /// <summary>

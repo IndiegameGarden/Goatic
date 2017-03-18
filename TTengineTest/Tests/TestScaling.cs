@@ -32,7 +32,7 @@ namespace TTengineTest
                     m.Frequency = RandomMath.RandomBetween(0.04f, 0.3f);
                     m.Phase = RandomMath.RandomBetween(0f, MathHelper.TwoPi);
                     m.Offset = RandomMath.RandomBetween(0.45f, 0.8f);
-                    TestFactory.AddModifier(b, delegate(ScriptContext ctx, double value)
+                    Factory.AddModifier(b, delegate(ScriptContext ctx, double value)
                         {ctx.Entity.C<ScaleComp>().Scale = value;} , m);
                 }
             }

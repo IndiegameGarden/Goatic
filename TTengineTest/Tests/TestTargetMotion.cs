@@ -19,7 +19,6 @@ namespace TTengineTest
             ball.AddComponent(new TargetMotionComp());
             ball.C<TargetMotionComp>().Target = new Vector2(800f, 500f);
             ball.C<TargetMotionComp>().TargetVelocity = 2*MOVE_SPEED_MULTIPLIER;
-            ball.Refresh();
         }
 
     }

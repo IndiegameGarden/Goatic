@@ -22,11 +22,11 @@ namespace TTengine.Core
     /// </summary>
     public abstract class TTGame: Game
     {
-        /// <summary>If set to true in Game's constructor, starts both the TTMusicEngine and AudioSystem</summary>
-        protected bool IsAudio = false;
-
         /// <summary>The currently running (single) instance of TTGame</summary>
         public static TTGame Instance;
+
+        /// <summary>If set to true in Game's constructor, starts both the TTMusicEngine and AudioSystem</summary>
+        protected bool IsAudio = false;
 
         /// <summary>The XNA GraphicsDeviceManager for this Game</summary>
         public GraphicsDeviceManager GraphicsMgr;
@@ -57,9 +57,14 @@ namespace TTengine.Core
         /// <summary>When true, loop time profiling using below CountingTimers is enabled.</summary>
         public bool IsProfiling;
 
+        /// <summary>Timer used for recording duration of total Update() cycle</summary>
         public CountingTimer TimerUpdate = new CountingTimer();
 
+        /// <summary>Timer used for recording duration of total Draw() cycle</summary>
         public CountingTimer TimerDraw = new CountingTimer();
+
+        /// <summary>The factory for creating the MainChannel in</summary>
+        private TTFactory factory;
 
         /// <summary>
         /// Constructor
@@ -89,19 +94,22 @@ namespace TTengine.Core
 
         protected override void Initialize()
         {
+            factory = new TTFactory();
+
             // make root world and build to it
             RootWorld = new EntityWorld();
             RootWorld.InitializeAll(true);
-            TTFactory.BuildTo(RootWorld);
+            factory.BuildTo(RootWorld);
 
             // make root screen and build to it
             RootScreen = new ScreenComp(false, 0, 0);
-            TTFactory.BuildTo(RootScreen);
+            factory.BuildTo(RootScreen);
 
             // make the MainChannel and build to it
-            MainChannel = TTFactory.CreateChannel(Color.CornflowerBlue);
+            MainChannel = factory.CreateChannel(Color.CornflowerBlue);
 			MainChannelScreen = MainChannel.C<WorldComp>().Screen;
-            TTFactory.BuildTo(MainChannel);
+            factory.FinalizeNow(MainChannel);
+            factory.BuildTo(MainChannel);
 
             // the TTMusicEngine
             if (IsAudio)

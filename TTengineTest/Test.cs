@@ -12,7 +12,7 @@ namespace TTengineTest
     {
         public Test()
         {
-            this.Factory = TestFactory.Instance;
+            this.Factory = TestGame.Factory;
         }
 
         /// <summary>default background color for this test</summary>
@@ -35,7 +35,7 @@ namespace TTengineTest
         /// <param name="screen"></param>
         public void BuildTo(Entity screen)
         {
-            TestFactory.BuildTo(screen);
+            Factory.BuildTo(screen);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace TTengineTest
         /// </summary>
         public void BuildToDefault()
         {
-            TestFactory.BuildTo(Channel);
+            Factory.BuildTo(Channel);
         }
     }
 }

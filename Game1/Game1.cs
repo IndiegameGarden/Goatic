@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Input;
 using TTengine.Core;
 using TTengine.Comps;
 using TTengineTest;
-
 using Artemis;
 
 using Game1.Levels;
@@ -29,9 +28,9 @@ namespace Game1
         public static Game1Factory Factory;
         public Entity GameChannel, LevelChannel, BackgroundChannel, GuiChannel;
 
-        public static Game1 InstanceG
+        public static new Game1 Instance
         {
-            get { return Instance as Game1; }
+            get { return TTGame.Instance as Game1; }
         }
 
         public Game1()
@@ -63,41 +62,41 @@ namespace Game1
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
             const int SCREEN_SIZE_X = 1366;
             const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
-            GameChannel = Game1Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
-            Game1Factory.BuildTo(GameChannel);
+            GameChannel = Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            Factory.BuildTo(GameChannel);
 
             var scr = GameChannel.C<WorldComp>().Screen;
             scr.BackgroundColor = Color.Black;
 
             // create level/background channels of same size
-            BackgroundChannel = Game1Factory.CreateChannel(GameChannel);
+            BackgroundChannel = Factory.CreateChannel(GameChannel);
             BackgroundChannel.C<PositionComp>().Depth = 0.7f;
             BackgroundChannel.C<WorldComp>().Screen.BackgroundColor = Color.Black;
             BackgroundChannel.Tag = "BackgroundChannel";
             
-            LevelChannel = Game1Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            LevelChannel = Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             LevelChannel.C<PositionComp>().Depth = 0.5f;
             LevelChannel.Tag = "LevelChannel";
             // GuiChannel = TODO
 
             // apply magic scaling to screen resolution
-            Game1Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
+            Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
 
             // add framerate counter
-            Game1Factory.CreateFrameRateCounter(Color.White, SPARE_SCREEN_HEIGHT/2 );
+            Factory.CreateFrameRateCounter(Color.White, SPARE_SCREEN_HEIGHT/2 );
 
-            Game1Factory.BuildTo(LevelChannel);
+            Factory.BuildTo(LevelChannel);
 
             // add content 
             Test t = new TestSphereCollision();
             t.Create();
 
             // add builder entity (test level building)
-            var e = Game1Factory.CreateEntity();
+            var e = Factory.CreateEntity();
             e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
 
             // test bg content
-            Game1Factory.BuildTo(BackgroundChannel);
+            Factory.BuildTo(BackgroundChannel);
 
 
             base.LoadContent();

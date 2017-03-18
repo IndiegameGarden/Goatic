@@ -25,7 +25,7 @@ namespace TTengineTest
     /// </summary>
     public class TestGame : TTGame
     {
-        public TestFactory Factory;
+        public static TestFactory Factory;
         KeyboardState kbOld = Keyboard.GetState();
         int channel = 0;
         List<Entity> testChannels = new List<Entity>();
@@ -79,7 +79,7 @@ namespace TTengineTest
 
         protected override void Initialize()
         {
-            Factory = TestFactory.Instance;
+            Factory = new TestFactory();
             base.Initialize();
         }
 
@@ -125,26 +125,23 @@ namespace TTengineTest
 
         private void DoTest(Test test)
         {
-            var ch = TestFactory.CreateChannel(test.BackgroundColor);
+            Factory.BuildTo(MainChannel);
+
+            var ch = Factory.CreateChannel(test.BackgroundColor);
             test.Channel = ch;
             testChannels.Add(ch);
-            test.BuildToDefault(); // build test to the new channel
+            test.BuildToDefault(); // build test to the new channel (test.Channel)
             test.Create();
 
             // add framerate counter
             test.BuildToDefault();
             var col = TTUtil.InvertColor(test.BackgroundColor);
-            TestFactory.CreateFrameRateCounter(col);
+            Factory.CreateFrameRateCounter(col);
 
             // add test info as text
             Factory.CreateTextlet(new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col);
 
-            // disable the new channel by default
-            ch.IsEnabled = false;
-            ch.Refresh();
-
-            // ensure new channels are built to main Channel again
-            TestFactory.BuildTo(MainChannel);
+            Factory.FinalizeWorld(ch);
         }
 
     }

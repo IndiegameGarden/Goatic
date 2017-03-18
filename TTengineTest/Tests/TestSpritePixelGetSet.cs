@@ -18,7 +18,7 @@ namespace TTengineTest
         public override void Create()
         {
             Factory.BallSprite = "amazing1.png";
-            TestFactory.BuildScreen.SpriteBatch.samplerState = SamplerState.PointClamp; // set 'blocky' screen mode
+            Factory.BuildScreen.SpriteBatch.samplerState = SamplerState.PointClamp; // set 'blocky' screen mode
 
             // sprite
             var velo = new Vector2(5f, 3f);
@@ -26,7 +26,7 @@ namespace TTengineTest
             spr.C<ScaleComp>().Scale = 10f;
 
             // add script to sprite
-            TestFactory.AddScript(spr, ChangePixelsRandomlyScript);
+            Factory.AddScript(spr, ChangePixelsRandomlyScript);
 
         }
 

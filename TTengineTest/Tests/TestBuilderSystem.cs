@@ -21,13 +21,13 @@ namespace TTengineTest
 
             // add builder entity (test building in background thread)
             // this content is added while the 'game' plays
-            var e = TestFactory.CreateEntity();
+            var e = Factory.CreateEntity();
             e.AddComponent(new BuilderComp(TestBuilderScript1));
         }
 
         void TestBuilderScript1()
         {
-            TestFactory.BuildTo(Channel);
+            Factory.BuildTo(Channel);
             Random rnd = new Random();
             Factory.BallSprite = "paul-hardman_circle-four";
             for (int i=0; i < 185; i++)

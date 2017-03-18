@@ -19,22 +19,22 @@ namespace TTengineTest
             t0.Create();
 
             // create a first child channel
-            var ch1 = TestFactory.CreateChannel(Color.LightSalmon, 200, 400);
+            var ch1 = Factory.CreateChannel(Color.LightSalmon, 200, 400);
             ch1.C<WorldComp>().TimeWarp = 0.333;
 			ch1.C<PositionComp>().Position = new Vector2(50f, 50f);
             
             // second child channel
-            var ch2 = TestFactory.CreateChannel(Color.LightSeaGreen, 200, 400);
+            var ch2 = Factory.CreateChannel(Color.LightSeaGreen, 200, 400);
             ch2.C<WorldComp>().TimeWarp = 1.0;
 			ch2.C<PositionComp>().Position = new Vector2(300f, 50f);
 
 			// 3rd
-            var ch3 = TestFactory.CreateChannel(Color.LightPink, 200, 400);
+            var ch3 = Factory.CreateChannel(Color.LightPink, 200, 400);
             ch3.C<WorldComp>().TimeWarp = 2.0;
 			ch3.C<PositionComp>().Position = new Vector2(550f, 50f);
 
 			// 4th
-            var ch4 = TestFactory.CreateChannel(Color.LightGreen, 700, 250);
+            var ch4 = Factory.CreateChannel(Color.LightGreen, 700, 250);
             ch4.C<WorldComp>().TimeWarp = 4.0;
 			ch4.C<PositionComp>().Position = new Vector2(50f, 500f);            
 
