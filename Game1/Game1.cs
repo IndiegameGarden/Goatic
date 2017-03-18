@@ -62,19 +62,22 @@ namespace Game1
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
             const int SCREEN_SIZE_X = 1366;
             const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
-            GameChannel = Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            GameChannel = Factory.New();
+            Factory.CreateChannel(GameChannel, Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             Factory.BuildTo(GameChannel);
 
             var scr = GameChannel.C<WorldComp>().Screen;
             scr.BackgroundColor = Color.Black;
 
             // create level/background channels of same size
-            BackgroundChannel = Factory.CreateChannel(GameChannel);
+            BackgroundChannel = Factory.New();
+            Factory.CreateChannel(BackgroundChannel, GameChannel);
             BackgroundChannel.C<PositionComp>().Depth = 0.7f;
             BackgroundChannel.C<WorldComp>().Screen.BackgroundColor = Color.Black;
             BackgroundChannel.Tag = "BackgroundChannel";
-            
-            LevelChannel = Factory.CreateChannel(Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+
+            LevelChannel = Factory.New();
+            Factory.CreateChannel(LevelChannel, Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             LevelChannel.C<PositionComp>().Depth = 0.5f;
             LevelChannel.Tag = "LevelChannel";
             // GuiChannel = TODO
@@ -83,7 +86,7 @@ namespace Game1
             Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
 
             // add framerate counter
-            Factory.CreateFrameRateCounter(Color.White, SPARE_SCREEN_HEIGHT/2 );
+            Factory.CreateFrameRateCounter(Factory.New(), Color.White, SPARE_SCREEN_HEIGHT/2 );
 
             Factory.BuildTo(LevelChannel);
 
@@ -92,7 +95,7 @@ namespace Game1
             t.Create();
 
             // add builder entity (test level building)
-            var e = Factory.CreateEntity();
+            var e = Factory.New();
             e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
 
             // test bg content

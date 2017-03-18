@@ -29,7 +29,8 @@ namespace Game1
         /// <returns></returns>
         public Entity CreateBall(double radius)
         {
-            Entity e = CreateSpritelet("paul-hardman_circle-four");
+            Entity e = New();
+            CreateSpritelet(e, "paul-hardman_circle-four");
             e.AddComponent(new ScaleComp(radius));
             return e;
         }
@@ -79,7 +80,8 @@ namespace Game1
 
         public Entity CreateMovingTextlet(Vector2 pos, string text)
         {
-            var t = CreateTextlet(text);
+            var t = New();
+            CreateTextlet(t,text);
             t.C<PositionComp>().Position = pos;
             t.C<DrawComp>().DrawColor = Color.Black;
             t.C<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
@@ -124,7 +126,8 @@ namespace Game1
 
         public Entity CreateHypnoScreenlet()
         {
-            var e = CreateFxScreenlet("Hypno");
+            var e = New();
+            CreateFxScreenlet(e, "Hypno");
             AddScript(e, ScriptHypno );
             return e;
         }
@@ -139,7 +142,8 @@ namespace Game1
 
         public Entity CreateMandelbrotScreenlet()
         {
-            var e = CreateFxScreenlet("MandelbrotJulia");
+            var e = New();
+            CreateFxScreenlet(e, "MandelbrotJulia");
             AddScript(e, ScriptMandelbrotFx );
             return e;
         }
@@ -152,7 +156,8 @@ namespace Game1
 
         public Entity CreateJuliaScreenlet()
         {
-            var e = CreateFxScreenlet("MandelbrotJulia");
+            var e = New();
+            CreateFxScreenlet(e, "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
             AddScript(e, ScriptJuliaFx);

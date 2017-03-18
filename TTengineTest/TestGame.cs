@@ -127,7 +127,8 @@ namespace TTengineTest
         {
             Factory.BuildTo(MainChannel);
 
-            var ch = Factory.CreateChannel(test.BackgroundColor);
+            var ch = Factory.NewDisabled();
+            Factory.CreateChannel(ch, test.BackgroundColor);
             test.Channel = ch;
             testChannels.Add(ch);
             test.BuildToDefault(); // build test to the new channel (test.Channel)
@@ -136,12 +137,10 @@ namespace TTengineTest
             // add framerate counter
             test.BuildToDefault();
             var col = TTUtil.InvertColor(test.BackgroundColor);
-            Factory.CreateFrameRateCounter(col);
+            Factory.CreateFrameRateCounter(Factory.New(), col);
 
             // add test info as text
             Factory.CreateTextlet(new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col);
-
-            Factory.FinalizeWorld(ch);
         }
 
     }

@@ -106,9 +106,9 @@ namespace TTengine.Core
             factory.BuildTo(RootScreen);
 
             // make the MainChannel and build to it
-            MainChannel = factory.CreateChannel(Color.CornflowerBlue);
+            MainChannel = factory.New();
+            factory.CreateChannel(MainChannel, Color.CornflowerBlue);
 			MainChannelScreen = MainChannel.C<WorldComp>().Screen;
-            factory.FinalizeNow(MainChannel);
             factory.BuildTo(MainChannel);
 
             // the TTMusicEngine

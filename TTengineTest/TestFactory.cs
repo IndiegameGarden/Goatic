@@ -32,7 +32,8 @@ namespace TTengineTest
         /// <returns></returns>
         public Entity CreateBall(double radius)
         {
-            Entity e = CreateSpritelet(this.BallSprite);
+            Entity e = New();
+            CreateSpritelet(e,this.BallSprite);
             e.C<SpriteComp>().CenterToMiddle();
             e.AddComponent(new ScaleComp(radius));
             return e;
@@ -53,10 +54,9 @@ namespace TTengineTest
             return ball;
         }
 
-        public Entity CreateMovingBallEntityDisabled(Vector2 pos, Vector2 velo, double radius)
+        public Entity CreateMovingBallInBackground(Vector2 pos, Vector2 velo, double radius)
         {
-            Entity e = CreateEntity();
-            e.IsEnabled = false;
+            Entity e = NewDisabled(); // NOTE: to allow background building
             e.AddComponent(new PositionComp());
             e.AddComponent(new VelocityComp());
             e.AddComponent(new DrawComp(BuildScreen));
@@ -64,6 +64,7 @@ namespace TTengineTest
             e.AddComponent(spriteComp);
             e.C<SpriteComp>().CenterToMiddle();
             e.AddComponent(new ScaleComp(radius));
+            Finalize(e);
             return e;
         }
 
@@ -84,7 +85,8 @@ namespace TTengineTest
 
         public Entity CreateTextlet(Vector2 pos, string text, Color col)
         {
-            var txt = CreateTextlet(text);
+            var txt = New();
+            CreateTextlet(txt,text);
             txt.C<PositionComp>().Position = pos;
             txt.C<PositionComp>().Depth = 0f + 0.1f * ((float)rnd.NextDouble()); // random Z position
             txt.C<DrawComp>().DrawColor = col;

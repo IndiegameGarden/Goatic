@@ -17,7 +17,7 @@ namespace TTengineTest
             // create an additional child channel that renders onto the main channel
             // content for 1st screen: call upon another unit test
             var t1 = new TestRelativeMotion();
-            var ch1 = Factory.CreateChannel(Color.White, 800, 400);
+            var ch1 = Factory.CreateChannel(Factory.New(), Color.White, 800, 400);
             throw new NotImplementedException();
 
             /*

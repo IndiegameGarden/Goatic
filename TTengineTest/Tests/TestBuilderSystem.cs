@@ -21,7 +21,7 @@ namespace TTengineTest
 
             // add builder entity (test building in background thread)
             // this content is added while the 'game' plays
-            var e = Factory.CreateEntity();
+            var e = Factory.New();
             e.AddComponent(new BuilderComp(TestBuilderScript1));
         }
 
@@ -34,7 +34,7 @@ namespace TTengineTest
             {
                 Vector2 pos = new Vector2(1400f * (float)rnd.NextDouble(), 1000f * (float)rnd.NextDouble());
                 Vector2 vel = new Vector2(6f * (float)rnd.NextDouble() - 3f, 6f * (float)rnd.NextDouble() - 3f);
-                Entity e = Factory.CreateMovingBallEntityDisabled(pos,vel, 0.5 + 0.5*rnd.NextDouble());
+                Entity e = Factory.CreateMovingBallInBackground(pos,vel, 0.5 + 0.5*rnd.NextDouble());
                 Thread.Sleep(2);
                 //e.IsEnabled = true;
                 //e.Refresh();

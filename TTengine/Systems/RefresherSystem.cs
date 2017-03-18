@@ -17,7 +17,7 @@ namespace TTengine.Systems
 
         public override void Process(Entity entity)
         {
-            base.Process(entity);
+            entity.Refresh();
         }
     }
 }
