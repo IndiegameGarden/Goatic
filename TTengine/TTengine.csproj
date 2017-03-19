@@ -47,7 +47,6 @@
     <Compile Include="Comps\BlinkComp.cs" />
     <Compile Include="Comps\BTAIComp.cs" />
     <Compile Include="Comps\AudioFadingComp.cs" />
-    <Compile Include="Comps\BuilderComp.cs" />
     <Compile Include="Comps\PlayerInputComp.cs" />
     <Compile Include="Comps\ExpiresComp.cs" />
     <Compile Include="Comps\PositionComp.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Systems\BlinkSystem.cs" />
     <Compile Include="Systems\AudioFadingSystem.cs" />
     <Compile Include="Systems\BuilderSystem.cs" />
-    <Compile Include="Systems\RefresherSystem.cs" />
     <Compile Include="Systems\SpriteCollisionSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />
     <Compile Include="Systems\TargetMotionSystem.cs" />

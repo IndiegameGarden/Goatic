@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System.Threading;
 using TTengine.Core;
 using TTengine.Comps;
+using TTengine.Systems;
 using TTengine.Modifiers;
 using Artemis;
 using Artemis.Interface;
@@ -25,7 +26,32 @@ namespace TTengineTest
             // add builder entity (test building in background thread)
             // this content is added while the 'game' plays
             var e = Factory.New();
-            e.AddComponent(new BuilderComp(TestBuilderScript1));
+            Factory.AddScript(e, new EntityScriptTriggersBuilding1(this) );
+        }
+
+        /// <summary>
+        /// The script being added to the Entity, which triggers the build once at some point in time.
+        /// </summary>
+        class EntityScriptTriggersBuilding1: IScript
+        {
+            bool isDone = false;
+            TestBuilderSystem testClass;
+
+            public EntityScriptTriggersBuilding1(TestBuilderSystem testClass)
+            {
+                this.testClass = testClass;
+            }
+
+            public void OnUpdate(ScriptContext ctx)
+            {
+                // if enough time has passed, launch new builder job into the queue and
+                // self-destruct this script.
+                if (!isDone && ctx.SimTime > 5)
+                {
+                    BuilderSystem.AddToQueue(testClass.TestBuilderScript1);
+                    isDone = true;
+                }
+            }
         }
 
         /// <summary>

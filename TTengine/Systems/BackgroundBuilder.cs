@@ -12,19 +12,17 @@ namespace TTengine.Systems
     /// </summary>
     public class BackgroundBuilder
     {
-        static Queue<BuilderComp> jobQ = new Queue<BuilderComp>();
+        static Queue<BuildScriptDelegate> jobQ = new Queue<BuildScriptDelegate>();
         static Thread thread = null;
         static bool isRunning = true;
-        int checkIntervalMs = 0;
-        BuilderSystem builderSystem = null;
+        int checkIntervalMs = 0;        
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="checkIntervalMs">number of milliseconds to wait in between queue checks in case queue was found empty.</param>
-        public BackgroundBuilder(BuilderSystem parentSystem, int checkIntervalMs = 50)
+        public BackgroundBuilder(int checkIntervalMs = 50)
         {
-            this.builderSystem = parentSystem;
             this.checkIntervalMs = checkIntervalMs;
             if (thread == null)
                 StartSystemThread();
@@ -57,7 +55,7 @@ namespace TTengine.Systems
         /// Add a new building job to the queue of the builder
         /// </summary>
         /// <param name="job">job to enqueue</param>
-        public void AddJob(BuilderComp job)
+        public void AddJob(BuildScriptDelegate job)
         {
             lock (jobQ)
             {
@@ -74,7 +72,7 @@ namespace TTengine.Systems
             {
                 while (isRunning)
                 {
-                    BuilderComp job = null;
+                    BuildScriptDelegate job = null;
                     lock (jobQ)
                     {
                         if (jobQ.Count > 0)
@@ -85,7 +83,7 @@ namespace TTengine.Systems
                     if (job != null)
                     {
                         // do the job - build
-                        job.BuildScript(/*builderSystem.EntityWorld*/);
+                        job();
                     }
                     else
                     {

@@ -96,7 +96,7 @@ namespace Game1
 
             // add builder entity (test level building)
             var e = Factory.New();
-            e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
+            //e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
 
             // test bg content
             Factory.BuildTo(BackgroundChannel);

@@ -10,13 +10,14 @@ namespace TTengine.Systems
 {
     /// <summary>System that builds new entities in a background thread.</summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.BuilderSystem)]
-    public class BuilderSystem : EntityComponentProcessingSystem<BuilderComp>
+    public class BuilderSystem : QueueSystemProcessingThreadSafe<BuildScriptDelegate>
     {
         BackgroundBuilder bgBuilder = null;
 
         public override void LoadContent()
         {
-            bgBuilder = new BackgroundBuilder(this);
+            SetQueueProcessingLimit(10, typeof(BuilderSystem));
+            bgBuilder = new BackgroundBuilder();
             base.LoadContent();
         }
 
@@ -29,30 +30,14 @@ namespace TTengine.Systems
             base.UnloadContent();
         }
 
-        /*
-        protected override bool CheckProcessing()
+        public static void AddToQueue(BuildScriptDelegate script)
         {
-            bool c = base.CheckProcessing();
-            if (!c)
-                return false;
-            // don't add new jobs while the builder is busy.
-            if (bgBuilder.IsBusy())
-                return false;
-            else
-                return true;
+            AddToQueue(script,typeof(BuilderSystem));
         }
-        */
 
-        public override void Process(Entity entity, BuilderComp bc)
+        public override void Process(BuildScriptDelegate script)
         {
-            // add any active buildercomp as a new job, if not busy and if not already triggered
-            if (!bc.HasTriggered /*&& !bgBuilder.IsBusy()*/ )
-            {
-                bc.HasTriggered = true; // flag so it is not triggered again.
-                bgBuilder.AddJob(bc); // separate builder thread building
-                //bc.BuildScript(); // test: in-current-thread building
-            }
-
+            bgBuilder.AddJob(script); // separate builder thread building
         }
     }
 

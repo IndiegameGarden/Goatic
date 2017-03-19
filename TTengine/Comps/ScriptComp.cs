@@ -8,13 +8,18 @@ using Artemis;
 namespace TTengine.Comps
 {
     /// <summary>
-    /// Method signature (Delegate) for scripts
+    /// Method signature (Delegate) for scripts that are tied to Entities
     /// </summary>
     /// <param name="ctx">script context supplied during script execution</param>
     public delegate void ScriptDelegate(ScriptContext ctx);
 
     /// <summary>
-    /// The context object passed to scripts when run
+    /// Method signature (Delegate) for scripts that are not tied to Entities
+    /// </summary>
+    public delegate void BuildScriptDelegate();
+
+    /// <summary>
+    /// The context object passed to scripts when they are run
     /// </summary>
     public class ScriptContext
     {
