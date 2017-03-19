@@ -91,7 +91,8 @@ namespace TTengine.Core
         public void Finalize(Entity e)
         {
             e.IsEnabled = true;
-            RefresherSystem.AddToQueue(e,typeof(RefresherSystem));
+            e.Refresh();
+            //RefresherSystem.AddToQueue(e,typeof(RefresherSystem));
         }
 
         /// <summary>
