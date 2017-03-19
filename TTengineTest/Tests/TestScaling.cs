@@ -19,11 +19,12 @@ namespace TTengineTest
         public override void Create()
         {
             Factory.BallSprite = "red-circle_frank-tschakert";
+            int i = 0;
             for (float x = 250f; x < 800f; x += 200f)
             {
                 for (float y = 150f; y < 668f; y += 200f)
                 {
-                    var b = Factory.CreateMovingBall(Factory.New(),new Vector2(x, y), Vector2.Zero);
+                    var b = Factory.CreateMovingBall(Factory.New(),new Vector2(x, y), Vector2.Zero, 1, 0.2f + i*0.0001f);
                     b.AddComponent(new ScaleComp());
 
                     // to each ball, we add a sinusoid based modification of the Scale parameter.
@@ -34,6 +35,8 @@ namespace TTengineTest
                     m.Offset = RandomMath.RandomBetween(0.45f, 0.8f);
                     Factory.AddModifier(b, delegate(ScriptContext ctx, double value)
                         {ctx.Entity.C<ScaleComp>().Scale = value;} , m);
+
+                    i++;
                 }
             }
         }

@@ -19,6 +19,7 @@ namespace TTengineTest
         {
             // add regular content  (non-builder created)
             Test t = new TestSphereCollision();
+            //Test t = new TestScaling();
             t.Create();
 
             // add builder entity (test building in background thread)
@@ -27,19 +28,24 @@ namespace TTengineTest
             e.AddComponent(new BuilderComp(TestBuilderScript1));
         }
 
+        /// <summary>
+        /// Script to run in the background thread, building new entities at a steady pace.
+        /// Each Entity once completed configured is released into the World using the 
+        /// Factory.Finalize() method.
+        /// </summary>
         void TestBuilderScript1()
         {
             Factory.BuildTo(Channel);
             Random rnd = new Random();
             Factory.BallSprite = "paul-hardman_circle-four";
-            for (int i=0; i < 185; i++)
+            for (int i=0; i < 125; i++)
             {
                 Vector2 pos = new Vector2(1400f * (float)rnd.NextDouble(), 1000f * (float)rnd.NextDouble());
                 Vector2 vel = new Vector2(6f * (float)rnd.NextDouble() - 3f, 6f * (float)rnd.NextDouble() - 3f);
-                Entity e = Factory.CreateMovingBall(Factory.NewDisabled(), pos, vel, 0.5 + 0.5*rnd.NextDouble());
-                Thread.Sleep(2);
-                //e.IsEnabled = true;
-                //e.Refresh();
+                // below: basis is a Disabled entity. It is only enabled using Finalize() once completely built.
+                Entity e = Factory.CreateMovingBall(Factory.NewDisabled(), pos, vel, 0.1 + 0.5*rnd.NextDouble(), 0.8f+i*0.0001f);
+                Factory.Finalize(e); // release into the World!
+                Thread.Sleep(10);
             }
         }
 

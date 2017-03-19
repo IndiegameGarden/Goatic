@@ -142,7 +142,7 @@ namespace TTengineTest
             Factory.CreateFrameRateCounter(Factory.New(), col);
 
             // add test info as text
-            Factory.CreateTextlet(Factory.New(),new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col);
+            Factory.CreateTextlet(Factory.New(),new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col, 0f);
         }
 
     }
