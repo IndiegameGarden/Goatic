@@ -45,7 +45,7 @@ namespace TTengineTest
                 // below: basis is a Disabled entity. It is only enabled using Finalize() once completely built.
                 Entity e = Factory.CreateMovingBall(Factory.NewDisabled(), pos, vel, 0.1 + 0.5*rnd.NextDouble(), 0.8f+i*0.0001f);
                 Factory.Finalize(e); // release into the World!
-                Thread.Sleep(10);
+                Thread.Sleep(100);
             }
         }
 

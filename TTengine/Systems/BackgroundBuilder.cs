@@ -22,7 +22,7 @@ namespace TTengine.Systems
         /// 
         /// </summary>
         /// <param name="checkIntervalMs">number of milliseconds to wait in between queue checks in case queue was found empty.</param>
-        public BackgroundBuilder(BuilderSystem parentSystem, int checkIntervalMs = 100)
+        public BackgroundBuilder(BuilderSystem parentSystem, int checkIntervalMs = 50)
         {
             this.builderSystem = parentSystem;
             this.checkIntervalMs = checkIntervalMs;
@@ -41,6 +41,7 @@ namespace TTengine.Systems
         public void Stop()
         {
             isRunning = false;
+            thread.Interrupt();
             thread.Join();
         }
 
@@ -69,25 +70,31 @@ namespace TTengine.Systems
         /// </summary>
         protected void RunSystemMainloop()
         {
-            while (isRunning)
+            try
             {
-                BuilderComp job = null;
-                lock (jobQ)
+                while (isRunning)
                 {
-                    if (jobQ.Count > 0)
+                    BuilderComp job = null;
+                    lock (jobQ)
                     {
-                        job = jobQ.Dequeue();
+                        if (jobQ.Count > 0)
+                        {
+                            job = jobQ.Dequeue();
+                        }
+                    }
+                    if (job != null)
+                    {
+                        // do the job - build
+                        job.BuildScript(/*builderSystem.EntityWorld*/);
+                    }
+                    else
+                    {
+                        Thread.Sleep(checkIntervalMs);
                     }
                 }
-                if (job != null)
-                {
-                    // do the job - build
-                    job.BuildScript(/*builderSystem.EntityWorld*/);
-                }
-                else
-                {
-                    Thread.Sleep(checkIntervalMs);
-                }
+            }catch(ThreadInterruptedException)
+            {
+                ;
             }
         }
     }
