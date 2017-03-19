@@ -20,8 +20,6 @@ namespace Game1
             _game = game;
         }
 
-        protected Random rnd = new Random();
-
         /// <summary>
         /// create a ball Spritelet that can be scaled
         /// </summary>
@@ -41,11 +39,11 @@ namespace Game1
         /// <returns></returns>
         public Entity CreateHyperActiveBall(Vector2 pos)
         {
-            var ball = CreateBall(0.08f + 0.07f * (float)rnd.NextDouble());
+            var ball = CreateBall(RandomMath.RandomBetween(0.08f,0.15f));
 
             // position and velocity set
             ball.C<PositionComp>().Position = pos;
-            ball.C<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
+            ball.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
 
             /*
             // duration of entity
@@ -84,7 +82,7 @@ namespace Game1
             CreateTextlet(t,text);
             t.C<PositionComp>().Position = pos;
             t.C<DrawComp>().DrawColor = Color.Black;
-            t.C<VelocityComp>().Velocity = 0.2f * new Vector2((float)rnd.NextDouble() - 0.5f, (float)rnd.NextDouble() - 0.5f);
+            t.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
             t.C<ScaleComp>().Scale = 0.5;
             return t;
         }
@@ -100,11 +98,11 @@ namespace Game1
         /// <returns></returns>
         public Entity CreateMovingBall(Vector2 pos, Vector2 velo)
         {
-            var ball = CreateBall(0.96f + 0.08f * (float)rnd.NextDouble());
+            var ball = CreateBall(RandomMath.RandomBetween(0.96f, 1.08f));
 
             // position and velocity set
             ball.C<PositionComp>().Position = pos;
-            ball.C<PositionComp>().Depth = 0.5f + 0.1f * ((float)rnd.NextDouble()); // random Z position
+            ball.C<PositionComp>().Depth = RandomMath.RandomBetween(0.5f,0.6f); // random Z position
             ball.C<VelocityComp>().Velocity2D = velo;
             return ball;
         }

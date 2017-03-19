@@ -18,8 +18,6 @@ namespace TTengineTest
         /// <summary>Can change here the sprite name used for creating all Ball type entities</summary>
         public string BallSprite = "red-circle_frank-tschakert";
 
-        protected Random rnd = new Random();
-
         /// <summary>
         /// create a ball Spritelet that can be scaled
         /// </summary>

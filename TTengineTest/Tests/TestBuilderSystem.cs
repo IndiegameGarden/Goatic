@@ -62,14 +62,13 @@ namespace TTengineTest
         void TestBuilderScript1()
         {
             Factory.BuildTo(Channel);
-            Random rnd = new Random();
             Factory.BallSprite = "paul-hardman_circle-four";
             for (int i=0; i < 125; i++)
             {
-                Vector2 pos = new Vector2(1400f * (float)rnd.NextDouble(), 1000f * (float)rnd.NextDouble());
-                Vector2 vel = new Vector2(6f * (float)rnd.NextDouble() - 3f, 6f * (float)rnd.NextDouble() - 3f);
+                Vector2 pos = new Vector2(RandomMath.RandomBetween(0f,1400f), RandomMath.RandomBetween(0f,1000f));
+                Vector2 vel = new Vector2(RandomMath.RandomBetween(-4f,4f), RandomMath.RandomBetween(-4f, 4f));
                 // below: basis is a Disabled entity. It is only enabled using Finalize() once completely built.
-                Entity e = Factory.CreateMovingBall(Factory.NewDisabled(), pos, vel, 0.1 + 0.5*rnd.NextDouble(), 0.8f+i*0.0001f);
+                Entity e = Factory.CreateMovingBall(Factory.NewDisabled(), pos, vel, RandomMath.RandomBetween(0.1f,0.6f), 0.8f+i*0.0001f);
                 Factory.Finalize(e); // release into the World!
                 Thread.Sleep(30);
             }
