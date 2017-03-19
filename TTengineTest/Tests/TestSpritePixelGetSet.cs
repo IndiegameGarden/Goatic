@@ -22,7 +22,7 @@ namespace TTengineTest
 
             // sprite
             var velo = new Vector2(5f, 3f);
-            var spr = Factory.CreateMovingBall(new Vector2(335f, 350f), velo);
+            var spr = Factory.CreateMovingBall(Factory.New(), new Vector2(335f, 350f), velo);
             spr.C<ScaleComp>().Scale = 10f;
 
             // add script to sprite

@@ -22,7 +22,7 @@ namespace TTengineTest
             for (int i = 0; i < 35; i++)
             {
                 float radius = RandomMath.RandomBetween(0.1f, 0.5f);
-                var ball = Factory.CreateBall(radius);
+                var ball = Factory.CreateBall(Factory.New(),radius);
                 ball.C<PositionComp>().Position = new Vector2(150f * (i % BALLS_PER_ROW),
                                                                     200f * (float)Math.Floor((double)(i / BALLS_PER_ROW)));
                 ball.C<VelocityComp>().Velocity2D = RandomMath.RandomDirection() * 30f;

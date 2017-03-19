@@ -19,7 +19,7 @@ namespace TTengineTest
 
             // ball 1
             var velo = new Vector2(3f, 0.3f);
-            var ball = Factory.CreateMovingBall(new Vector2(95f, 250f), velo);
+            var ball = Factory.CreateMovingBall(Factory.New(), new Vector2(95f, 250f), velo);
 
             // Modifier: adapting scale with sine rhythm
             var sineFunc = new SineFunction();
@@ -32,7 +32,7 @@ namespace TTengineTest
             Factory.AddModifier(ball, MyRotateModifierScript);
 
             // ball 2
-            var ball2 = Factory.CreateMovingBall(new Vector2(695f, 450f), velo);
+            var ball2 = Factory.CreateMovingBall(Factory.New(), new Vector2(695f, 450f), velo);
             ball2.C<ScaleComp>().Scale = 0.5;
 
             // script with anonymous delegate code block - for rotation

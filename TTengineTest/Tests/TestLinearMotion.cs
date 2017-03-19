@@ -19,7 +19,7 @@ namespace TTengineTest
                 {
                     var velo = new Vector2(-0.5f + x / 1024f, -0.5f + y / 768f);
                     velo *= MOVE_SPEED_MULTIPLIER;
-                    Factory.CreateMovingBall(new Vector2(x, y), velo );
+                    Factory.CreateMovingBall(Factory.New(), new Vector2(x, y), velo );
                 }
             }
         }

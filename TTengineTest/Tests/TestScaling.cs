@@ -23,7 +23,7 @@ namespace TTengineTest
             {
                 for (float y = 150f; y < 668f; y += 200f)
                 {
-                    var b = Factory.CreateMovingBall(new Vector2(x, y), Vector2.Zero);
+                    var b = Factory.CreateMovingBall(Factory.New(),new Vector2(x, y), Vector2.Zero);
                     b.AddComponent(new ScaleComp());
 
                     // to each ball, we add a sinusoid based modification of the Scale parameter.

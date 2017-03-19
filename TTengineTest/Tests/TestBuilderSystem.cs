@@ -1,4 +1,6 @@
-﻿using System;
+﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
+using System;
 using Microsoft.Xna.Framework;
 using System.Threading;
 using TTengine.Core;
@@ -34,7 +36,7 @@ namespace TTengineTest
             {
                 Vector2 pos = new Vector2(1400f * (float)rnd.NextDouble(), 1000f * (float)rnd.NextDouble());
                 Vector2 vel = new Vector2(6f * (float)rnd.NextDouble() - 3f, 6f * (float)rnd.NextDouble() - 3f);
-                Entity e = Factory.CreateMovingBallInBackground(pos,vel, 0.5 + 0.5*rnd.NextDouble());
+                Entity e = Factory.CreateMovingBall(Factory.NewDisabled(), pos, vel, 0.5 + 0.5*rnd.NextDouble());
                 Thread.Sleep(2);
                 //e.IsEnabled = true;
                 //e.Refresh();

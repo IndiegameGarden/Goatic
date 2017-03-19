@@ -13,17 +13,17 @@ namespace TTengineTest
         public override void Create()
         {
             Factory.BallSprite = "red-circle_frank-tschakert";
-            var b1 = Factory.CreateMovingBall(new Vector2(400f, 300f), new Vector2(-8f,0f));
+            var b1 = Factory.CreateMovingBall(Factory.New(), new Vector2(400f, 300f), new Vector2(-8f,0f));
 
             Factory.BallSprite = "red-circle_frank-tschakert_runtime-load.png";
-            var b2 = Factory.CreateMovingBall(new Vector2(600f, 300f), new Vector2(8f,0f));
+            var b2 = Factory.CreateMovingBall(Factory.New(), new Vector2(600f, 300f), new Vector2(8f,0f));
 
             var p = new Vector2(0f, 100f);
-            var t = Factory.CreateTextlet(p, "XNA Content pipeline", Color.Black);
+            var t = Factory.CreateTextlet(Factory.New(), p, "XNA Content pipeline", Color.Black);
             t.C<ScaleComp>().Scale = 0.5f;
             b1.C<PositionComp>().AddChild(t.C<PositionComp>());
 
-            var t2 = Factory.CreateTextlet(p, "Runtime loaded PNG", Color.Black);
+            var t2 = Factory.CreateTextlet(Factory.New(), p, "Runtime loaded PNG", Color.Black);
             t2.C<ScaleComp>().Scale = 0.5f;
             b2.C<PositionComp>().AddChild(t2.C<PositionComp>());
         }

@@ -1,3 +1,5 @@
+// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -127,7 +129,7 @@ namespace TTengineTest
         {
             Factory.BuildTo(MainChannel);
 
-            var ch = Factory.NewDisabled();
+            var ch = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
             Factory.CreateChannel(ch, test.BackgroundColor);
             test.Channel = ch;
             testChannels.Add(ch);
@@ -140,7 +142,7 @@ namespace TTengineTest
             Factory.CreateFrameRateCounter(Factory.New(), col);
 
             // add test info as text
-            Factory.CreateTextlet(new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col);
+            Factory.CreateTextlet(Factory.New(),new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col);
         }
 
     }

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
+using System;
 using Microsoft.Xna.Framework;
 
 using TTengine.Core;
 using TTengine.Comps;
-using TTengine.Behaviors;
-using TTengine.Modifiers;
-using TTengine.Util;
 
 using Artemis;
-using Artemis.Interface;
-using TreeSharp;
 
 namespace TTengineTest
 {
@@ -30,9 +25,8 @@ namespace TTengineTest
         /// </summary>
         /// <param name="radius">the relative size scaling, 1 is normal</param>
         /// <returns></returns>
-        public Entity CreateBall(double radius)
+        public Entity CreateBall(Entity e, double radius)
         {
-            Entity e = New();
             CreateSpritelet(e,this.BallSprite);
             e.C<SpriteComp>().CenterToMiddle();
             e.AddComponent(new ScaleComp(radius));
@@ -43,9 +37,9 @@ namespace TTengineTest
         /// create an active ball with given position and random velocity and some weird (AI) behaviors
         /// </summary>
         /// <returns></returns>
-        public Entity CreateMovingBall(Vector2 pos, Vector2 velo)
+        public Entity CreateMovingBall(Entity e, Vector2 pos, Vector2 velo, double radius = 1.0)
         {
-            var ball = CreateBall(0.96f + 0.08f * (float)rnd.NextDouble());
+            var ball = CreateBall(e,radius);
 
             // position and velocity set
             ball.C<PositionComp>().Position = pos;
@@ -54,28 +48,14 @@ namespace TTengineTest
             return ball;
         }
 
-        public Entity CreateMovingBallInBackground(Vector2 pos, Vector2 velo, double radius)
+        public Entity CreateMovingBall(Entity e, Vector3 pos, Vector2 velo)
         {
-            Entity e = NewDisabled(); // NOTE: to allow background building
-            e.AddComponent(new PositionComp());
-            e.AddComponent(new VelocityComp());
-            e.AddComponent(new DrawComp(BuildScreen));
-            var spriteComp = new SpriteComp(this.BallSprite);
-            e.AddComponent(spriteComp);
-            e.C<SpriteComp>().CenterToMiddle();
-            e.AddComponent(new ScaleComp(radius));
-            Finalize(e);
-            return e;
+            return CreateMovingBall(e, new Vector2(pos.X, pos.Y), velo);
         }
 
-        public Entity CreateMovingBall(Vector3 pos, Vector2 velo)
+        public Entity CreateRotatingBall(Entity e, Vector2 pos, Vector2 velo, double rotSpeed)
         {
-            return CreateMovingBall(new Vector2(pos.X, pos.Y), velo);
-        }
-
-        public Entity CreateRotatingBall(Vector2 pos, Vector2 velo, double rotSpeed)
-        {
-            var ball = CreateMovingBall(pos, velo);
+            var ball = CreateMovingBall(e, pos, velo);
             ball.C<ScaleComp>().Scale = 0.7;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
@@ -83,15 +63,14 @@ namespace TTengineTest
             return ball;
         }
 
-        public Entity CreateTextlet(Vector2 pos, string text, Color col)
+        public Entity CreateTextlet(Entity e, Vector2 pos, string text, Color col)
         {
-            var txt = New();
-            CreateTextlet(txt,text);
-            txt.C<PositionComp>().Position = pos;
-            txt.C<PositionComp>().Depth = 0f + 0.1f * ((float)rnd.NextDouble()); // random Z position
-            txt.C<DrawComp>().DrawColor = col;
-            txt.C<ScaleComp>().Scale = 0.8;
-            return txt;
+            CreateTextlet(e,text);
+            e.C<PositionComp>().Position = pos;
+            e.C<PositionComp>().Depth = 0f + 0.1f * ((float)rnd.NextDouble()); // random Z position
+            e.C<DrawComp>().DrawColor = col;
+            e.C<ScaleComp>().Scale = 0.8;
+            return e;
         }
 
     }

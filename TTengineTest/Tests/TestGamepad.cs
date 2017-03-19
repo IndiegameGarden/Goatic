@@ -16,7 +16,7 @@ namespace TTengineTest
     {
         public override void Create()
         {
-            var b = Factory.CreateMovingBall(Factory.BuildScreen.Center, Vector2.Zero);
+            var b = Factory.CreateMovingBall(Factory.New(), Factory.BuildScreen.Center, Vector2.Zero);
             b.AddComponent(new PlayerInputComp());
             Factory.AddScript(b, ScriptMoveByGamepad);
         }

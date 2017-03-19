@@ -19,7 +19,7 @@ namespace TTengineTest
 
         public override void Create()
         {
-            var ball = Factory.CreateBall(1);
+            var ball = Factory.CreateBall(Factory.New(),1);
             ball.C<PositionComp>().Position = new Vector2(300f, 300f);
             ball.C<VelocityComp>().Velocity2D = new Vector2(25f, 25f);
 
