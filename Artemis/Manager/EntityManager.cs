@@ -316,7 +316,7 @@ namespace Artemis.Manager
                 this.AddedComponentEvent(entity, component);
             }
 
-            this.Refresh(entity);
+            entity.Refresh(); //this.Refresh(entity); --> old code, seems more unneeded overhead. 
         }
 
         /// <summary>Get the component instance of the given component type for the given entity.</summary>
