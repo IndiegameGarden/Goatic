@@ -24,60 +24,39 @@ namespace Game1
         /// areas.
         /// </summary>
         const int SPARE_SCREEN_HEIGHT = 256;
+        const int SCREEN_SIZE_X = 1366;
+        const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
 
-        public static Game1Factory Factory;
+        public static new Game1Factory Factory;
+        public static new Game1 Instance;
+
         public Entity GameChannel, LevelChannel, BackgroundChannel, GuiChannel;
-
-        public static new Game1 Instance
-        {
-            get { return TTGame.Instance as Game1; }
-        }
 
         public Game1()
         {
+            Instance = this;
             IsAudio = false;    // set to true if audio is needed
-        }
-
-        protected override void Initialize()
-        {
-            Factory = new Game1Factory(this);
-
-            base.Initialize();
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            KeyboardState kb = Keyboard.GetState();
-            if (kb.IsKeyDown(Keys.Escape))
-            {
-                UnloadContent();
-                Exit();
-            }
-
-            base.Update(gameTime);
         }
 
         protected override void LoadContent()
         {
+            Factory = new Game1Factory(this);
+            Factory.BuildTo(MainChannel);
+
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
-            const int SCREEN_SIZE_X = 1366;
-            const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
-            GameChannel = Factory.New();
-            Factory.CreateChannel(GameChannel, Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            GameChannel = Factory.CreateChannel(Factory.New(), Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             Factory.BuildTo(GameChannel);
 
             var scr = GameChannel.C<WorldComp>().Screen;
             scr.BackgroundColor = Color.Black;
 
             // create level/background channels of same size
-            BackgroundChannel = Factory.New();
-            Factory.CreateChannel(BackgroundChannel, GameChannel);
+            BackgroundChannel = Factory.CreateChannel(Factory.New(), GameChannel);
             BackgroundChannel.C<PositionComp>().Depth = 0.7f;
             BackgroundChannel.C<WorldComp>().Screen.BackgroundColor = Color.Black;
             BackgroundChannel.Tag = "BackgroundChannel";
 
-            LevelChannel = Factory.New();
-            Factory.CreateChannel(LevelChannel, Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
+            LevelChannel = Factory.CreateChannel(Factory.New(), Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             LevelChannel.C<PositionComp>().Depth = 0.5f;
             LevelChannel.Tag = "LevelChannel";
             // GuiChannel = TODO
@@ -90,19 +69,28 @@ namespace Game1
 
             Factory.BuildTo(LevelChannel);
 
-            // add content 
+            // add content - borrow from tests TODO
             Test t = new TestSphereCollision();
+            t.Factory = new TestFactory();
+            t.Factory.BuildTo(LevelChannel);
             t.Create();
 
-            // add builder entity (test level building)
-            var e = Factory.New();
-            //e.AddComponent(new BuilderComp(TestLevel.BuildTest1));
-
             // test bg content
-            Factory.BuildTo(BackgroundChannel);
-
+            //Factory.BuildTo(BackgroundChannel);
 
             base.LoadContent();
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            KeyboardState kb = Keyboard.GetState();
+            if (kb.IsKeyDown(Keys.Escape))
+            {
+                UnloadContent();
+                Exit();
+            }
+
+            base.Update(gameTime);
         }
 
         protected override void UnloadContent()

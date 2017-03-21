@@ -65,8 +65,8 @@ namespace TTengine.Core
         /// <summary>Timer used for recording duration of total Draw() cycle</summary>
         public CountingTimer TimerDraw = new CountingTimer();
 
-        /// <summary>The factory for creating the MainChannel in</summary>
-        private TTFactory factory;
+        /// <summary>The factory for creating the default TTGame Entities with</summary>
+        public static TTFactory Factory;
 
         /// <summary>
         /// Constructor
@@ -96,22 +96,21 @@ namespace TTengine.Core
 
         protected override void Initialize()
         {
-            factory = new TTFactory();
+            Factory = new TTFactory();
 
             // make root world and build to it
             RootWorld = new EntityWorld();
             RootWorld.InitializeAll(true);
-            factory.BuildTo(RootWorld);
+            Factory.BuildTo(RootWorld);
 
             // make root screen and build to it
             RootScreen = new ScreenComp(false, 0, 0);
-            factory.BuildTo(RootScreen);
+            Factory.BuildTo(RootScreen);
 
             // make the MainChannel and build to it
-            MainChannel = factory.New();
-            factory.CreateChannel(MainChannel, Color.CornflowerBlue);
+            MainChannel = Factory.CreateChannel(Factory.New(), Color.CornflowerBlue);
 			MainChannelScreen = MainChannel.C<WorldComp>().Screen;
-            factory.BuildTo(MainChannel);
+            Factory.BuildTo(MainChannel);
 
             // the TTMusicEngine
             if (IsAudio)
@@ -123,11 +122,7 @@ namespace TTengine.Core
             }
 
             base.Initialize();
-        }
 
-        protected override void LoadContent()
-        {
-            base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)

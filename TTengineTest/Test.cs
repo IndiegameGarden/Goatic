@@ -23,7 +23,7 @@ namespace TTengineTest
         /// <summary>The Channel onto which this Test will render</summary>
         public Entity Channel;
 
-        protected TestFactory Factory;
+        public TestFactory Factory;
 
         /// <summary>
         /// Create the entities for this specific test
