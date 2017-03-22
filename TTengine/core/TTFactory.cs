@@ -84,15 +84,14 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Finalize Entity after having constructed all its components. This will enable it, later,
-        /// via the RefresherSystem (and its calling thread) so not immediately.
+        /// Finalize Entity after having constructed all its components; enabling it and
+        /// triggering a refresh.
         /// </summary>
-        /// <param name="e">Entity to finalize and soon after activate.</param>
+        /// <param name="e">Entity to finalize and in the next ECS round activate.</param>
         public void Finalize(Entity e)
         {
             e.IsEnabled = true;
             e.Refresh();
-            //RefresherSystem.AddToQueue(e,typeof(RefresherSystem));
         }
 
         /// <summary>
@@ -100,8 +99,8 @@ namespace TTengine.Core
         /// </summary>
         public Entity AddMotion(Entity e)
         {
-            e.AddComponent(new PositionComp());
-            e.AddComponent(new VelocityComp());
+            if (!e.HasComponent<PositionComp>()) e.AddComponent(new PositionComp());
+            if (!e.HasComponent<VelocityComp>()) e.AddComponent(new VelocityComp());
             return e;
         }
 
@@ -111,7 +110,7 @@ namespace TTengine.Core
         public Entity AddDrawable(Entity e)
         {
             AddMotion(e);
-            e.AddComponent(new DrawComp(BuildScreen));
+            if (!e.HasComponent<DrawComp>()) e.AddComponent(new DrawComp(BuildScreen));
             return e;
         }
 
@@ -124,8 +123,8 @@ namespace TTengine.Core
         public Entity CreateSpritelet(Entity e, string graphicsFile)
         {
             AddDrawable(e);
-            var spriteComp = new SpriteComp(graphicsFile);
-            e.AddComponent(spriteComp);
+            var sc = new SpriteComp(graphicsFile);
+            e.AddComponent(sc);
             return e;
         }
 
@@ -136,8 +135,8 @@ namespace TTengine.Core
         public Entity CreateSpritelet(Entity e, ScreenComp screen)
         {
             AddDrawable(e);
-            var spriteComp = new SpriteComp(screen);
-            e.AddComponent(spriteComp);
+            var sc = new SpriteComp(screen);
+            e.AddComponent(sc);
             return e;
         }
 
@@ -152,20 +151,20 @@ namespace TTengine.Core
                                                      AnimationType animType = AnimationType.NORMAL )
         {
             AddDrawable(e);
-            var spriteComp = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
-            spriteComp.AnimType = animType;
-            e.AddComponent(spriteComp);
+            var sc = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
+            sc.AnimType = animType;
+            e.AddComponent(sc);
             return e;
         }
 
         public Entity CreateSpriteField(Entity e, string fieldBitmapFile, string spriteBitmapFile)
         {
             AddDrawable(e);
-            var spriteFieldComp = new SpriteFieldComp(fieldBitmapFile);
-            var spriteComp = new SpriteComp(spriteBitmapFile);
-            spriteFieldComp.FieldSpacing = new Vector2(spriteComp.Width, spriteComp.Height);
-            e.AddComponent(spriteComp);
-            e.AddComponent(spriteFieldComp);
+            var sfc = new SpriteFieldComp(fieldBitmapFile);
+            var sc = new SpriteComp(spriteBitmapFile);
+            sfc.FieldSpacing = new Vector2(sc.Width, sc.Height);
+            e.AddComponent(sc);
+            e.AddComponent(sfc);
             return e;
         }
 
@@ -178,7 +177,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             e.AddComponent(new ScaleComp());
-            TextComp tc = new TextComp(text, fontName);
+            var tc = new TextComp(text, fontName);
             e.AddComponent(tc);
             return e;
         }

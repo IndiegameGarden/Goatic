@@ -40,7 +40,7 @@ namespace Game1
 
         protected override void LoadContent()
         {
-            Factory = new Game1Factory(this);
+            Factory = new Game1Factory();
             Factory.BuildTo(MainChannel);
 
             // create the game's channel at fixed resolution, which is then auto-scaled onto any screen resolution.
@@ -67,16 +67,9 @@ namespace Game1
             // add framerate counter
             Factory.CreateFrameRateCounter(Factory.New(), Color.White, SPARE_SCREEN_HEIGHT/2 );
 
-            Factory.BuildTo(LevelChannel);
-
-            // add content - borrow from tests TODO
-            Test t = new TestSphereCollision();
-            t.Factory = new TestFactory();
-            t.Factory.BuildTo(LevelChannel);
-            t.Create();
-
-            // test bg content
-            //Factory.BuildTo(BackgroundChannel);
+            // create the root level
+            var root = new RootLevel();
+            root.Build();
 
             base.LoadContent();
         }

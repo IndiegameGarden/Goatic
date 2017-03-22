@@ -16,7 +16,7 @@ namespace TTengine.Systems
 
         public override void LoadContent()
         {
-            SetQueueProcessingLimit(10, typeof(BuilderSystem));
+            SetQueueProcessingLimit(1, typeof(BuilderSystem));
             bgBuilder = new BackgroundBuilder();
             base.LoadContent();
         }

@@ -1,4 +1,4 @@
-﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+﻿// (c) 2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 namespace Game1.Systems
 {
@@ -9,7 +9,7 @@ namespace Game1.Systems
     {
         // Systems in UPDATE loop
         public const int
-            BuilderSystem = 5;
+            LevelBuilderSystem = 5;
 
         // Systems in DRAW loop
         // ...

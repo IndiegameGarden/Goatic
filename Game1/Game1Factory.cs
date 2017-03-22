@@ -1,23 +1,29 @@
 ﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
-
 using Microsoft.Xna.Framework;
 
+using Artemis;
 using TTengine.Core;
 using TTengine.Comps;
 
-using Artemis;
+using Game1.Comps;
+using Game1.Levels;
 
 namespace Game1
 {
     public class Game1Factory: TTFactory
     {
-        private Game1 _game;
 
-        public Game1Factory(Game1 game)
+        public Entity CreateLevel(Level level, BuildScriptDelegate script, float x, float y)
         {
-            _game = game;
+            var e = New();
+            var pc = new PositionComp();
+            pc.Position = new Vector2(x, y);
+            e.AddComponent(pc);
+            var lc = new LevelComp(level,script);
+            e.AddComponent(lc);
+            return e;
         }
 
         /// <summary>

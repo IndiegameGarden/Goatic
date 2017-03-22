@@ -1,10 +1,11 @@
-﻿
+﻿// (c) 2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
 using Microsoft.Xna.Framework;
 using Artemis;
 
 namespace Game1.Levels
 {
-    public class TestLevel
+    public class TestLevel: Level
     {
         public static void BuildTest1()
         {
