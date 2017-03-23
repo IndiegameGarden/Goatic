@@ -147,12 +147,15 @@ namespace TTengine.Core
         /// <param name="NspritesX">Number of sprites in horizontal direction (X) in the atlas</param>
         /// <param name="NspritesY">Number of sprites in vertical direction (Y) in the atlas</param>
         /// <param name="animType">Animation type chosen from AnimationType class</param>
+        /// <param name="slowDownFactor">Slowdown factor for animation, default = 1</param>
         public Entity CreateAnimatedSpritelet(Entity e, string atlasBitmapFile, int NspritesX, int NspritesY, 
-                                                     AnimationType animType = AnimationType.NORMAL )
+                                                     AnimationType animType = AnimationType.NORMAL,
+                                                     int slowDownFactor = 1)
         {
             AddDrawable(e);
             var sc = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
             sc.AnimType = animType;
+            sc.SlowdownFactor = slowDownFactor;
             e.AddComponent(sc);
             return e;
         }

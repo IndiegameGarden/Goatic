@@ -15,15 +15,45 @@ namespace Game1
     public class Game1Factory: TTFactory
     {
 
-        public Entity CreateLevel(Level level, BuildScriptDelegate script, float x, float y)
+        public Entity CreateLevelBuilder(Level level, BuildScriptDelegate script, float x, float y, bool isLevelOwner = false)
         {
             var e = New();
+            if (isLevelOwner)
+                level.LevelOwner = e;
             var pc = new PositionComp();
             pc.Position = new Vector2(x, y);
             e.AddComponent(pc);
-            var lc = new LevelComp(level,script);
+            var lc = new LevelComp(level,script,e);
             e.AddComponent(lc);
             return e;
+        }
+
+        public Entity CreateShip(Entity e)
+        {
+            CreateSpritelet(e, "ball");
+            e.AddComponent(new ScaleComp(1.0));
+            e.AddComponent(new PlayerInputComp());
+            AddScript(e, ScriptMoveByGamepad);
+            return e;
+        }
+
+        void ScriptMoveByGamepad(ScriptContext ctx)
+        {
+            var e = ctx.Entity;
+            var vc = e.C<VelocityComp>();
+            float spd = (float)(195 * ctx.Dt);
+
+            var dir = e.C<PlayerInputComp>();
+
+            if (dir.Direction.Y < 0f)
+                vc.Y -= spd;
+            else if (dir.Direction.Y > 0f)
+                vc.Y += spd;
+            else if (dir.Direction.X < 0f)
+                vc.X -= spd;
+            else if (dir.Direction.X > 0f)
+                vc.X += spd;
+
         }
 
         /// <summary>

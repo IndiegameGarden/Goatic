@@ -15,9 +15,9 @@ namespace Game1.Levels
         public void Build()
         {
             Factory.BuildTo(LevelChannel);
-            var lev = new WeePlanetsLevel();
-            Factory.CreateLevel(lev, lev.BuildWaterPlanetSection, 400f, 100f);
-            Factory.CreateLevel(lev, lev.BuildTestSection, 700f, 1400f);
+            var lev = new WeePlanetsLevel();            
+            Factory.CreateLevelBuilder(lev, lev.BuildTestSection, 700f, 1400f);
+            Factory.CreateLevelBuilder(lev, lev.BuildWaterPlanetSection, 400f, 100f, true);
 
         }
     }

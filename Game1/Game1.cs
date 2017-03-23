@@ -30,7 +30,10 @@ namespace Game1
         public static new Game1Factory Factory;
         public static new Game1 Instance;
 
+        // the channels (i.e. layers)
         public Entity GameChannel, LevelChannel, BackgroundChannel, GuiChannel;
+
+        public Entity Ship;
 
         public Game1()
         {
@@ -59,15 +62,19 @@ namespace Game1
             LevelChannel = Factory.CreateChannel(Factory.New(), Color.Transparent, SCREEN_SIZE_X, SCREEN_SIZE_Y);
             LevelChannel.C<PositionComp>().Depth = 0.5f;
             LevelChannel.Tag = "LevelChannel";
+            
             // GuiChannel = TODO
 
-            // apply magic scaling to screen resolution
+            // apply magic scaling from SCREEN_SIZE_* to current screen resolution
             Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
 
             // add framerate counter
             Factory.CreateFrameRateCounter(Factory.New(), Color.White, SPARE_SCREEN_HEIGHT/2 );
 
-            // create the root level
+            // create the player ship
+            Ship = Factory.CreateShip(Factory.New());
+
+            // create the root level which contains the builder entities (with more level content)
             var root = new RootLevel();
             root.Build();
 
