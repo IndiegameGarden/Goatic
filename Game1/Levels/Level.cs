@@ -11,7 +11,11 @@ namespace Game1.Levels
         protected Entity BackgroundChannel = Game1.Instance.BackgroundChannel;
         protected Entity LevelChannel = Game1.Instance.LevelChannel;
 
-        public Entity LevelOwner;
+        /// <summary>
+        /// If an Entity owns a Level (if != null) then the position of the level's created entities will
+        /// be always relative to the position of the LevelOwner.
+        /// </summary>
+        public Entity LevelOwner = null;
 
         /// <summary>
         /// Create a new Entity within the level, still disabled i.e. not yet finalized. Can be used
