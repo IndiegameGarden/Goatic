@@ -7,21 +7,21 @@ namespace Game1.Levels
 {
     public class TestLevel: Level
     {
-        public static void BuildTest1()
+        public void BuildTest1()
         {
-            Game1.Factory.BuildTo(Game1.Instance.BackgroundChannel);
+            BuildTo(BackgroundChannel);
 
-            var fxScreen = Game1.Factory.CreateHypnoScreenlet();
-            Game1.Factory.BuildTo(fxScreen);
-            Game1.Factory.CreateRotatingBall(new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
+            var fxScreen = CreateHypnoScreenlet();
+            BuildTo(fxScreen);
+            CreateRotatingBall(new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
 
-            var fxScreen2 = Game1.Factory.CreateMandelbrotScreenlet();
-            Game1.Factory.BuildTo(fxScreen2);
-            Game1.Factory.CreateRotatingBall(new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
+            var fxScreen2 = CreateMandelbrotScreenlet();
+            BuildTo(fxScreen2);
+            CreateRotatingBall(new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
 
-            var fxScreen3 = Game1.Factory.CreateJuliaScreenlet();
-            Game1.Factory.BuildTo(fxScreen3);
-            Game1.Factory.CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
+            var fxScreen3 = CreateJuliaScreenlet();
+            BuildTo(fxScreen3);
+            CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
 
         }
     }

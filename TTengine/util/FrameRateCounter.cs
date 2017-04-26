@@ -12,9 +12,9 @@ namespace TTengine.Util
 {
     /// <summary>
     /// shows a framerate counter on screen (shows FPS) calculated
-    /// from timing of draw/upd calls.
+    /// from timing of draw/upd calls; and more profiling info if available.
     /// </summary>
-    public class FrameRateCounter: IScriptDraw
+    public class FrameRateCounter: IScript
     {
         TextComp textComp;
         TimeSpan elapsedTime = TimeSpan.Zero;
@@ -43,10 +43,14 @@ namespace TTengine.Util
 
             if (timer.TimeTotal > 0)
                 frameRateAvg = (int)( (double)timer.CountTotal / timeTotal );
-            string msg = string.Format("{0,4} FPS [{1,4}] Tupd={2,5:N1}ms Tdrw={3,5:N1}ms", timer.Count, frameRateAvg,
-                Math.Round(1000.0 * TTGame.Instance.TimerUpdate.TimePerCount),
-                Math.Round(1000.0 * TTGame.Instance.TimerDraw.TimePerCount) 
-            );
+            string msg;
+            if (TTGame.Instance.IsProfiling)
+                msg = string.Format("{0,4} FPS [{1,4}] Tupd={2,5:N1}ms Tdrw={3,5:N1}ms", timer.Count, frameRateAvg,
+                    Math.Round(1000.0 * TTGame.Instance.ProfilingTimerUpdate.TimePerCount),
+                    Math.Round(1000.0 * TTGame.Instance.ProfilingTimerDraw.TimePerCount) 
+                );
+            else
+                msg = string.Format("{0,4} FPS [{1,4}]", timer.Count, frameRateAvg);
             textComp.Text = msg;
         }
 

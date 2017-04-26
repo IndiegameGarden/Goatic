@@ -57,5 +57,6 @@ namespace TTengine.Modifiers
             ScriptCode(ctx,v);
         }
 
+        public void OnDraw(ScriptContext ctx) { ; }
     }
 }

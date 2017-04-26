@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System.Text;
-using TTengine.Core;
 using TTengine.Comps;
-
 using Artemis;
 using Artemis.Manager;
 using Artemis.Attributes;
@@ -27,8 +23,7 @@ namespace TTengine.Systems
             ctx.Entity = entity;
             sc.SimTime += Dt;
             ctx.SimTime = sc.SimTime;
-            //ctx.Dt = set already in the Begin() method above
-            foreach(IScript script in sc.Scripts)
+            foreach (var script in sc.Scripts)
                 script.OnUpdate(ctx);
         }
 
@@ -49,11 +44,7 @@ namespace TTengine.Systems
             ctx.Entity = entity;
             ctx.SimTime = sc.SimTime;
             foreach (var script in sc.Scripts)
-            {
-                if (script is IScriptDraw)
-                    (script as IScriptDraw).OnDraw(ctx);
-            }
-
+                script.OnDraw(ctx);
         }
     }
 }

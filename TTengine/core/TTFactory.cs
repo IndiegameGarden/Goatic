@@ -88,7 +88,7 @@ namespace TTengine.Core
         /// triggering a refresh.
         /// </summary>
         /// <param name="e">Entity to finalize and in the next ECS round activate.</param>
-        public void Finalize(Entity e)
+        public virtual void Finalize(Entity e)
         {
             e.IsEnabled = true;
             e.Refresh();
@@ -368,7 +368,7 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Basic script object that can run code from a Delegate
+        /// Basic script object that can run code from a Delegate in the OnUpdate cycle
         /// </summary>
         public class BasicScript : IScript
         {
@@ -384,6 +384,7 @@ namespace TTengine.Core
                 scriptCode(ctx);
             }
 
+            public void OnDraw(ScriptContext ctx) {; }
         }
 
         /// <summary>

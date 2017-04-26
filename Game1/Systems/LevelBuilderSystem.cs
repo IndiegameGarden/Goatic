@@ -29,7 +29,8 @@ namespace Game1.Systems
                 if (dist <= lc.TriggerRadius)   // if close enough 
                 {
                     lc.CanTrigger = false;      // prevent next round trigger
-                    BuilderSystem.AddToQueue(lc.BuildScript);       // put script in building queue
+                    var job = new ScriptJob(lc.BuildScript, new ScriptContext(Game1.Instance.GameTime,this.Dt,entity));
+                    ScriptThreadedSystem.AddToQueue(job);       // put script in building queue
                 }
             }
         }

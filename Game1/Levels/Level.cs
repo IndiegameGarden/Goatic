@@ -1,36 +1,55 @@
 ﻿// (c) 2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
+using Microsoft.Xna.Framework;
 using Artemis;
 using TTengine.Comps;
 
 namespace Game1.Levels
 {
-    public class Level
+    /// <summary>
+    /// A level class, containing level-specific build scripts (for building level sections) and
+    /// level-specific factory methods for creating Entities. By default Entities in the Level are
+    /// creating at a position relative to its AnchorPosition.
+    /// </summary>
+    public class Level: Game1Factory
     {
-        protected Game1Factory Factory = Game1.Factory;
+        /// <summary>
+        /// The background channel to which level's background Entities are built. By default, equals
+        /// the game's default BackgroundChannel.
+        /// </summary>
         protected Entity BackgroundChannel = Game1.Instance.BackgroundChannel;
+
+        /// <summary>
+        /// The foreground (level) channel to which level's foreground Entities are built. By default, equals
+        /// the game's default LevelChannel.
+        /// </summary>
         protected Entity LevelChannel = Game1.Instance.LevelChannel;
 
         /// <summary>
-        /// If an Entity owns a Level (if != null) then the position of the level's created entities will
-        /// be always relative to the position of the LevelOwner.
+        /// Relative position to which newly created Entities in this level are anchored (only on 
+        /// creation time). Build scripts may shift the anchor position to and fro. A LevelComp
+        /// (background builder object) will typically set the AnchorPosition initially.
         /// </summary>
-        public Entity LevelOwner = null;
+        protected Vector2 AnchorPosition = Vector2.Zero;
 
         /// <summary>
-        /// Create a new Entity within the level, still disabled i.e. not yet finalized. Can be used
-        /// as input to factory building methods to further customize it.
+        /// Called at start of each build script in order to set the AnchorPosition to
+        /// the current position of the Entity that triggers/spawns the building of this
+        /// level section.
         /// </summary>
-        /// <returns>New Entity with a PositionComp that is linked to the LevelOwner position.</returns>
-        protected Entity New()
+        /// <param name="ctx">The context that was used to call the script that calls this method.</param>
+        protected void SetAnchorPosition(ScriptContext ctx)
         {
-            var e = Factory.NewDisabled();
-            var pc = new PositionComp();
-            // make any new entity created here a position-child of the level owning entity. This lays
-            // the level content at the right position in the overall world.
-            LevelOwner.C<PositionComp>().AddChild(pc);
-            e.AddComponent(pc);
-            return e;
+            AnchorPosition = ctx.Entity.C<PositionComp>().PositionAbs;
+        }
+
+        // Hijack the Finalize method to allow adding the AnchorPosition to new entities.
+        public override void Finalize(Entity e)
+        {
+            if (e.HasComponent<PositionComp>())
+                e.C<PositionComp>().Position += AnchorPosition;
+            e.IsEnabled = true;
+            e.Refresh();
         }
     }
 }

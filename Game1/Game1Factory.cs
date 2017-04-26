@@ -15,13 +15,10 @@ namespace Game1
     public class Game1Factory: TTFactory
     {
 
-        public Entity CreateLevelBuilder(Level level, BuildScriptDelegate script, float x, float y, bool isLevelOwner = false)
+        public Entity CreateLevelBuilder(Level level, ScriptDelegate script, float x, float y)
         {
             var e = New();
-            if (isLevelOwner)
-                level.LevelOwner = e;
-            var pc = new PositionComp();
-            pc.Position = new Vector2(x, y);
+            var pc = new PositionComp(x,y);
             e.AddComponent(pc);
             var lc = new LevelComp(level,script,e);
             e.AddComponent(lc);

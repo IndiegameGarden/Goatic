@@ -56,14 +56,19 @@ namespace TTengine.Core
         /// </summary>
         public double TimeLag = 0.0;
 
+        /// <summary>
+        /// total Game Time in seconds
+        /// </summary>
+        public double GameTime = 0.0;
+
         /// <summary>When true, loop time profiling using below CountingTimers is enabled.</summary>
-        public bool IsProfiling;
+        public bool IsProfiling = false;
 
-        /// <summary>Timer used for recording duration of total Update() cycle</summary>
-        public CountingTimer TimerUpdate = new CountingTimer();
+        /// <summary>Timer used for profiling: recording duration of total Update() cycle</summary>
+        public CountingTimer ProfilingTimerUpdate = new CountingTimer();
 
-        /// <summary>Timer used for recording duration of total Draw() cycle</summary>
-        public CountingTimer TimerDraw = new CountingTimer();
+        /// <summary>Timer used for profiling: recording duration of total Draw() cycle</summary>
+        public CountingTimer ProfilingTimerDraw = new CountingTimer();
 
         /// <summary>The factory for creating the default TTGame Entities with</summary>
         public static TTFactory Factory;
@@ -129,9 +134,10 @@ namespace TTengine.Core
         {
             if (IsProfiling)
             {
-                TimerUpdate.Start();
-                TimerUpdate.CountUp();
+                ProfilingTimerUpdate.Start();
+                ProfilingTimerUpdate.CountUp();
             }
+            this.GameTime = gameTime.TotalGameTime.TotalSeconds;
             double dt = TargetElapsedTime.TotalSeconds;
             // see http://gameprogrammingpatterns.com/game-loop.html
             TimeLag += gameTime.ElapsedGameTime.TotalSeconds;
@@ -139,13 +145,14 @@ namespace TTengine.Core
             while (TimeLag >= dt)
             {
                 RootWorld.Update(TargetElapsedTime);
+                this.GameTime += dt;
                 TimeLag -= dt;
             }
             base.Update(gameTime);
             if (IsProfiling)
             {
-                TimerUpdate.Update();
-                TimerUpdate.Stop();
+                ProfilingTimerUpdate.Update();
+                ProfilingTimerUpdate.Stop();
             }
         }
 
@@ -153,9 +160,10 @@ namespace TTengine.Core
         {
             if (IsProfiling)
             {
-                TimerDraw.Start();
-                TimerDraw.CountUp();
+                ProfilingTimerDraw.Start();
+                ProfilingTimerDraw.CountUp();
             }
+            this.GameTime = gameTime.TotalGameTime.TotalSeconds;
             RootScreen.SpriteBatch.BeginParameterized();
             RootWorld.Draw();   // draw world including all sub-worlds/sub-channels
             GraphicsDevice.SetRenderTarget(null);
@@ -163,8 +171,8 @@ namespace TTengine.Core
             base.Draw(gameTime);
             if (IsProfiling)
             {
-                TimerDraw.Update();
-                TimerDraw.Stop();
+                ProfilingTimerDraw.Update();
+                ProfilingTimerDraw.Stop();
             }
         }
 

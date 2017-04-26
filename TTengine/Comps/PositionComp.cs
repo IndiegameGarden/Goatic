@@ -63,9 +63,10 @@ namespace TTengine.Comps
         /// <summary>Initializes a new instance of the <see cref="PositionComp" /> class.</summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
-        public PositionComp(float x, float y, float depth)
-            : this(new Vector3(x, y, depth))
+        public PositionComp(float x, float y, float depth = 0.5f)
         {
+            this.Position = new Vector2(x,y);
+            this.Depth = depth;
         }
 
         /// <summary>Initializes a new instance of the <see cref="PositionComp" /> class.</summary>
