@@ -38,7 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Tests\TestBuilderSystem.cs" />
+    <Compile Include="Tests\TestScriptThreadedSystemForBuilding.cs" />
     <Compile Include="Tests\TestTransparentChannels.cs" />
     <Compile Include="Tests\TestPostEffects.cs" />
     <Compile Include="Tests\TestGamepad.cs" />

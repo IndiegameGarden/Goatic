@@ -44,7 +44,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
-            DoTest(new TestBuilderSystem());
+            DoTest(new TestScriptThreadedSystemForBuilding());
             DoTest(new TestTextureSamplingShader());
             DoTest(new TestTransparentChannels());
             DoTest(new TestRelativeMotion());

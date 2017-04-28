@@ -12,8 +12,8 @@ using Artemis.Interface;
 
 namespace TTengineTest
 {
-    /// <summary>Test the BuilderSystem basic operation</summary>
-    class TestBuilderSystem : Test
+    /// <summary>Test the ScriptThreadedSystem for basic entity-building operation</summary>
+    class TestScriptThreadedSystemForBuilding : Test
     {
 
         public override void Create()
@@ -35,9 +35,9 @@ namespace TTengineTest
         class EntityScriptTriggersBuilding1: IScript
         {
             bool isDone = false;
-            TestBuilderSystem testClass;
+            TestScriptThreadedSystemForBuilding testClass;
 
-            public EntityScriptTriggersBuilding1(TestBuilderSystem testClass)
+            public EntityScriptTriggersBuilding1(TestScriptThreadedSystemForBuilding testClass)
             {
                 this.testClass = testClass;
             }
