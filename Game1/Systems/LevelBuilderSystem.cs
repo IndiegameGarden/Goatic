@@ -30,7 +30,7 @@ namespace Game1.Systems
                 {
                     lc.CanTrigger = false;      // prevent next round trigger
                     var job = new ScriptJob(lc.BuildScript, new ScriptContext(Game1.Instance.GameTime,this.Dt,entity));
-                    ScriptThreadedSystem.AddToQueue(job);       // put script in building queue
+                    ScriptThreadedSystem.AddToQueue(job);       // put script in bg job processing queue
                 }
             }
         }
