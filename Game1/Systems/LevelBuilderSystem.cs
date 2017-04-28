@@ -22,9 +22,9 @@ namespace Game1.Systems
         
         public override void Process(Entity entity, LevelComp lc, PositionComp pc)
         {
-            var pct = lc.TriggerEntity.C<PositionComp>(); // the trigger's position
             if (lc.CanTrigger)          // check if ready to trigger
             {
+                var pct = lc.TriggerEntity.C<PositionComp>(); // the trigger's position
                 float dist = (pct.PositionAbs - pc.PositionAbs).Length();   // calc distance
                 if (dist <= lc.TriggerRadius)   // if close enough 
                 {
