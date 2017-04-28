@@ -8,7 +8,8 @@ namespace Game1.Levels
 {
     /// <summary>
     /// The one root level that will trigger builds of all other levels / content via
-    /// LevelBuilder entities. Builds are triggered when e.g. the player gets close enough.
+    /// LevelBuilder entities. Builds are triggered when e.g. the player gets close enough to
+    /// the LevelBuilder.
     /// </summary>
     public class RootLevel: Level
     {

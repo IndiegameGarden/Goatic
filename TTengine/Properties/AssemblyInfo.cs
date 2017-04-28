@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("TTengine")]
 [assembly: AssemblyProduct("TTengine")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
+[assembly: AssemblyDescription("Experimental 2D game engine for C# on top of MonoGame 3.x")]
+[assembly: AssemblyCompany("IndiegameGarden.com")]
+[assembly: AssemblyCopyright("Copyright © IndiegameGarden 2010-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

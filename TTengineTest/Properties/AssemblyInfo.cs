@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("TTengineTest")]
 [assembly: AssemblyProduct("TTengineTest")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
+[assembly: AssemblyDescription("Tests for the TTengine")]
+[assembly: AssemblyCompany("IndiegameGarden.com")]
+[assembly: AssemblyCopyright("Copyright © IndiegameGarden 2010-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
