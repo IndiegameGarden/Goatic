@@ -53,6 +53,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Comps\InputToMotionComp.cs" />
     <Compile Include="Comps\LevelComp.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Game1Factory.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Levels\TestLevel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Systems\InputToMotionSystem.cs" />
     <Compile Include="Systems\LevelBuilderSystem.cs" />
     <Compile Include="Systems\SystemsSchedule.cs" />
   </ItemGroup>

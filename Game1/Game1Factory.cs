@@ -28,9 +28,10 @@ namespace Game1
         public Entity CreateShip(Entity e)
         {
             CreateSpritelet(e, "ball");
-            e.AddComponent(new ScaleComp(1.0));
+            e.AddComponent(new ScaleComp(2.0));
             e.AddComponent(new PlayerInputComp());
-            AddScript(e, ScriptMoveByGamepad);
+            e.AddComponent(new InputToMotionComp());
+            //AddScript(e, ScriptMoveByGamepad);
             return e;
         }
 

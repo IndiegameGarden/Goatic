@@ -9,7 +9,8 @@ namespace Game1.Systems
     {
         // Systems in UPDATE loop
         public const int
-            LevelBuilderSystem = 5;
+            LevelBuilderSystem = 5,
+            InputToMotionSystem = 15;
 
         // Systems in DRAW loop
         // ...
