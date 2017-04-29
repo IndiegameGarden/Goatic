@@ -105,7 +105,7 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Add Entity position and velocity, and mae it a drawable Entity
+        /// Add Entity position and velocity, and make it a drawable Entity
         /// </summary>
         public Entity AddDrawable(Entity e)
         {
@@ -255,7 +255,35 @@ namespace TTengine.Core
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
             e.AddComponent(sc);
-            //e.AddComponent(new DrawComp(sc));
+            return e;
+        }
+
+        /// <summary>
+        /// Creates an FX Spritelet that renders a shader Effect in a rectangle of screen-filling size
+        /// </summary>
+        /// <returns></returns>
+        public Entity CreateFxSpritelet(Entity e, string effectFile)
+        {
+            AddDrawable(e);
+            var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
+            var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
+            sc.SpriteBatch.effect = fx; // set the effect in SprBatch
+            e.AddComponent(sc);
+            var spc = new SpriteRectComp();
+            e.AddComponent(spc);
+            e.C<DrawComp>().DrawScreen = sc; // let spritelet draw itself to the effect-generating screenlet sc
+            return e;
+        }
+
+        /// <summary>
+        /// Create a Spritelet which is a rect covering the entire display
+        /// </summary>
+        /// <returns></returns>
+        public Entity CreateSpritelet(Entity e)
+        {
+            AddDrawable(e);
+            var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));
+            e.AddComponent(sc);
             return e;
         }
 

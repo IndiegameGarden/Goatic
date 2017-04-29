@@ -27,7 +27,7 @@ namespace TTengineTest
     /// </summary>
     public class TestGame : TTGame
     {
-        public static new TestFactory Factory;
+        public static TestFactory Factory;
         KeyboardState kbOld = Keyboard.GetState();
         int channel = 0;
         List<Entity> testChannels = new List<Entity>();

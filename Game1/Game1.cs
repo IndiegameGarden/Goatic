@@ -27,7 +27,7 @@ namespace Game1
         const int SCREEN_SIZE_X = 1366;
         const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
 
-        public static new Game1Factory Factory;
+        public static Game1Factory Factory;
         public static new Game1 Instance;
 
         // the channels (i.e. layers)

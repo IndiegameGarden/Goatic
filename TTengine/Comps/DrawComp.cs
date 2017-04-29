@@ -80,7 +80,7 @@ namespace TTengine.Comps
         public float DrawRotation = 0f;
 
         /// <summary>
-        /// position in pixels for drawing, directly usable in Draw() calls
+        /// position in pixels for drawing, directly usable in Draw() calls. WARNING: is being set by systems like SpriteRenderSystem on each draw.
         /// </summary>
         public Vector2 DrawPosition
         {

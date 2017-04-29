@@ -57,6 +57,7 @@
     <Compile Include="Comps\ShaderComp.cs" />
     <Compile Include="Comps\SphereShapeComp.cs" />
     <Compile Include="Comps\DrawComp.cs" />
+    <Compile Include="Comps\SpriteRectComp.cs" />
     <Compile Include="Comps\SpriteFieldComp.cs" />
     <Compile Include="Comps\TextComp.cs" />
     <Compile Include="Comps\VelocityComp.cs" />

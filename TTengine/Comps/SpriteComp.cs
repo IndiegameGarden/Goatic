@@ -1,4 +1,4 @@
-// (c) 2010-2015 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -70,7 +70,7 @@ namespace TTengine.Comps
         protected Texture2D texture = null;
         protected ScreenComp screen = null;
         protected Color[] textureData = null;
-        public static BlendState blendAlpha = null, blendColor = null;
+        internal static BlendState blendAlpha = null, blendColor = null;
 
         #endregion
 

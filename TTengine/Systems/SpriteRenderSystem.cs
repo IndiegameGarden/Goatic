@@ -69,8 +69,9 @@ namespace TTengine.Systems
             
             // update drawpos interpolated
             var p = posComp.PositionAbs;
-            if (entity.HasComponent<VelocityComp>())
-                p += (float)TTGame.Instance.TimeLag * entity.C<VelocityComp>().Velocity2D;
+            float tlag = (float)TTGame.Instance.TimeLag;
+            if (tlag > 0f && entity.HasComponent<VelocityComp>())
+                p += tlag * entity.C<VelocityComp>().Velocity2D;
             drawComp.DrawPosition = scr.ToPixels(p);
             drawComp.LayerDepth = posComp.Depth; 
 
@@ -83,4 +84,54 @@ namespace TTengine.Systems
         }
 
     }
+
+    /// <summary>The system for rendering rect sprites</summary>
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.SpriteRenderSystemDraw)]
+    public class SpriteRectRenderSystem : EntityComponentProcessingSystem<SpriteRectComp, PositionComp, DrawComp>
+    {
+        protected Texture2D dummyTexture = new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1);
+        protected Rectangle rect = new Rectangle();
+
+        public override void LoadContent()
+        {
+            Color[] data = new Color[] { Color.White };
+            dummyTexture.SetData<Color>(data);
+        }
+
+        /// <summary>Processes the specified entity.</summary>
+        /// <param name="entity">The entity.</param>
+        public override void Process(Entity entity, SpriteRectComp sprComp, PositionComp pc, DrawComp dc)
+        {
+            if (!dc.IsVisible)
+                return;
+
+            var scr = dc.DrawScreen;
+
+            // update drawpos interpolated
+            var p = pc.PositionAbs;
+            float tlag = (float)TTGame.Instance.TimeLag;
+            if (tlag > 0f && entity.HasComponent<VelocityComp>())
+                p += tlag * entity.C<VelocityComp>().Velocity2D;
+            dc.DrawPosition = scr.ToPixels(p);
+            dc.LayerDepth = pc.Depth;
+
+            TTSpriteBatch sb = scr.SpriteBatch;
+
+            // draw rect sprite
+            rect.X = (int)Math.Round(dc.DrawPosition.X);
+            rect.Y = (int)Math.Round(dc.DrawPosition.Y);
+            if (sprComp.Width == 0 || sprComp.Height == 0)
+            {
+                rect.Width = scr.Width;
+                rect.Height = scr.Height;
+            } else { 
+                rect.Width = (int)Math.Round(sprComp.Width * dc.DrawScale);
+                rect.Height = (int)Math.Round(sprComp.Height * dc.DrawScale);
+            }
+            sb.Draw(dummyTexture, rect, null, dc.DrawColor,
+                dc.DrawRotation, Vector2.Zero, SpriteEffects.None, dc.LayerDepth);
+        }
+
+    }
+
 }

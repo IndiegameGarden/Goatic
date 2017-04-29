@@ -71,7 +71,7 @@ namespace TTengine.Core
         public CountingTimer ProfilingTimerDraw = new CountingTimer();
 
         /// <summary>The factory for creating the default TTGame Entities with</summary>
-        public static TTFactory Factory;
+        internal static TTFactory Factory;
 
         /// <summary>
         /// Constructor

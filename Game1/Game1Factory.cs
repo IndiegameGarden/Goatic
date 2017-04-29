@@ -133,11 +133,20 @@ namespace Game1
             return e;
         }
 
+        public Entity CreateJuliaFxSpritelet()
+        {            
+            var e = CreateFxSpritelet(New(), "MandelbrotJulia");
+            var fx = e.C<ScreenComp>().SpriteBatch.effect;
+            fx.CurrentTechnique = fx.Techniques[1]; // select Julia
+            AddScript(e, ScriptJuliaFx);
+            return e;
+        }
+
         void ScriptJuliaFx(ScriptContext ctx)
         {
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             var t = (float) ctx.SimTime;
-            effect.Parameters["JuliaSeed"].SetValue( new Vector2(0.39f - t * 0.004f , -0.2f + t * 0.003f) );
+            effect.Parameters["JuliaSeed"].SetValue( new Vector2(0.39f + t * 0.004f , -0.2f + t * 0.003f) );
         }
 
     }

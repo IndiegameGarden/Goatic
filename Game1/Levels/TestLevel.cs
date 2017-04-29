@@ -9,7 +9,7 @@ namespace Game1.Levels
     {
         public override void Build()
         {
-            BuildTestShaders();
+            BuildTestShaderBackground();
         }
 
         public void BuildTestShaders()
@@ -30,5 +30,13 @@ namespace Game1.Levels
             CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
 
         }
+
+        public void BuildTestShaderBackground()
+        {
+            BuildTo(BackgroundChannel);
+            CreateJuliaFxSpritelet();
+
+        }
+
     }
 }
