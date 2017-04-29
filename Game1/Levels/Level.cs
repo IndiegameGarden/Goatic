@@ -35,7 +35,7 @@ namespace Game1.Levels
         /// <summary>
         /// Called at start of each build script in order to set the AnchorPosition to
         /// the current position of the Entity that triggers/spawns the building of this
-        /// level section.
+        /// level section. This will modify the AnchorPosition of the Level.
         /// </summary>
         /// <param name="ctx">The context that was used to call the script that calls this method.</param>
         protected void SetAnchorPosition(ScriptContext ctx)
@@ -43,13 +43,12 @@ namespace Game1.Levels
             AnchorPosition = ctx.Entity.C<PositionComp>().PositionAbs;
         }
 
-        // Hijack the Finalize method to allow adding the AnchorPosition to new entities.
+        // Hijack the Finalize method to allow shifting new entities positions by AnchorPosition
         public override void Finalize(Entity e)
         {
             if (e.HasComponent<PositionComp>())
                 e.C<PositionComp>().Position += AnchorPosition;
-            e.IsEnabled = true;
-            e.Refresh();
+            base.Finalize(e);            
         }
     }
 }

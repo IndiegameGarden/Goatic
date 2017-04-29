@@ -10,15 +10,16 @@ namespace Game1.Levels
         public void BuildTest1()
         {
             BuildTo(BackgroundChannel);
-
             var fxScreen = CreateHypnoScreenlet();
             BuildTo(fxScreen);
             CreateRotatingBall(new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
 
+            BuildTo(BackgroundChannel);
             var fxScreen2 = CreateMandelbrotScreenlet();
             BuildTo(fxScreen2);
             CreateRotatingBall(new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
 
+            BuildTo(BackgroundChannel);
             var fxScreen3 = CreateJuliaScreenlet();
             BuildTo(fxScreen3);
             CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);

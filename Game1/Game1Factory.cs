@@ -31,27 +31,7 @@ namespace Game1
             e.AddComponent(new ScaleComp(2.0));
             e.AddComponent(new PlayerInputComp());
             e.AddComponent(new InputToMotionComp());
-            //AddScript(e, ScriptMoveByGamepad);
             return e;
-        }
-
-        void ScriptMoveByGamepad(ScriptContext ctx)
-        {
-            var e = ctx.Entity;
-            var vc = e.C<VelocityComp>();
-            float spd = (float)(195 * ctx.Dt);
-
-            var dir = e.C<PlayerInputComp>();
-
-            if (dir.Direction.Y < 0f)
-                vc.Y -= spd;
-            else if (dir.Direction.Y > 0f)
-                vc.Y += spd;
-            else if (dir.Direction.X < 0f)
-                vc.X -= spd;
-            else if (dir.Direction.X > 0f)
-                vc.X += spd;
-
         }
 
         /// <summary>
@@ -65,49 +45,6 @@ namespace Game1
             CreateSpritelet(e, "paul-hardman_circle-four");
             e.AddComponent(new ScaleComp(radius));
             return e;
-        }
-
-        /// <summary>
-        /// create an active ball with given position and random velocity and some weird (AI) behaviors
-        /// </summary>
-        /// <returns></returns>
-        public Entity CreateHyperActiveBall(Vector2 pos)
-        {
-            var ball = CreateBall(RandomMath.RandomBetween(0.08f,0.15f));
-
-            // position and velocity set
-            ball.C<PositionComp>().Position = pos;
-            ball.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
-
-            /*
-            // duration of entity
-            ball.AddComponent(new ExpiresComp(4 + 500 * rnd.NextDouble()));
-
-            // Behavior Tree AI
-            BTAIComp ai = new BTAIComp();
-            var randomWanderBehavior = new RandomWanderBehavior(1, 6);
-            ai.rootNode = new PrioritySelector(randomWanderBehavior);
-            ball.AddComponent(ai);
-
-            // Modifier to adapt scale
-            TTFactory.AddModifier(ball, ScaleModifierScript);
-
-            // another adapting scale with sine rhythm
-            var s = new SineFunction();
-            s.Frequency = 0.5;
-            s.Amplitude = 0.25;
-            s.Offset = 1;
-            TTFactory.AddModifier(ball, ScaleModifierScript, s);
-
-            // modifier to adapt rotation
-            TTFactory.AddModifier(ball, RotateModifierScript);
-
-            // set different time offset initially, per ball (for the modifiers)
-            ball.GetComponent<ScriptComp>().SimTime = 10 * rnd.NextDouble();
-            */
-
-            return ball;
-
         }
 
         public Entity CreateMovingTextlet(Vector2 pos, string text)
@@ -127,7 +64,7 @@ namespace Game1
         }
 
         /// <summary>
-        /// create an active ball with given position and random velocity and some weird (AI) behaviors
+        /// create a moving ball with given position and velocity
         /// </summary>
         /// <returns></returns>
         public Entity CreateMovingBall(Vector2 pos, Vector2 velo)
