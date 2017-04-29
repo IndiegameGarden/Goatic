@@ -7,7 +7,12 @@ namespace Game1.Levels
 {
     public class TestLevel: Level
     {
-        public void BuildTest1()
+        public override void Build()
+        {
+            BuildTestShaders();
+        }
+
+        public void BuildTestShaders()
         {
             BuildTo(BackgroundChannel);
             var fxScreen = CreateHypnoScreenlet();

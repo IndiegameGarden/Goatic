@@ -75,7 +75,8 @@ namespace Game1
             Ship = Factory.CreateShip(Factory.New());
 
             // create the root level which contains the builder entities (with more level content)
-            var root = new RootLevel();
+            //Level root = new RootLevel();
+            Level root = new TestLevel(); 
             root.Build();
 
             base.LoadContent();

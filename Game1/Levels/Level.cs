@@ -11,7 +11,7 @@ namespace Game1.Levels
     /// level-specific factory methods for creating Entities. By default Entities in the Level are
     /// creating at a position relative to its AnchorPosition.
     /// </summary>
-    public class Level: Game1Factory
+    public abstract class Level: Game1Factory
     {
         /// <summary>
         /// The background channel to which level's background Entities are built. By default, equals
@@ -50,5 +50,11 @@ namespace Game1.Levels
                 e.C<PositionComp>().Position += AnchorPosition;
             base.Finalize(e);            
         }
+
+        public virtual void Build()
+        {
+            // can be overridden with actual code
+        }
+
     }
 }

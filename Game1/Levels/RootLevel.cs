@@ -13,7 +13,7 @@ namespace Game1.Levels
     /// </summary>
     public class RootLevel: Level
     {
-        public void Build()
+        public override void Build()
         {
             BuildTo(LevelChannel);
             var lev = new WeePlanetsLevel();            
