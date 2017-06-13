@@ -69,7 +69,7 @@ namespace Game1
             Factory.ProcessChannelFit(GameChannel, MainChannel, false, true, SPARE_SCREEN_HEIGHT);
 
             // add framerate counter
-            Factory.CreateFrameRateCounter(Factory.New(), Color.White, SPARE_SCREEN_HEIGHT/2 );
+            Factory.CreateFrameRateCounter(Factory.New(), Color.White, SPARE_SCREEN_HEIGHT/2 + 20 );
 
             // create the player ship
             Ship = Factory.CreateShip(Factory.New());

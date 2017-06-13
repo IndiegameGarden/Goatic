@@ -139,10 +139,10 @@ namespace TTengineTest
             // add framerate counter
             test.BuildToDefault();
             var col = TTUtil.InvertColor(test.BackgroundColor);
-            Factory.CreateFrameRateCounter(Factory.New(), col);
+            Factory.CreateFrameRateCounter(Factory.New(), col, 20);
 
             // add test info as text
-            Factory.CreateTextlet(Factory.New(),new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-20f), test.GetType().Name, col, 0f);
+            Factory.CreateTextlet(Factory.New(),new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-40f), test.GetType().Name, col, 0f);
         }
 
     }
