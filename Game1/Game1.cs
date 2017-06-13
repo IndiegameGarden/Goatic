@@ -24,8 +24,8 @@ namespace Game1
         /// areas.
         /// </summary>
         const int SPARE_SCREEN_HEIGHT = 256;
-        const int SCREEN_SIZE_X = 1366;
-        const int SCREEN_SIZE_Y = 668 + SPARE_SCREEN_HEIGHT;
+        const int SCREEN_SIZE_X = 1920;
+        const int SCREEN_SIZE_Y = 1080 + SPARE_SCREEN_HEIGHT;
 
         public static Game1Factory Factory;
         public static new Game1 Instance;
@@ -66,7 +66,7 @@ namespace Game1
             // GuiChannel = TODO
 
             // apply magic scaling from SCREEN_SIZE_* to current screen resolution
-            Factory.ProcessChannelFit(GameChannel, MainChannel, true, true, SPARE_SCREEN_HEIGHT);
+            Factory.ProcessChannelFit(GameChannel, MainChannel, false, true, SPARE_SCREEN_HEIGHT);
 
             // add framerate counter
             Factory.CreateFrameRateCounter(Factory.New(), Color.White, SPARE_SCREEN_HEIGHT/2 );
