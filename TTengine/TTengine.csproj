@@ -62,7 +62,6 @@
     <Compile Include="Comps\TextComp.cs" />
     <Compile Include="Comps\VelocityComp.cs" />
     <Compile Include="Comps\WorldComp.cs" />
-    <Compile Include="Core\Channel.cs" />
     <Compile Include="Core\Comp.cs" />
     <Compile Include="Comps\TargetMotionComp.cs" />
     <Compile Include="Core\IUpdate.cs" />

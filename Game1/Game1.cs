@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Input;
 
 using TTengine.Core;
 using TTengine.Comps;
-using TTengineTest;
 using Artemis;
 
 using Game1.Levels;
