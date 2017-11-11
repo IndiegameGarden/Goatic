@@ -3,21 +3,13 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 using TTengine.Core;
 using TTengine.Comps;
-using TTengine.Behaviors;
-using TTengine.Modifiers;
 using TTengine.Util;
 
 using Artemis;
-using Artemis.Interface;
-using TreeSharp;
 
 
 namespace TTengineTest
@@ -127,7 +119,8 @@ namespace TTengineTest
 
         private void DoTest(Test test)
         {
-            Factory.BuildTo(MainChannel);
+            Factory.BuildTo(RootWorld);
+            Factory.BuildTo(RootScreen);
 
             var ch = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
             Factory.CreateChannel(ch, test.BackgroundColor);

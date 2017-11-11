@@ -1,21 +1,11 @@
 ﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using Artemis;
-using Artemis.Utils;
-using TTengine.Core;
-using TTengine.Comps;
-using TTengine.Systems;
 using TTengine.Util;
 using TTMusicEngine;
-using TTMusicEngine.Soundevents;
 
 namespace TTengine.Core
 {
@@ -41,14 +31,6 @@ namespace TTengine.Core
 
         /// <summary>Root screen where the MainChannel is drawn to.</summary>
         public ScreenComp RootScreen;
-
-        /// <summary>The main Channel is a scalable screen ('graphics window') and World in
-        /// which all other entities, channels, levels etc exist. It lives inside the RootWorld and renders
-        /// to the RootScreen.</summary>
-        public Entity MainChannel;
-
-        /// <summary>The Screen of the MainChannel.</summary>
-        public ScreenComp MainChannelScreen;
 
         /// <summary>
         /// lag is how much time (sec) the fixed timestep (gametime) updates lag to the actual time.
@@ -112,11 +94,6 @@ namespace TTengine.Core
             // make root screen and build to it
             RootScreen = new ScreenComp(false, 0, 0);
             Factory.BuildTo(RootScreen);
-
-            // make the MainChannel and build to it
-            MainChannel = Factory.CreateChannel(Factory.New(), Color.CornflowerBlue);
-			MainChannelScreen = MainChannel.C<WorldComp>().Screen;
-            Factory.BuildTo(MainChannel);
 
             // the TTMusicEngine
             if (IsAudio)

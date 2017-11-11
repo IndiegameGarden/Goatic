@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Artemis;
 using TTengine.Comps;
-using TTengine.Systems;
 using TTengine.Modifiers;
 using TTMusicEngine.Soundevents;
 
@@ -30,6 +29,12 @@ namespace TTengine.Core
 
         /// <summary>The Screen that newly built Entities in factory will by default render to.</summary>
         public ScreenComp BuildScreen;
+
+        public TTFactory()
+        {
+            this.BuildWorld = TTGame.Instance.RootWorld;
+            this.BuildScreen = TTGame.Instance.RootScreen;
+        }
 
         public void BuildTo(EntityWorld world)
         {
