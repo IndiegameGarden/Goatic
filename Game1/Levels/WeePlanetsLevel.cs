@@ -15,9 +15,12 @@ namespace Game1.Levels
         {
             SetAnchorPosition(ctx);
             BuildTo(BackgroundChannel);
-            waterPlanet = CreateSpritelet(New(), "wee-planet-water");
+            waterPlanet = CreateSpritelet(New(), "supernova1");
+            waterPlanet.C<SpriteComp>().CenterToMiddle();
+            var sc = new ScaleComp(2);
+            waterPlanet.AddComponent(sc);
             var pc = waterPlanet.C<PositionComp>();
-            pc.Position = new Vector2(0f,400f); // TODO in constructor args?
+            pc.Position = new Vector2(400f,400f); // TODO in constructor args?
             var rc = new RotateComp();
             rc.RotateSpeed = 0.1; // TODO in constructor args?
             waterPlanet.AddComponent(rc);

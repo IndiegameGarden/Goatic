@@ -59,6 +59,7 @@
     <Compile Include="Game1Factory.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\RootLevel.cs" />
+    <Compile Include="Levels\NovasLevel.cs" />
     <Compile Include="Levels\WeePlanetsLevel.cs" />
     <Compile Include="Levels\TestLevel.cs" />
     <Compile Include="Program.cs" />
@@ -75,8 +76,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Hypno.fx" />
-    <Content Include="Content\MandelbrotJulia.fx" />
+    <None Include="Content\Nova.fx" />
+    <None Include="Content\Hypno.fx" />
+    <None Include="Content\MandelbrotJulia.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace Game1.Levels
         public override void Build()
         {
             BuildTestShaderBackground();
+            BuildTestShaders();
         }
 
         public void BuildTestShaders()

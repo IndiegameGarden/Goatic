@@ -34,6 +34,22 @@ namespace Game1
             return e;
         }
 
+        public Entity CreateNovaBall(float x, float y, int type=1)
+        {
+            Entity fx = CreateFxScreenlet(New(), "Nova");
+            Entity nov = CreateSpritelet(New(), "supernova"+type);
+            nov.C<SpriteComp>().CenterToMiddle();
+            var sc = new ScaleComp(2);
+            nov.AddComponent(sc);
+            var pc = nov.C<PositionComp>();
+            pc.Position = new Vector2(x, y);
+            var rc = new RotateComp();
+            rc.RotateSpeed = 0.1; // TODO in constructor args?
+            nov.AddComponent(rc);
+            nov.C<DrawComp>().DrawScreen = fx.C<ScreenComp>(); // draw nova onto the Shader/FX screen
+            return nov;
+        }
+
         /// <summary>
         /// create a ball Spritelet that can be scaled
         /// </summary>
