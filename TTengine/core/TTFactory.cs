@@ -120,7 +120,7 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Make base Entity a Sprite, which is a moveable sprite 
+        /// Create a Sprite, which is a moveable graphic
         /// </summary>
         /// <param name="graphicsFile">The content graphics file with or without extension. If
         /// extension given eg "ball.png", the uncompiled file will be loaded at runtime. If no extension
@@ -146,7 +146,7 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Create an animated sprite entity
+        /// Create an animated sprite
         /// </summary>
         /// <param name="atlasBitmapFile">Filename of the sprite atlas bitmap</param>
         /// <param name="NspritesX">Number of sprites in horizontal direction (X) in the atlas</param>
@@ -165,6 +165,13 @@ namespace TTengine.Core
             return e;
         }
 
+        /// <summary>
+        /// experimental TODO
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="fieldBitmapFile"></param>
+        /// <param name="spriteBitmapFile"></param>
+        /// <returns></returns>
         public Entity CreateSpriteField(Entity e, string fieldBitmapFile, string spriteBitmapFile)
         {
             AddDrawable(e);
@@ -177,11 +184,11 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Creates a Textlet, which is a moveable piece of text.
+        /// Creates a moveable text.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="fontName"></param>
-        public Entity CreateTextlet(Entity e, string text, string fontName = "Font1")
+        public Entity CreateText(Entity e, string text, string fontName = "Font1")
         {
             AddDrawable(e);
             e.AddC(new ScaleComp());
@@ -243,7 +250,7 @@ namespace TTengine.Core
         /// be the same.
         /// </summary>
         /// <param name="templateChannel">Existing channel to use as template for color and size.</param>
-        public Entity CreateChannel(Entity e, Entity templateChannel) 
+        public Entity CreateChannelLike(Entity e, Entity templateChannel) 
         {
             ScreenComp sc = templateChannel.C<WorldComp>().Screen;
             CreateChannel(e,sc.BackgroundColor, sc.Width, sc.Height);
@@ -252,6 +259,7 @@ namespace TTengine.Core
 
         /// <summary>
         /// Creates an FX Screenlet that renders a layer with shader Effect to the current active BuildScreen
+        /// TODO: convert to an AddFx syntax
         /// </summary>
         /// <returns></returns>
         public Entity CreateFxScreenlet(Entity e, String effectFile)
@@ -284,7 +292,7 @@ namespace TTengine.Core
         /// Create a Sprite which is a rect covering the entire display
         /// </summary>
         /// <returns></returns>
-        public Entity CreateSprite(Entity e)
+        public Entity CreateSpriteFill(Entity e)
         {
             AddDrawable(e);
             var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));
@@ -293,20 +301,10 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Creates a Scriptlet, which is an Entity that only contains a custom code script
-        /// </summary>
-        /// <param name="script"></param>
-        public Entity CreateScriptlet(Entity e, IScript script)
-        {
-            e.AddC(new ScriptComp(script));
-            return e;
-        }
-
-        /// <summary>
         /// Add audio script to Entity
         /// </summary>
         /// <param name="soundScript"></param>
-        public Entity CreateAudiolet(Entity e, SoundEvent soundScript)
+        public Entity AddAudio(Entity e, SoundEvent soundScript)
         {
             e.AddC(new AudioComp(soundScript));
             return e;
@@ -318,19 +316,25 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFrameRateCounter(Entity e, Color textColor, int pixelsOffsetVertical = 0)
         {
-            CreateTextlet(e,"##");
+            CreateText(e,"##");
             e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
             e.C<DrawComp>().DrawColor = textColor;
             AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
             return e;
         }
 
-        public void AddScript(Entity e, IScript script)
+        /// <summary>
+        /// Add custom code script to Entity
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="script"></param>
+        public Entity AddScript(Entity e, IScript script)
         {
             if (!e.HasC<ScriptComp>())
                 e.AddC(new ScriptComp());
             var sc = e.C<ScriptComp>();
             sc.Add(script);
+            return e;
         }
 
         /// <summary>
@@ -339,7 +343,7 @@ namespace TTengine.Core
         /// <param name="e">The Entity to add script to</param>
         /// <param name="scriptCode">Script to run</param>
         /// <returns>IScript object created from the function</returns>
-        public BasicScript AddScript(Entity e, ScriptDelegate scriptCode)
+        public Entity AddScript(Entity e, ScriptDelegate scriptCode)
         {
             if (!e.HasC<ScriptComp>())
             {
@@ -348,7 +352,7 @@ namespace TTengine.Core
             var sc = e.C<ScriptComp>();
             var script = new BasicScript(scriptCode);
             sc.Add(script);
-            return script;
+            return e;
         }
 
         /// <summary>
@@ -358,7 +362,7 @@ namespace TTengine.Core
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <param name="func">Function whose value will be passed in ScriptContext.FunctionValue to script</param>
         /// <returns></returns>
-        public ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode, IFunction func)
+        public Entity AddModifier(Entity e, ModifierDelegate scriptCode, IFunction func)
         {
             if (!e.HasC<ScriptComp>())
             {
@@ -367,7 +371,7 @@ namespace TTengine.Core
             var sc = e.C<ScriptComp>();
             var script = new ModifierScript(scriptCode, func);
             sc.Add(script);
-            return script;
+            return e;
         }
 
         /// <summary>
@@ -377,7 +381,7 @@ namespace TTengine.Core
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <param name="func">Function whose value will be passed in ScriptContext.FunctionValue to script</param>
         /// <returns></returns>
-        public VectorModifierScript AddModifier(Entity e, VectorModifierDelegate scriptCode, IVectorFunction func)
+        public Entity AddModifier(Entity e, VectorModifierDelegate scriptCode, IVectorFunction func)
         {
             if (!e.HasC<ScriptComp>())
             {
@@ -386,7 +390,7 @@ namespace TTengine.Core
             var sc = e.C<ScriptComp>();
             var script = new VectorModifierScript(scriptCode, func);
             sc.Add(script);
-            return script;
+            return e;
         }
 
         /// <summary>
@@ -395,7 +399,7 @@ namespace TTengine.Core
         /// <param name="e">Entity to add modifier script to</param>
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <returns></returns>
-        public ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode)
+        public Entity AddModifier(Entity e, ModifierDelegate scriptCode)
         {
             return AddModifier(e, scriptCode, null);
         }
@@ -426,7 +430,7 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="channelToFit"></param>
         /// <param name="parentChannel"></param>
-        public void ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
+        public Entity ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
                                              bool canShrink = true, int maxPixelsCutOffVertical = 0)
         {
             var scrToFit = channelToFit.C<WorldComp>().Screen;
@@ -472,6 +476,7 @@ namespace TTengine.Core
             // apply scale
             scl.Scale = scale;
 
+            return channelToFit;
         }
 
     }

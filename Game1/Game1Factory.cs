@@ -66,7 +66,7 @@ namespace Game1
         public Entity CreateMovingTextlet(Vector2 pos, string text)
         {
             var t = New();
-            CreateTextlet(t,text);
+            CreateText(t,text);
             t.C<PositionComp>().Position = pos;
             t.C<DrawComp>().DrawColor = Color.Black;
             t.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);

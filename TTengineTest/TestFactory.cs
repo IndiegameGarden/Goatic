@@ -63,7 +63,7 @@ namespace TTengineTest
 
         public Entity CreateTextlet(Entity e, Vector2 pos, string text, Color col, float layerDepth = 0.5f)
         {
-            CreateTextlet(e,text);
+            CreateText(e,text);
             e.C<PositionComp>().Position = pos;
             e.C<PositionComp>().Depth = layerDepth;
             e.C<DrawComp>().DrawColor = col;
