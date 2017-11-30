@@ -32,12 +32,12 @@ namespace TTengineTest
             ch1.C<WorldComp>().Screen.Zoom = 0.5f;
 
             // second item - a regular sprite with transparency RUNTIME LOADED
-            var spr1 = Factory.CreateSpritelet(Factory.New(), "red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
+            var spr1 = Factory.CreateSprite(Factory.New(), "red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
             spr1.C<PositionComp>().Position = new Vector2(800f, 50f);
             Color c2 = spr1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
 
             // 3rd item - a regular compiled content sprite with transparency content pipeline loaded
-            var spr2 = Factory.CreateSpritelet(Factory.New(), "red-circle_frank-tschakert"); 
+            var spr2 = Factory.CreateSprite(Factory.New(), "red-circle_frank-tschakert"); 
             spr2.C<PositionComp>().Position = new Vector2(1050f, 50f);
 
 			// for channel, build the content into it.

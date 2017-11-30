@@ -15,7 +15,7 @@ namespace Game1.Levels
         {
             SetAnchorPosition(ctx);
             BuildTo(BackgroundChannel);
-            waterPlanet = CreateSpritelet(New(), "supernova1");
+            waterPlanet = CreateSprite(New(), "supernova1");
             waterPlanet.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp(2);
             waterPlanet.AddC(sc);
@@ -32,7 +32,7 @@ namespace Game1.Levels
         {
             SetAnchorPosition(ctx);
             BuildTo(LevelChannel);
-            animCircle = CreateAnimatedSpritelet(New(), "animated-fluorescent-circle", 4, 8, AnimationType.NORMAL, 4);
+            animCircle = CreateAnimatedSprite(New(), "animated-fluorescent-circle", 4, 8, AnimationType.NORMAL, 4);
             var ac = animCircle.C<AnimatedSpriteComp>();
             var pc = animCircle.C<PositionComp>();
             ac.MaxFrame = 29;

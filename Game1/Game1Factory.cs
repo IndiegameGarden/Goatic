@@ -27,7 +27,7 @@ namespace Game1
 
         public Entity CreateShip(Entity e)
         {
-            CreateSpritelet(e, "ball");
+            CreateSprite(e, "ball");
             e.AddC(new ScaleComp(2.0));
             e.AddC(new PlayerInputComp());
             e.AddC(new InputToMotionComp());
@@ -37,7 +37,7 @@ namespace Game1
         public Entity CreateNovaBall(float x, float y, int type=1)
         {
             Entity fx = CreateFxScreenlet(New(), "Nova");
-            Entity nov = CreateSpritelet(New(), "supernova"+type);
+            Entity nov = CreateSprite(New(), "supernova"+type);
             nov.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp(2);
             nov.AddC(sc);
@@ -51,14 +51,14 @@ namespace Game1
         }
 
         /// <summary>
-        /// create a ball Spritelet that can be scaled
+        /// create a ball Sprite that can be scaled
         /// </summary>
         /// <param name="radius">the relative size scaling, 1 is normal</param>
         /// <returns></returns>
         public Entity CreateBall(double radius)
         {
             Entity e = New();
-            CreateSpritelet(e, "paul-hardman_circle-four");
+            CreateSprite(e, "paul-hardman_circle-four");
             e.AddC(new ScaleComp(radius));
             return e;
         }
@@ -149,9 +149,9 @@ namespace Game1
             return e;
         }
 
-        public Entity CreateJuliaFxSpritelet()
+        public Entity CreateJuliaFxSprite()
         {            
-            var e = CreateFxSpritelet(New(), "MandelbrotJulia");
+            var e = CreateFxSprite(New(), "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
             AddScript(e, ScriptJuliaFx);

@@ -26,7 +26,7 @@ namespace TTengineTest
             var levScr = Factory.CreateScreenlet(Factory.New(), Color.Black,true);
             levScr.C<ScreenComp>().SpriteBatch.samplerState = SamplerState.PointClamp; // nice 'n blocky
             BuildTo(levScr);
-            var s = Factory.CreateSpritelet(Factory.New(), "Quest14-Level1.png");
+            var s = Factory.CreateSprite(Factory.New(), "Quest14-Level1.png");
             s.C<SpriteComp>().Center = new Vector2(532f, 227f);
             s.AddC(new ScaleComp(1.0));
             var targFunc = new MoveToTargetFunction();
@@ -39,7 +39,7 @@ namespace TTengineTest
 
             // -- main channel: shows the child channel using a sprite
             BuildToDefault();
-            var scr1 = Factory.CreateSpritelet(Factory.New(), levScr.C<ScreenComp>());
+            var scr1 = Factory.CreateSprite(Factory.New(), levScr.C<ScreenComp>());
             scr1.C<PositionComp>().Depth = 0.9f;
             // some non-blocky graphics in front of level; using default Spritebatch
             var t1 = new TestAnimatedSprite();

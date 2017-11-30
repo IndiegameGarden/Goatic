@@ -40,7 +40,7 @@ namespace TTengine.Comps
         }
 
         /// <summary>
-        /// create new spritelet with given Texture2D texture, or null if no texture yet
+        /// create new sprite with given Texture2D texture, or null if no texture yet
         /// </summary>
         public SpriteComp(Texture2D texture)
         {
@@ -49,7 +49,7 @@ namespace TTengine.Comps
         }
 
         /// <summary>
-        /// create new spritelet that renders the contents of a screenlet
+        /// create new sprite that renders the contents of a screenlet
         /// </summary>
         /// <param name="screen">the screenlet to render as a sprite</param>
         public SpriteComp(ScreenComp screen)

@@ -35,7 +35,7 @@ namespace Game1.Levels
         public void BuildTestShaderBackground()
         {
             BuildTo(BackgroundChannel);
-            CreateJuliaFxSpritelet();
+            CreateJuliaFxSprite();
 
         }
 

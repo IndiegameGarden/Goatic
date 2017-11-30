@@ -120,12 +120,12 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Make base Entity a Spritelet, which is a moveable sprite 
+        /// Make base Entity a Sprite, which is a moveable sprite 
         /// </summary>
         /// <param name="graphicsFile">The content graphics file with or without extension. If
         /// extension given eg "ball.png", the uncompiled file will be loaded at runtime. If no extension
         /// given eg "ball", precompiled XNA content will be loaded (.xnb files).</param>
-        public Entity CreateSpritelet(Entity e, string graphicsFile)
+        public Entity CreateSprite(Entity e, string graphicsFile)
         {
             AddDrawable(e);
             var sc = new SpriteComp(graphicsFile);
@@ -134,10 +134,10 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Create a Spritelet with texture based on the contents of a Screen
+        /// Create a Sprite with texture based on the contents of a Screen
         /// </summary>
         /// <returns></returns>
-        public Entity CreateSpritelet(Entity e, ScreenComp screen)
+        public Entity CreateSprite(Entity e, ScreenComp screen)
         {
             AddDrawable(e);
             var sc = new SpriteComp(screen);
@@ -153,7 +153,7 @@ namespace TTengine.Core
         /// <param name="NspritesY">Number of sprites in vertical direction (Y) in the atlas</param>
         /// <param name="animType">Animation type chosen from AnimationType class</param>
         /// <param name="slowDownFactor">Slowdown factor for animation, default = 1</param>
-        public Entity CreateAnimatedSpritelet(Entity e, string atlasBitmapFile, int NspritesX, int NspritesY, 
+        public Entity CreateAnimatedSprite(Entity e, string atlasBitmapFile, int NspritesX, int NspritesY, 
                                                      AnimationType animType = AnimationType.NORMAL,
                                                      int slowDownFactor = 1)
         {
@@ -230,10 +230,10 @@ namespace TTengine.Core
 			sc.BackgroundColor = backgroundColor;
 			screenlet.AddC (sc);
 
-            // create the channel Entity, based on Spritelet
-            CreateSpritelet(e, sc);
+            // create the channel Entity, based on Sprite
+            CreateSprite(e, sc);
 
-			// make this spritelet into a Channel by adding the World
+			// make this sprite into a Channel by adding the World
             e.AddC(wc);
             return e;
         }
@@ -264,10 +264,10 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Creates an FX Spritelet that renders a shader Effect in a rectangle of screen-filling size
+        /// Creates an FX Sprite that renders a shader Effect in a rectangle of screen-filling size
         /// </summary>
         /// <returns></returns>
-        public Entity CreateFxSpritelet(Entity e, string effectFile)
+        public Entity CreateFxSprite(Entity e, string effectFile)
         {
             AddDrawable(e);
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
@@ -276,15 +276,15 @@ namespace TTengine.Core
             e.AddC(sc);
             var spc = new SpriteRectComp();
             e.AddC(spc);
-            e.C<DrawComp>().DrawScreen = sc; // let spritelet draw itself to the effect-generating screenlet sc
+            e.C<DrawComp>().DrawScreen = sc; // let sprite draw itself to the effect-generating screenlet sc
             return e;
         }
 
         /// <summary>
-        /// Create a Spritelet which is a rect covering the entire display
+        /// Create a Sprite which is a rect covering the entire display
         /// </summary>
         /// <returns></returns>
-        public Entity CreateSpritelet(Entity e)
+        public Entity CreateSprite(Entity e)
         {
             AddDrawable(e);
             var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));

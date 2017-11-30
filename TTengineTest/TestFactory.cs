@@ -19,13 +19,13 @@ namespace TTengineTest
         public string BallSprite = "red-circle_frank-tschakert";
 
         /// <summary>
-        /// create a ball Spritelet that can be scaled
+        /// create a ball Sprite that can be scaled
         /// </summary>
         /// <param name="radius">the relative size scaling, 1 is normal</param>
         /// <returns></returns>
         public Entity CreateBall(Entity e, double radius, float layerDepth = 0.5f)
         {
-            CreateSpritelet(e,this.BallSprite);
+            CreateSprite(e,this.BallSprite);
             e.C<PositionComp>().Depth = layerDepth;
             e.C<SpriteComp>().CenterToMiddle();
             e.AddC(new ScaleComp(radius));
