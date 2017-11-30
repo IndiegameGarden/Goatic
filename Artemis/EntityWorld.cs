@@ -288,7 +288,7 @@ namespace Artemis
 
             foreach (IComponent comp in components)
             {
-                entity.AddComponent(comp);
+                entity.AddC(comp);
             }
 
             return entity;

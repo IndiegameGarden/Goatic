@@ -15,7 +15,7 @@ namespace TTengineTest
         public override void Create()
         {
             var e = Factory.CreateSpriteField(Factory.New(),"amazing1.png", "tree");   // TODO white circle
-            e.AddComponent(new VelocityComp());
+            e.AddC(new VelocityComp());
 
             e.C<VelocityComp>().Velocity2D = new Vector2(5f, 5f);
 

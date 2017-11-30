@@ -28,7 +28,7 @@ namespace TTengineTest
             CreateSpritelet(e,this.BallSprite);
             e.C<PositionComp>().Depth = layerDepth;
             e.C<SpriteComp>().CenterToMiddle();
-            e.AddComponent(new ScaleComp(radius));
+            e.AddC(new ScaleComp(radius));
             return e;
         }
 
@@ -57,7 +57,7 @@ namespace TTengineTest
             ball.C<ScaleComp>().Scale = 0.7;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
-            ball.AddComponent(rc);
+            ball.AddC(rc);
             return ball;
         }
 

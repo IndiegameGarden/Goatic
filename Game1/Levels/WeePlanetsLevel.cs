@@ -18,12 +18,12 @@ namespace Game1.Levels
             waterPlanet = CreateSpritelet(New(), "supernova1");
             waterPlanet.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp(2);
-            waterPlanet.AddComponent(sc);
+            waterPlanet.AddC(sc);
             var pc = waterPlanet.C<PositionComp>();
             pc.Position = new Vector2(400f,400f); // TODO in constructor args?
             var rc = new RotateComp();
             rc.RotateSpeed = 0.1; // TODO in constructor args?
-            waterPlanet.AddComponent(rc);
+            waterPlanet.AddC(rc);
             Finalize(waterPlanet);
 
         }

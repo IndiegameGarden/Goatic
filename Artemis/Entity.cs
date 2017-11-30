@@ -184,7 +184,7 @@ namespace Artemis
 
         /// <summary>Adds the component.</summary>
         /// <param name="component">The component.</param>
-        public void AddComponent(IComponent component)
+        public void AddC(IComponent component)
         {
             Debug.Assert(component != null, "Component must not be null.");
 
@@ -194,7 +194,7 @@ namespace Artemis
         /// <summary>Adds the component.</summary>
         /// <typeparam name="T">The <see langword="Type"/> T.</typeparam>
         /// <param name="component">The component.</param>
-        public void AddComponent<T>(IComponent component) where T : IComponent
+        public void AddC<T>(IComponent component) where T : IComponent
         {
             Debug.Assert(component != null, "Component must not be null.");
 
@@ -204,7 +204,7 @@ namespace Artemis
         /// <summary>Adds the component.</summary>
         /// <typeparam name="T">The <see langword="Type"/> T.</typeparam>
         /// <param name="component">The component.</param>
-        public void AddComponent<T>(IComponent<T> component) where T : IComponent
+        public void AddC<T>(IComponent<T> component) where T : IComponent
         {
             Debug.Assert(component != null, "Component must not be null.");
 
@@ -264,7 +264,7 @@ namespace Artemis
         /// <summary>Determines whether this instance has a specific component.</summary>
         /// <typeparam name="T">The <see langword="Type"/> T.</typeparam>
         /// <returns><see langword="true" /> if this instance has a specific component; otherwise, <see langword="false" />.</returns>
-        public bool HasComponent<T>() where T : IComponent
+        public bool HasC<T>() where T : IComponent
         {
             return !object.Equals((T)this.entityManager.GetComponent(this, ComponentType<T>.CType), default(T));
         }

@@ -46,7 +46,7 @@ namespace Game1.Levels
         // Hijack the Finalize method to allow shifting new entities positions by AnchorPosition
         public override void Finalize(Entity e)
         {
-            if (e.HasComponent<PositionComp>())
+            if (e.HasC<PositionComp>())
                 e.C<PositionComp>().Position += AnchorPosition;
             base.Finalize(e);            
         }

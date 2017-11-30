@@ -19,18 +19,18 @@ namespace Game1
         {
             var e = New();
             var pc = new PositionComp(x,y);
-            e.AddComponent(pc);
+            e.AddC(pc);
             var lc = new LevelComp(level,script,e);
-            e.AddComponent(lc);
+            e.AddC(lc);
             return e;
         }
 
         public Entity CreateShip(Entity e)
         {
             CreateSpritelet(e, "ball");
-            e.AddComponent(new ScaleComp(2.0));
-            e.AddComponent(new PlayerInputComp());
-            e.AddComponent(new InputToMotionComp());
+            e.AddC(new ScaleComp(2.0));
+            e.AddC(new PlayerInputComp());
+            e.AddC(new InputToMotionComp());
             return e;
         }
 
@@ -40,12 +40,12 @@ namespace Game1
             Entity nov = CreateSpritelet(New(), "supernova"+type);
             nov.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp(2);
-            nov.AddComponent(sc);
+            nov.AddC(sc);
             var pc = nov.C<PositionComp>();
             pc.Position = new Vector2(x, y);
             var rc = new RotateComp();
             rc.RotateSpeed = 0.1; // TODO in constructor args?
-            nov.AddComponent(rc);
+            nov.AddC(rc);
             nov.C<DrawComp>().DrawScreen = fx.C<ScreenComp>(); // draw nova onto the Shader/FX screen
             return nov;
         }
@@ -59,7 +59,7 @@ namespace Game1
         {
             Entity e = New();
             CreateSpritelet(e, "paul-hardman_circle-four");
-            e.AddComponent(new ScaleComp(radius));
+            e.AddC(new ScaleComp(radius));
             return e;
         }
 
@@ -105,7 +105,7 @@ namespace Game1
             ball.C<ScaleComp>().Scale = 0.7;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
-            ball.AddComponent(rc);
+            ball.AddC(rc);
             return ball;
         }
 

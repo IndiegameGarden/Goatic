@@ -28,7 +28,7 @@ namespace TTengineTest
             BuildTo(levScr);
             var s = Factory.CreateSpritelet(Factory.New(), "Quest14-Level1.png");
             s.C<SpriteComp>().Center = new Vector2(532f, 227f);
-            s.AddComponent(new ScaleComp(1.0));
+            s.AddC(new ScaleComp(1.0));
             var targFunc = new MoveToTargetFunction();
             targFunc.CurrentValue.X = 1.0f;
             targFunc.Target.X = 15.0f;

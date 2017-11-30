@@ -27,7 +27,7 @@ namespace TTengineTest
             BTAIComp ai = new BTAIComp();
             var randomWanderBehavior = new RandomWanderBehavior(1, 6);
             ai.rootNode = new PrioritySelector(randomWanderBehavior);
-            ball.AddComponent(ai);
+            ball.AddC(ai);
         }
 
     }

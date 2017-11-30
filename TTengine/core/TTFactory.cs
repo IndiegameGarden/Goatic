@@ -53,14 +53,14 @@ namespace TTengine.Core
         /// the Entity is a Channel.</param>
         public void BuildTo(Entity e)
         {
-            if (e.HasComponent<WorldComp>())
+            if (e.HasC<WorldComp>())
             {
                 var wc = e.C<WorldComp>();
                 BuildWorld = wc.World;
                 if (wc.Screen != null)
                     BuildScreen = wc.Screen;
             }
-            if (e.HasComponent<ScreenComp>())
+            if (e.HasC<ScreenComp>())
                 BuildScreen = e.C<ScreenComp>();
         }
 
@@ -104,8 +104,8 @@ namespace TTengine.Core
         /// </summary>
         public Entity AddMotion(Entity e)
         {
-            if (!e.HasComponent<PositionComp>()) e.AddComponent(new PositionComp());
-            if (!e.HasComponent<VelocityComp>()) e.AddComponent(new VelocityComp());
+            if (!e.HasC<PositionComp>()) e.AddC(new PositionComp());
+            if (!e.HasC<VelocityComp>()) e.AddC(new VelocityComp());
             return e;
         }
 
@@ -115,7 +115,7 @@ namespace TTengine.Core
         public Entity AddDrawable(Entity e)
         {
             AddMotion(e);
-            if (!e.HasComponent<DrawComp>()) e.AddComponent(new DrawComp(BuildScreen));
+            if (!e.HasC<DrawComp>()) e.AddC(new DrawComp(BuildScreen));
             return e;
         }
 
@@ -129,7 +129,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(graphicsFile);
-            e.AddComponent(sc);
+            e.AddC(sc);
             return e;
         }
 
@@ -141,7 +141,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(screen);
-            e.AddComponent(sc);
+            e.AddC(sc);
             return e;
         }
 
@@ -161,7 +161,7 @@ namespace TTengine.Core
             var sc = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
             sc.AnimType = animType;
             sc.SlowdownFactor = slowDownFactor;
-            e.AddComponent(sc);
+            e.AddC(sc);
             return e;
         }
 
@@ -171,8 +171,8 @@ namespace TTengine.Core
             var sfc = new SpriteFieldComp(fieldBitmapFile);
             var sc = new SpriteComp(spriteBitmapFile);
             sfc.FieldSpacing = new Vector2(sc.Width, sc.Height);
-            e.AddComponent(sc);
-            e.AddComponent(sfc);
+            e.AddC(sc);
+            e.AddC(sfc);
             return e;
         }
 
@@ -184,9 +184,9 @@ namespace TTengine.Core
         public Entity CreateTextlet(Entity e, string text, string fontName = "Font1")
         {
             AddDrawable(e);
-            e.AddComponent(new ScaleComp());
+            e.AddC(new ScaleComp());
             var tc = new TextComp(text, fontName);
-            e.AddComponent(tc);
+            e.AddC(tc);
             return e;
         }
 
@@ -204,8 +204,8 @@ namespace TTengine.Core
         {
             var sc = new ScreenComp(hasRenderBuffer, width, height);
             sc.BackgroundColor = backgroundColor;            
-            e.AddComponent(sc);
-            e.AddComponent(new DrawComp(BuildScreen));
+            e.AddC(sc);
+            e.AddC(new DrawComp(BuildScreen));
             return e;
         }
 
@@ -228,13 +228,13 @@ namespace TTengine.Core
 			var sc = new ScreenComp (true, width, height);
 			wc.Screen = sc;				// store the Screen as part of the World
 			sc.BackgroundColor = backgroundColor;
-			screenlet.AddComponent (sc);
+			screenlet.AddC (sc);
 
             // create the channel Entity, based on Spritelet
             CreateSpritelet(e, sc);
 
 			// make this spritelet into a Channel by adding the World
-            e.AddComponent(wc);
+            e.AddC(wc);
             return e;
         }
 
@@ -259,7 +259,7 @@ namespace TTengine.Core
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
-            e.AddComponent(sc);
+            e.AddC(sc);
             return e;
         }
 
@@ -273,9 +273,9 @@ namespace TTengine.Core
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
-            e.AddComponent(sc);
+            e.AddC(sc);
             var spc = new SpriteRectComp();
-            e.AddComponent(spc);
+            e.AddC(spc);
             e.C<DrawComp>().DrawScreen = sc; // let spritelet draw itself to the effect-generating screenlet sc
             return e;
         }
@@ -288,7 +288,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));
-            e.AddComponent(sc);
+            e.AddC(sc);
             return e;
         }
 
@@ -298,7 +298,7 @@ namespace TTengine.Core
         /// <param name="script"></param>
         public Entity CreateScriptlet(Entity e, IScript script)
         {
-            e.AddComponent(new ScriptComp(script));
+            e.AddC(new ScriptComp(script));
             return e;
         }
 
@@ -308,7 +308,7 @@ namespace TTengine.Core
         /// <param name="soundScript"></param>
         public Entity CreateAudiolet(Entity e, SoundEvent soundScript)
         {
-            e.AddComponent(new AudioComp(soundScript));
+            e.AddC(new AudioComp(soundScript));
             return e;
         }
 
@@ -327,8 +327,8 @@ namespace TTengine.Core
 
         public void AddScript(Entity e, IScript script)
         {
-            if (!e.HasComponent<ScriptComp>())
-                e.AddComponent(new ScriptComp());
+            if (!e.HasC<ScriptComp>())
+                e.AddC(new ScriptComp());
             var sc = e.C<ScriptComp>();
             sc.Add(script);
         }
@@ -341,9 +341,9 @@ namespace TTengine.Core
         /// <returns>IScript object created from the function</returns>
         public BasicScript AddScript(Entity e, ScriptDelegate scriptCode)
         {
-            if (!e.HasComponent<ScriptComp>())
+            if (!e.HasC<ScriptComp>())
             {
-                e.AddComponent(new ScriptComp());
+                e.AddC(new ScriptComp());
             }
             var sc = e.C<ScriptComp>();
             var script = new BasicScript(scriptCode);
@@ -360,9 +360,9 @@ namespace TTengine.Core
         /// <returns></returns>
         public ModifierScript AddModifier(Entity e, ModifierDelegate scriptCode, IFunction func)
         {
-            if (!e.HasComponent<ScriptComp>())
+            if (!e.HasC<ScriptComp>())
             {
-                e.AddComponent(new ScriptComp());
+                e.AddC(new ScriptComp());
             }
             var sc = e.C<ScriptComp>();
             var script = new ModifierScript(scriptCode, func);
@@ -379,9 +379,9 @@ namespace TTengine.Core
         /// <returns></returns>
         public VectorModifierScript AddModifier(Entity e, VectorModifierDelegate scriptCode, IVectorFunction func)
         {
-            if (!e.HasComponent<ScriptComp>())
+            if (!e.HasC<ScriptComp>())
             {
-                e.AddComponent(new ScriptComp());
+                e.AddC(new ScriptComp());
             }
             var sc = e.C<ScriptComp>();
             var script = new VectorModifierScript(scriptCode, func);
@@ -440,7 +440,7 @@ namespace TTengine.Core
             if (scl == null)
             {
                 scl = new ScaleComp();
-                channelToFit.AddComponent(scl);
+                channelToFit.AddC(scl);
             }
 
             // position channel to the middle of parent.
