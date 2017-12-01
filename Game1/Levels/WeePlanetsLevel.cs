@@ -11,7 +11,7 @@ namespace Game1.Levels
         Entity waterPlanet;
         Entity animCircle;
 
-        public void BuildWaterPlanetSection(ScriptContext ctx)
+        public void BuildWaterPlanetSection(ScriptComp ctx)
         {
             SetAnchorPosition(ctx);
             BuildTo(BackgroundChannel);
@@ -28,7 +28,7 @@ namespace Game1.Levels
 
         }
 
-        public void BuildTestSection(ScriptContext ctx)
+        public void BuildTestSection(ScriptComp ctx)
         {
             SetAnchorPosition(ctx);
             BuildTo(LevelChannel);

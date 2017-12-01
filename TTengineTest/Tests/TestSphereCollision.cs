@@ -36,7 +36,7 @@ namespace TTengineTest
         /// script that sets color of sprite, depending on number of colliding objects
         /// </summary>
         /// <param name="ctx"></param>
-        void BallColorSetScript(ScriptContext ctx)
+        void BallColorSetScript(ScriptComp ctx)
         {
             var sc = ctx.Entity.C<SphereShapeComp>();
             var dc = ctx.Entity.C<DrawComp>();

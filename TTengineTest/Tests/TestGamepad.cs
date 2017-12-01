@@ -21,7 +21,7 @@ namespace TTengineTest
             Factory.AddScript(b, ScriptMoveByGamepad);
         }
 
-        void ScriptMoveByGamepad(ScriptContext ctx)
+        void ScriptMoveByGamepad(ScriptComp ctx)
         {
             var e = ctx.Entity;
             var vc = e.C<VelocityComp>();

@@ -22,6 +22,8 @@ namespace Game1
             e.AddC(pc);
             var lc = new LevelComp(level,script,e);
             e.AddC(lc);
+            var sc = new ScriptComp(e);
+            e.AddC(sc);
             return e;
         }
 
@@ -37,17 +39,23 @@ namespace Game1
         public Entity CreateNovaBall(float x, float y, int type=1)
         {
             Entity fx = CreateFxScreenlet(New(), "Nova");
-            Entity nov = CreateSprite(New(), "supernova"+type);
-            nov.C<SpriteComp>().CenterToMiddle();
+            Entity e = CreateSprite(New(), "supernova"+type);
+            e.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp(2);
-            nov.AddC(sc);
-            var pc = nov.C<PositionComp>();
+            e.AddC(sc);
+            var pc = e.C<PositionComp>();
             pc.Position = new Vector2(x, y);
             var rc = new RotateComp();
             rc.RotateSpeed = 0.1; // TODO in constructor args?
-            nov.AddC(rc);
-            nov.C<DrawComp>().DrawScreen = fx.C<ScreenComp>(); // draw nova onto the Shader/FX screen
-            return nov;
+            e.AddC(rc);
+            AddScript(e, GrowNovaScript);            
+            e.C<DrawComp>().DrawScreen = fx.C<ScreenComp>(); // draw nova onto the Shader/FX screen
+            return e;
+        }
+
+        void GrowNovaScript(ScriptComp sc)
+        {
+            sc.Entity.C<ScaleComp>().Scale *= 1.001;
         }
 
         /// <summary>
@@ -74,7 +82,7 @@ namespace Game1
             return t;
         }
 
-        public void RotateModifierScript(ScriptContext ctx, double value)
+        public void RotateModifierScript(ScriptComp ctx, double value)
         {
             ctx.Entity.C<DrawComp>().DrawRotation = (float)value;
         }
@@ -117,7 +125,7 @@ namespace Game1
             return e;
         }
 
-        void ScriptHypno(ScriptContext ctx)
+        void ScriptHypno(ScriptComp ctx)
         {
             float z = 17f - 15f * (float)Math.Sin(MathHelper.TwoPi * 0.03324 * ctx.SimTime);
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
@@ -133,7 +141,7 @@ namespace Game1
             return e;
         }
 
-        void ScriptMandelbrotFx(ScriptContext ctx)
+        void ScriptMandelbrotFx(ScriptComp ctx)
         {
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             effect.Parameters["Zoom"].SetValue((float)( 3 - ctx.SimTime/20.0 ));
@@ -158,7 +166,7 @@ namespace Game1
             return e;
         }
 
-        void ScriptJuliaFx(ScriptContext ctx)
+        void ScriptJuliaFx(ScriptComp ctx)
         {
             var effect = ctx.Entity.C<ScreenComp>().SpriteBatch.effect;
             var t = (float) ctx.SimTime;

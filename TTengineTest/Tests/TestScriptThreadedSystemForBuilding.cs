@@ -42,19 +42,19 @@ namespace TTengineTest
                 this.testClass = testClass;
             }
 
-            public void OnUpdate(ScriptContext ctx)
+            public void OnUpdate(ScriptComp ctx)
             {
                 // if enough time has passed, launch new builder job into the queue and
                 // self-destruct this script.
                 if (!isDone && ctx.SimTime > 5)
                 {
-                    var job = new ScriptJob(testClass.TestBuilderScript1, new ScriptContext());
+                    var job = new ScriptJob(testClass.TestBuilderScript1, ctx.Entity);
                     ScriptThreadedSystem.AddToQueue(job);
                     isDone = true;
                 }
             }
 
-            public void OnDraw(ScriptContext ctx) {; }
+            public void OnDraw(ScriptComp ctx) {; }
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace TTengineTest
         /// Each Entity once completed configured is released into the World using the 
         /// Factory.Finalize() method.
         /// </summary>
-        void TestBuilderScript1(ScriptContext ctx)
+        void TestBuilderScript1(ScriptComp ctx)
         {
             Factory.BuildTo(Channel);
             Factory.BallSprite = "paul-hardman_circle-four";

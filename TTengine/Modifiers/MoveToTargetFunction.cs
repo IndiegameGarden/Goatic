@@ -23,7 +23,7 @@ namespace TTengine.Modifiers
 
         public double Speed = 0;
 
-        public Vector2 Value(ScriptContext ctx)
+        public Vector2 Value(ScriptComp ctx)
         {
             // scaling logic towards target
             if (Speed > 0)

@@ -17,10 +17,10 @@ namespace Game1.Systems
     /// which then starts a build
     /// </summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.LevelBuilderSystem)]
-    public class LevelBuilderSystem : EntityComponentProcessingSystem<LevelComp,PositionComp>
+    public class LevelBuilderSystem : EntityComponentProcessingSystem<LevelComp,PositionComp,ScriptComp>
     {
         
-        public override void Process(Entity entity, LevelComp lc, PositionComp pc)
+        public override void Process(Entity entity, LevelComp lc, PositionComp pc, ScriptComp sc)
         {
             if (lc.CanTrigger)          // check if ready to trigger
             {
@@ -29,7 +29,7 @@ namespace Game1.Systems
                 if (dist <= lc.TriggerRadius)   // if close enough 
                 {
                     lc.CanTrigger = false;      // prevent next round trigger
-                    var job = new ScriptJob(lc.BuildScript, new ScriptContext(Game1.Instance.GameTime,this.Dt,entity));
+                    var job = new ScriptJob(lc.BuildScript, entity );
                     ScriptThreadedSystem.AddToQueue(job);       // put script in bg job processing queue
                 }
             }

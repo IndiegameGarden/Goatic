@@ -119,7 +119,7 @@ namespace TTengine.Systems
                     if (job != null)
                     {
                         // do the job - execute
-                        job.Script(job.Ctx);
+                        job.Script(job.Entity.C<ScriptComp>());
                     }
                     else
                     {

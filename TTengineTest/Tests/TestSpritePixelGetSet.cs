@@ -34,7 +34,7 @@ namespace TTengineTest
         /// pixel modification code is here, called every update cycle
         /// </summary>
         /// <param name="context"></param>
-        void ChangePixelsRandomlyScript(ScriptContext context)
+        void ChangePixelsRandomlyScript(ScriptComp context)
         {
             // pick a random pixel
             var sc = context.Entity.C<SpriteComp>();

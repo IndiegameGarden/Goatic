@@ -43,7 +43,7 @@ namespace TTengineTest
 
         }
 
-        void CirclingPositionScript(ScriptContext ctx)
+        void CirclingPositionScript(ScriptComp ctx)
         {
             const float R = 50f;
             const double F = 0.1;
@@ -53,7 +53,7 @@ namespace TTengineTest
                             (float)(R * Math.Cos(MathHelper.TwoPi * F * t)));
         }
 
-        void CirclingPositionScript2(ScriptContext ctx)
+        void CirclingPositionScript2(ScriptComp ctx)
         {
             const float R = 30f;
             const double F = 0.14;

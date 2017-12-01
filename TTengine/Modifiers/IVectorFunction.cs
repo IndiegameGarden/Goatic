@@ -14,6 +14,6 @@ namespace TTengine.Modifiers
         /// </summary>
         /// <param name="ctx">Script context object</param>
         /// <returns>Vector function result value</returns>
-        Vector2 Value(ScriptContext ctx);
+        Vector2 Value(ScriptComp ctx);
     }
 }

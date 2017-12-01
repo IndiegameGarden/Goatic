@@ -36,29 +36,27 @@ namespace TTengineTest
             ball2.C<ScaleComp>().Scale = 0.5;
 
             // script with anonymous delegate code block - for rotation
-            Factory.AddScript(ball2, delegate(ScriptContext ctx) { 
+            Factory.AddScript(ball2, delegate(ScriptComp ctx) { 
                     ctx.Entity.C<DrawComp>().DrawRotation = (float)ctx.SimTime; 
                 });
 
             // TargetModifier to set its position towards a target
-            //var tm = new TargetModifier<PositionComp>(delegate(PositionComp pc, Vector3 pos) { pc.Position = pos; }, 
-            //                    ball2.GetComponent<PositionComp>());
             var targFunc = new MoveToTargetFunction();
             targFunc.Target = new Vector2(0f, 0f);
             targFunc.CurrentValue = ball2.C<PositionComp>().Position;
             targFunc.Speed = 40;
-            Factory.AddModifier(ball2,
-                delegate(ScriptContext ctx, Vector2 pos) { ctx.Entity.C<PositionComp>().Position = pos; },
+            Factory.AddFunctionScript(ball2,
+                delegate(ScriptComp ctx, Vector2 pos) { ctx.Entity.C<PositionComp>().Position = pos; },
                 targFunc);
 
         }
 
-        void MyScaleModifierScript(ScriptContext ctx, double value)
+        void MyScaleModifierScript(ScriptComp ctx, double value)
         {
             ctx.Entity.C<ScaleComp>().Scale = (0.4 + value * 0.3);            
         }
 
-        void MyRotateModifierScript(ScriptContext ctx, double value)
+        void MyRotateModifierScript(ScriptComp ctx, double value)
         {
             ctx.Entity.C<DrawComp>().DrawRotation = (float)value;
         }

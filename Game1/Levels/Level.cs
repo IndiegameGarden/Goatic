@@ -38,7 +38,7 @@ namespace Game1.Levels
         /// level section. This will modify the AnchorPosition of the Level.
         /// </summary>
         /// <param name="ctx">The context that was used to call the script that calls this method.</param>
-        protected void SetAnchorPosition(ScriptContext ctx)
+        protected void SetAnchorPosition(ScriptComp ctx)
         {
             AnchorPosition = ctx.Entity.C<PositionComp>().PositionAbs;
         }

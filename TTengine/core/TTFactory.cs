@@ -331,9 +331,9 @@ namespace TTengine.Core
         public Entity AddScript(Entity e, IScript script)
         {
             if (!e.HasC<ScriptComp>())
-                e.AddC(new ScriptComp());
+                e.AddC(new ScriptComp(e));
             var sc = e.C<ScriptComp>();
-            sc.Add(script);
+            sc.Scripts.Add(script);
             return e;
         }
 
@@ -345,14 +345,7 @@ namespace TTengine.Core
         /// <returns>IScript object created from the function</returns>
         public Entity AddScript(Entity e, ScriptDelegate scriptCode)
         {
-            if (!e.HasC<ScriptComp>())
-            {
-                e.AddC(new ScriptComp());
-            }
-            var sc = e.C<ScriptComp>();
-            var script = new BasicScript(scriptCode);
-            sc.Add(script);
-            return e;
+            return AddScript(e,new BasicScript(scriptCode));
         }
 
         /// <summary>
@@ -360,18 +353,11 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="e">Entity to add modifier script to</param>
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
-        /// <param name="func">Function whose value will be passed in ScriptContext.FunctionValue to script</param>
+        /// <param name="func">Function whose value will be passed in ScriptComp.FunctionValue to script</param>
         /// <returns></returns>
-        public Entity AddModifier(Entity e, ModifierDelegate scriptCode, IFunction func)
+        public Entity AddModifier(Entity e, FunctionScriptDelegate scriptCode, IFunction func)
         {
-            if (!e.HasC<ScriptComp>())
-            {
-                e.AddC(new ScriptComp());
-            }
-            var sc = e.C<ScriptComp>();
-            var script = new ModifierScript(scriptCode, func);
-            sc.Add(script);
-            return e;
+            return AddScript(e,new FunctionScript(scriptCode, func));            
         }
 
         /// <summary>
@@ -379,18 +365,11 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="e">Entity to add modifier script to</param>
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
-        /// <param name="func">Function whose value will be passed in ScriptContext.FunctionValue to script</param>
+        /// <param name="func">Function whose value will be passed in ScriptComp.FunctionValue to script</param>
         /// <returns></returns>
-        public Entity AddModifier(Entity e, VectorModifierDelegate scriptCode, IVectorFunction func)
-        {
-            if (!e.HasC<ScriptComp>())
-            {
-                e.AddC(new ScriptComp());
-            }
-            var sc = e.C<ScriptComp>();
-            var script = new VectorModifierScript(scriptCode, func);
-            sc.Add(script);
-            return e;
+        public Entity AddFunctionScript(Entity e, VectorScriptDelegate scriptCode, IVectorFunction func)
+        { 
+            return AddScript( e, new VectorScript(scriptCode, func) );
         }
 
         /// <summary>
@@ -399,7 +378,7 @@ namespace TTengine.Core
         /// <param name="e">Entity to add modifier script to</param>
         /// <param name="scriptCode">Code block (delegate) that is the script</param>
         /// <returns></returns>
-        public Entity AddModifier(Entity e, ModifierDelegate scriptCode)
+        public Entity AddModifier(Entity e, FunctionScriptDelegate scriptCode)
         {
             return AddModifier(e, scriptCode, null);
         }
@@ -416,12 +395,12 @@ namespace TTengine.Core
                 this.scriptCode = scriptCode;
             }
 
-            public void OnUpdate(ScriptContext ctx)
+            public void OnUpdate(ScriptComp sc)
             {
-                scriptCode(ctx);
+                scriptCode(sc);
             }
 
-            public void OnDraw(ScriptContext ctx) {; }
+            public void OnDraw(ScriptComp sc) {; }
         }
 
         /// <summary>

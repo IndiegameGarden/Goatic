@@ -31,11 +31,11 @@ namespace TTengine.Util
             timer.Start();
         }
 
-        public void OnUpdate(ScriptContext ctx){
+        public void OnUpdate(ScriptComp ctx){
             timer.Update();
         }
         
-        public void OnDraw(ScriptContext ctx)
+        public void OnDraw(ScriptComp ctx)
         {
             timer.CountUp();
             int frameRateAvg = 0;

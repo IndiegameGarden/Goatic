@@ -47,7 +47,7 @@ namespace TTengineTest
 
         }
 
-        void ScriptInspectTextureColor(ScriptContext ctx)
+        void ScriptInspectTextureColor(ScriptComp ctx)
         {
             var e = ctx.Entity;
             var sc = e.C<SpriteComp>();

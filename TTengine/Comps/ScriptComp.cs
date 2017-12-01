@@ -13,55 +13,28 @@ using Artemis;
 namespace TTengine.Comps
 {
     /// <summary>
-    /// Method signature (Delegate) for scripts
+    /// Method signature (Delegate) for scripts defined by methods/functions.
     /// </summary>
-    /// <param name="ctx">script context supplied during script execution</param>
-    public delegate void ScriptDelegate(ScriptContext ctx);
+    /// <param name="sc">ScriptComp passed upon script execution, containing contextual info for script execution.</param>
+    public delegate void ScriptDelegate(ScriptComp sc);
 
     /// <summary>
-    /// The context object passed to scripts when they are run
-    /// </summary>
-    public class ScriptContext
-    {       
-        /// <summary>Amount of time active in simulation of the parent ScriptComp or Entity, in seconds.
-        /// Value may be tweaked by others (e.g. by a script, modifier, etc.).</summary>
-        public double SimTime = 0;
-
-        /// <summary>Delta time of the last Update() simulation step performed or 0 if not specified</summary>
-        public double Dt = 0;
-
-        /// <summary>
-        /// The Entity that the script is attached to, or triggered by.
-        /// </summary>
-        public Entity Entity = null;
-
-        /// <summary>
-        /// Create new instance of ScriptContext with give values
-        /// </summary>
-        /// <param name="simTime"></param>
-        /// <param name="dt"></param>
-        /// <param name="ent"></param>
-        public ScriptContext(double simTime = 0, double dt = 0, Entity ent = null)
-        {
-            this.SimTime = simTime;
-            this.Dt = dt;
-            this.Entity = ent;
-        }
-    }
-
-    /// <summary>
-    /// A script job consisting of a script and the context object that will be passed to it.
-    /// Used for queueing or postponing script execution.
+    /// A script job object for queueing or postponing script execution.
     /// </summary>
     public class ScriptJob
     {
         public ScriptDelegate Script;
-        public ScriptContext Ctx;
+        public Entity Entity;
 
-        public ScriptJob(ScriptDelegate script, ScriptContext ctx )
+        /// <summary>
+        /// Create a new ScriptJob
+        /// </summary>
+        /// <param name="script">Script to run</param>
+        /// <param name="ent">Entity that performs the script (for execution context)</param>
+        public ScriptJob(ScriptDelegate script, Entity ent)
         {
             this.Script = script;
-            this.Ctx = ctx;
+            this.Entity = ent;
         }
     }
 
@@ -70,8 +43,8 @@ namespace TTengine.Comps
     /// </summary>
     public interface IScript
     {
-        void OnUpdate(ScriptContext context);
-        void OnDraw(ScriptContext context);
+        void OnUpdate(ScriptComp sc);
+        void OnDraw(ScriptComp sc);
     }
 
     /// <summary>
@@ -79,38 +52,30 @@ namespace TTengine.Comps
     /// </summary>
     public class ScriptComp: Comp
     {
-        /// <summary>Simulation time counter that is used by scripts, passed via ScriptContext</summary>
-        public double SimTime;
+        /// <summary>Simulation time counter that is used by scripts - counting since ScriptComp creation.</summary>
+        public double SimTime = 0;
+
+        /// <summary>Delta time of the last Update() simulation step performed, or 0 if not performed yet.</summary>
+        public double Dt = 0;
 
         /// <summary>
-        /// The scripts that are called every update/draw cycle
+        /// The Entity that this ScriptComp is attached to, value used by scripts to access any Components.
+        /// </summary>
+        public Entity Entity = null;
+
+        /// <summary>
+        /// The list of scripts that are called every update/draw cycle
         /// </summary>
         public List<IScript> Scripts = new List<IScript>();
 
         /// <summary>
         /// Create new ScriptComp without any scripts yet
         /// </summary>
-        public ScriptComp()
-        {        
-        }
-
-        /// <summary>
-        /// Create new ScriptComp with a single script already added
-        /// </summary>
-        /// <param name="script">script to Add initially</param>
-        public ScriptComp(IScript script)
+        /// <param name="e">Entity that this ScriptComp will be attached to</param>
+        public ScriptComp(Entity e = null)
         {
-            Add(script);
-        }
-
-        /// <summary>
-        /// Add a new IScript script to execute to this component.
-        /// </summary>
-        /// <param name="script">The IScript to add and execute in next updates.</param>
-        public void Add(IScript script)
-        {
-            this.Scripts.Add(script);
-        }
+            this.Entity = e;
+        }     
 
     }
 }

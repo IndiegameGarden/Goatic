@@ -9,7 +9,7 @@ namespace Game1.Levels
     public class NovasLevel: Level
     {
 
-        public void BuildSection1(ScriptContext ctx)
+        public void BuildSection1(ScriptComp ctx)
         {
             SetAnchorPosition(ctx);
             BuildTo(LevelChannel);
