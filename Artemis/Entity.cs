@@ -290,7 +290,7 @@ namespace Artemis
 
         /// <summary>Remove Component from this entity.</summary>
         /// <typeparam name="T">Component Type.</typeparam>
-        public void RemoveComponent<T>() where T : IComponent
+        public void RemoveC<T>() where T : IComponent
         {
             this.entityManager.RemoveComponent(this, ComponentTypeManager.GetTypeFor<T>());
         }
@@ -298,7 +298,7 @@ namespace Artemis
         /// <summary><para>Removes the component.</para>
         ///   <para>Faster removal of components from a entity.</para></summary>
         /// <param name="componentType">The type.</param>
-        public void RemoveComponent(ComponentType componentType)
+        public void RemoveC(ComponentType componentType)
         {
             Debug.Assert(componentType != null, "Component type must not be null.");
 

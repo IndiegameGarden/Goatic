@@ -33,8 +33,7 @@ namespace TTengineTest
             targFunc.CurrentValue.X = 1.0f;
             targFunc.Target.X = 15.0f;
             targFunc.Speed = 3;
-            Factory.AddFunctionScript(s, delegate(ScriptComp ctx, Vector2 val) { ctx.Entity.C<ScaleComp>().Scale = val.X; },
-                targFunc);
+            Factory.AddScript(s, (ctx) => { s.C<ScaleComp>().Scale = targFunc.Value(ctx).X; } );
             s.C<PositionComp>().Position = Channel.C<WorldComp>().Screen.Center;
 
             // -- main channel: shows the child channel using a sprite

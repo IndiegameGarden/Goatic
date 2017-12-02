@@ -20,13 +20,13 @@ namespace Game1.Levels
             if (false)
             {
                 var lev = new WeePlanetsLevel();
-                CreateLevelBuilder(lev, lev.BuildTestSection, 700f, 100f);
-                CreateLevelBuilder(lev, lev.BuildWaterPlanetSection, 400f, 100f);
+                CreateLevelBuilder(New(), lev, lev.BuildTestSection, 700f, 100f);
+                CreateLevelBuilder(New(), lev, lev.BuildWaterPlanetSection, 400f, 100f);
             }
             else
             {
                 var lev = new NovasLevel();
-                CreateLevelBuilder(lev, lev.BuildSection1, 400f, 100f);
+                CreateLevelBuilder(New(), lev, lev.BuildSection1, 400f, 100f);
             }
 
         }

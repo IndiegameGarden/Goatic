@@ -9,6 +9,11 @@ namespace Game1.Levels
     public class NovasLevel: Level
     {
 
+        public override void Build()
+        {
+            ;
+        }
+
         public void BuildSection1(ScriptComp ctx)
         {
             SetAnchorPosition(ctx);

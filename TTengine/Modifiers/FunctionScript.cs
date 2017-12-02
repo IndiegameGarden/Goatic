@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Artemis;
-using Artemis.Interface;
-using TTengine.Core;
+﻿
 using TTengine.Comps;
 
 namespace TTengine.Modifiers
@@ -35,7 +30,7 @@ namespace TTengine.Modifiers
         /// Create new ModifierScript
         /// </summary>
         /// <param name="code"></param>
-        /// <param name="function">if null is passed, the unity function f(x)=x is applied as Function</param>
+        /// <param name="function">the Function to compute in this script each OnUpdate()</param>
         public FunctionScript(FunctionScriptDelegate code, IFunction function)
         {
             this.ScriptCode = code;
@@ -48,21 +43,10 @@ namespace TTengine.Modifiers
         /// <param name="ctx"></param>
         public void OnUpdate(ScriptComp ctx)
         {
-            double v;
-            if (Function == null)
-                v = ctx.SimTime;
-            else
-                v = Function.Value(ctx.SimTime);
+            var v = Function.Value(ctx.SimTime);
             ScriptCode(ctx,v);
         }
 
         public void OnDraw(ScriptComp ctx) { ; }
     }
 }
-
-/*
- function can be pulled into script (object).
-
- creation of script in factory: supply an IFunction object, or IVectorFunction, also with potentially its input (pointer to it)
- AddScript( NewFunctionScript( code-delegate , Functions.NewSin(params) ) )
- */

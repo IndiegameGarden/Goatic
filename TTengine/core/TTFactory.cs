@@ -13,21 +13,24 @@ using TTMusicEngine.Soundevents;
 namespace TTengine.Core
 {
     /// <summary>
-    /// The TTengine's Factory to create new basic Entities (may be half-baked, 
-    /// to further customize) with customizable output to which EntityWorld or
-    /// Screen the items are built.
-    /// Factory's methods are 
-    ///     Create....(input) for new entity creation
-    ///     Add....(Entity e, input)   for adding elements to existing item
-    ///     BuildTo(...)               for changing the build destination of the factory
-    ///     Process...(Entity e, parameters)    for processing an entity
+    /// The TTengine's Factory to create, transform or customize Entities 
+    /// with selection methods to which EntityWorld or Screen the items are built.
+    /// 
+    /// Factory's methods are in the following classes:
+    ///     New....()           for new Entity creation from nothing.
+    ///     Create....(e,input) for creating from Entity e a usable stereotyped Entity (e.g., a Sprite)
+    ///     Add....(e, input)   for adding elements such as a Component or Script to an Entity
+    ///     BuildTo(...)        for changing the build destination of the factory
+    ///     Process...(e, par)  for processing an entity, e.g. transforming it, configuring or modifying.
+    ///     Join...(e1, e2 ..)  for joining Entities e1/e2/.. together in some way, composing/arranging.
+    ///     
     /// </summary>
     public class TTFactory
     {
-        /// <summary>The Artemis entity world currently used for building new Entities in.</summary>
+        /// <summary>The Artemis entity world currently used by this Factory for building new Entities in.</summary>
         public EntityWorld BuildWorld;
 
-        /// <summary>The Screen that newly built Entities in factory will by default render to.</summary>
+        /// <summary>The Screen that newly built Entities in this Factory will by default render to.</summary>
         public ScreenComp BuildScreen;
 
         public TTFactory()
@@ -100,7 +103,7 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Add Entity position and velocity, but no shape/drawability (yet)
+        /// Add Entity position and velocity
         /// </summary>
         public Entity AddMotion(Entity e)
         {
@@ -110,7 +113,7 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Add Entity position and velocity, and make it a drawable Entity
+        /// Add Entity position and velocity, and make it drawable
         /// </summary>
         public Entity AddDrawable(Entity e)
         {
@@ -129,6 +132,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(graphicsFile);
+            e.RemoveC<SpriteComp>();
             e.AddC(sc);
             return e;
         }
@@ -141,6 +145,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(screen);
+            e.RemoveC<SpriteComp>();
             e.AddC(sc);
             return e;
         }
@@ -158,6 +163,7 @@ namespace TTengine.Core
                                                      int slowDownFactor = 1)
         {
             AddDrawable(e);
+            e.RemoveC<AnimatedSpriteComp>();
             var sc = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
             sc.AnimType = animType;
             sc.SlowdownFactor = slowDownFactor;
@@ -175,6 +181,8 @@ namespace TTengine.Core
         public Entity CreateSpriteField(Entity e, string fieldBitmapFile, string spriteBitmapFile)
         {
             AddDrawable(e);
+            e.RemoveC<SpriteComp>();
+            e.RemoveC<SpriteFieldComp>();
             var sfc = new SpriteFieldComp(fieldBitmapFile);
             var sc = new SpriteComp(spriteBitmapFile);
             sfc.FieldSpacing = new Vector2(sc.Width, sc.Height);
@@ -191,7 +199,8 @@ namespace TTengine.Core
         public Entity CreateText(Entity e, string text, string fontName = "Font1")
         {
             AddDrawable(e);
-            e.AddC(new ScaleComp());
+            if (!e.HasC<ScaleComp>())  e.AddC(new ScaleComp());
+            e.RemoveC<TextComp>();
             var tc = new TextComp(text, fontName);
             e.AddC(tc);
             return e;
@@ -209,6 +218,8 @@ namespace TTengine.Core
         public Entity CreateScreenlet(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
                                         int width = 0, int height = 0)
         {
+            e.RemoveC<ScreenComp>();
+            e.RemoveC<DrawComp>();
             var sc = new ScreenComp(hasRenderBuffer, width, height);
             sc.BackgroundColor = backgroundColor;            
             e.AddC(sc);
@@ -228,6 +239,9 @@ namespace TTengine.Core
         public Entity CreateChannel(Entity e, Color backgroundColor,
                                         int width = 0, int height = 0)
         {
+            e.RemoveC<WorldComp>();
+            e.RemoveC<ScreenComp>();
+
 			var wc = new WorldComp(); // create world
 
 			// create a screenlet Entity within the Channel's (sub) world
@@ -264,6 +278,7 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFxScreenlet(Entity e, String effectFile)
         {
+            e.RemoveC<ScreenComp>();
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
@@ -277,6 +292,8 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFxSprite(Entity e, string effectFile)
         {
+            e.RemoveC<SpriteRectComp>();
+            e.RemoveC<ScreenComp>();
             AddDrawable(e);
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
@@ -294,6 +311,7 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateSpriteFill(Entity e)
         {
+            e.RemoveC<SpriteComp>();
             AddDrawable(e);
             var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));
             e.AddC(sc);
@@ -306,7 +324,10 @@ namespace TTengine.Core
         /// <param name="soundScript"></param>
         public Entity AddAudio(Entity e, SoundEvent soundScript)
         {
-            e.AddC(new AudioComp(soundScript));
+            if (e.HasC<AudioComp>())
+                e.C<AudioComp>().AudioScript = soundScript;
+            else
+                e.AddC(new AudioComp(soundScript));
             return e;
         }
 
@@ -341,46 +362,22 @@ namespace TTengine.Core
         /// Add a script to an Entity, based on a function (delegate)
         /// </summary>
         /// <param name="e">The Entity to add script to</param>
-        /// <param name="scriptCode">Script to run</param>
-        /// <returns>IScript object created from the function</returns>
+        /// <param name="scriptCode">Script to run, as delegate code</param>
         public Entity AddScript(Entity e, ScriptDelegate scriptCode)
         {
             return AddScript(e,new BasicScript(scriptCode));
         }
 
         /// <summary>
-        /// Add a Modifier script to an Entity, based on a code block (delegate) and a Function
+        /// Add a Function script to an Entity, based on a code block (delegate) and a Function
         /// </summary>
-        /// <param name="e">Entity to add modifier script to</param>
-        /// <param name="scriptCode">Code block (delegate) that is the script</param>
-        /// <param name="func">Function whose value will be passed in ScriptComp.FunctionValue to script</param>
+        /// <param name="e">Entity to add function script to</param>
+        /// <param name="scriptCode">Code block (delegate) that is the script with call parameters (ScriptComp,double)</param>
+        /// <param name="func">Function whose value will be passed to script code each call</param>
         /// <returns></returns>
-        public Entity AddModifier(Entity e, FunctionScriptDelegate scriptCode, IFunction func)
+        public Entity AddFunctionScript(Entity e, FunctionScriptDelegate scriptCode, IFunction func)
         {
             return AddScript(e,new FunctionScript(scriptCode, func));            
-        }
-
-        /// <summary>
-        /// Add a Modifier script to an Entity, based on a code block (delegate) and a VectorFunction
-        /// </summary>
-        /// <param name="e">Entity to add modifier script to</param>
-        /// <param name="scriptCode">Code block (delegate) that is the script</param>
-        /// <param name="func">Function whose value will be passed in ScriptComp.FunctionValue to script</param>
-        /// <returns></returns>
-        public Entity AddFunctionScript(Entity e, VectorScriptDelegate scriptCode, IVectorFunction func)
-        { 
-            return AddScript( e, new VectorScript(scriptCode, func) );
-        }
-
-        /// <summary>
-        /// Add a Modifier script to an Entity, based on a code block (delegate) and an empty (=unity) Function
-        /// </summary>
-        /// <param name="e">Entity to add modifier script to</param>
-        /// <param name="scriptCode">Code block (delegate) that is the script</param>
-        /// <returns></returns>
-        public Entity AddModifier(Entity e, FunctionScriptDelegate scriptCode)
-        {
-            return AddModifier(e, scriptCode, null);
         }
 
         /// <summary>

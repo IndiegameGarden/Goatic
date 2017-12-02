@@ -11,6 +11,11 @@ namespace Game1.Levels
         Entity waterPlanet;
         Entity animCircle;
 
+        public override void Build()
+        {
+            ;
+        }
+
         public void BuildWaterPlanetSection(ScriptComp ctx)
         {
             SetAnchorPosition(ctx);

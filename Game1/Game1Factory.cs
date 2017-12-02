@@ -12,21 +12,37 @@ using Game1.Levels;
 
 namespace Game1
 {
+    /// <summary>
+    /// Factory class that is specific to this Game and all its levels.
+    /// </summary>
     public class Game1Factory: TTFactory
     {
 
-        public Entity CreateLevelBuilder(Level level, ScriptDelegate script, float x, float y)
+        /// <summary>
+        /// Create a Level Builder, which builds new content on the background once the triggering Entity gets close to it.
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="level">Level to build from</param>
+        /// <param name="script">Script within level to build upon triggering</param>
+        /// <param name="x">X position of the builder</param>
+        /// <param name="y">Y position of the builder</param>
+        /// <returns></returns>
+        public Entity CreateLevelBuilder(Entity e, Level level, ScriptDelegate script, float x, float y)
         {
-            var e = New();
-            var pc = new PositionComp(x,y);
-            e.AddC(pc);
-            var lc = new LevelComp(level,script,e);
-            e.AddC(lc);
-            var sc = new ScriptComp(e);
-            e.AddC(sc);
+            e.RemoveC<PositionComp>();
+            e.RemoveC<LevelComp>();
+            e.AddC(new PositionComp(x, y));
+            e.AddC(new LevelComp(level, script, e));
+            if (!e.HasC<ScriptComp>())
+                e.AddC(new ScriptComp(e));
             return e;
         }
 
+        /// <summary>
+        /// Create the player's ship Entity
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public Entity CreateShip(Entity e)
         {
             CreateSprite(e, "ball");

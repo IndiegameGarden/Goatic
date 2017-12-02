@@ -19,35 +19,33 @@ namespace TTengineTest
 
             // ball 1
             var velo = new Vector2(3f, 0.3f);
-            var ball = Factory.CreateMovingBall(Factory.New(), new Vector2(95f, 250f), velo);
+            var b1 = Factory.CreateMovingBall(Factory.New(), new Vector2(95f, 250f), velo);
 
             // Modifier: adapting scale with sine rhythm
-            var sineFunc = new SineFunction();
-            sineFunc.Frequency = 0.5;
-            sineFunc.Amplitude = 0.25;
-            sineFunc.Offset = 1;
-            Factory.AddModifier(ball, MyScaleModifierScript, sineFunc);
+            var sineFunc = new SineFunction { Frequency = 0.5, Amplitude = 0.25, Offset = 1 };
+            Factory.AddFunctionScript(b1, MyScaleModifierScript, sineFunc);
 
             // modifier script to adapt rotation
-            Factory.AddModifier(ball, MyRotateModifierScript);
+            Factory.AddFunctionScript(b1, MyRotateModifierScript, new UnityFunction());
 
             // ball 2
-            var ball2 = Factory.CreateMovingBall(Factory.New(), new Vector2(695f, 450f), velo);
-            ball2.C<ScaleComp>().Scale = 0.5;
+            var b2 = Factory.CreateMovingBall(Factory.New(), new Vector2(695f, 450f), velo);
+            b2.C<ScaleComp>().Scale = 0.5;
 
             // script with anonymous delegate code block - for rotation
-            Factory.AddScript(ball2, delegate(ScriptComp ctx) { 
-                    ctx.Entity.C<DrawComp>().DrawRotation = (float)ctx.SimTime; 
-                });
+            Factory.AddScript(b2, ctx => { b2.C<DrawComp>().DrawRotation = (float)ctx.SimTime; });
 
             // TargetModifier to set its position towards a target
             var targFunc = new MoveToTargetFunction();
             targFunc.Target = new Vector2(0f, 0f);
-            targFunc.CurrentValue = ball2.C<PositionComp>().Position;
+            targFunc.CurrentValue = b2.C<PositionComp>().Position;
             targFunc.Speed = 40;
-            Factory.AddFunctionScript(ball2,
-                delegate(ScriptComp ctx, Vector2 pos) { ctx.Entity.C<PositionComp>().Position = pos; },
-                targFunc);
+            Factory.AddScript(b2, (sc) => { b2.C<PositionComp>().Position = targFunc.Value(sc); } );
+
+            // ball 3
+            var b3 = Factory.CreateMovingBall(Factory.New(), new Vector2(895f, 250f), new Vector2(-1f, 0.3f));
+            var f = new SineFunction();
+            Factory.AddScript(b3, (sc) => { b3.C<ScaleComp>().Scale = 0.43 * f.Value(sc) + 2.0; } );
 
         }
 

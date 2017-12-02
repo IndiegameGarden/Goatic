@@ -51,10 +51,10 @@ namespace Game1.Levels
             base.Finalize(e);            
         }
 
-        public virtual void Build()
-        {
-            // can be overridden with actual code
-        }
-
+        /// <summary>
+        /// Build the level.
+        /// </summary>
+        public abstract void Build();
+        
     }
 }

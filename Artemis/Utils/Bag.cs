@@ -172,7 +172,14 @@ namespace Artemis.Utils
         /// <returns>The specified element.</returns>
         public T Get(int index)
         {
-            return this.elements[index];
+            try
+            {
+                return this.elements[index];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return default(T);
+            }
         }
 
         /// <summary>Removes the specified index.</summary>

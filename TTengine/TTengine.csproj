@@ -67,11 +67,12 @@
     <Compile Include="Core\IUpdate.cs" />
     <Compile Include="Core\TargetVector.cs" />
     <Compile Include="Modifiers\IVectorFunction.cs" />
+    <Compile Include="Modifiers\UnityFunction.cs" />
     <Compile Include="Modifiers\VectorModifierScript.cs" />
     <Compile Include="Modifiers\Function.cs" />
     <Compile Include="Modifiers\IFunction.cs" />
     <Compile Include="Modifiers\MoveToTargetFunction.cs" />
-    <Compile Include="Modifiers\ModifierScript.cs" />
+    <Compile Include="Modifiers\FunctionScript.cs" />
     <Compile Include="Comps\SpriteComp.cs" />
     <Compile Include="Core\TTFactory.cs" />
     <Compile Include="Core\TTGame.cs" />

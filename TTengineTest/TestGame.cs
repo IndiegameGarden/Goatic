@@ -36,13 +36,13 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestModifiers());
             DoTest(new TestScriptThreadedSystemForBuilding());
             DoTest(new TestTextureSamplingShader());
             DoTest(new TestTransparentChannels());
             DoTest(new TestRelativeMotion());
             DoTest(new TestMultiChannels());
             DoTest(new TestGamepad());
-            DoTest(new TestModifiers());
             DoTest(new TestZoomedScreenlet());
             DoTest(new TestAudioBasics()); //FIXME? audio plays too soon
             DoTest(new TestContentLoad());
