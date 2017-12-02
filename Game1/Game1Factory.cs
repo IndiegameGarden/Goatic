@@ -29,8 +29,6 @@ namespace Game1
         /// <returns></returns>
         public Entity CreateLevelBuilder(Entity e, Level level, ScriptDelegate script, float x, float y)
         {
-            e.RemoveC<PositionComp>();
-            e.RemoveC<LevelComp>();
             e.AddC(new PositionComp(x, y));
             e.AddC(new LevelComp(level, script, e));
             if (!e.HasC<ScriptComp>())

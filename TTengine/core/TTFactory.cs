@@ -132,7 +132,6 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(graphicsFile);
-            e.RemoveC<SpriteComp>();
             e.AddC(sc);
             return e;
         }
@@ -145,7 +144,6 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var sc = new SpriteComp(screen);
-            e.RemoveC<SpriteComp>();
             e.AddC(sc);
             return e;
         }
@@ -163,7 +161,6 @@ namespace TTengine.Core
                                                      int slowDownFactor = 1)
         {
             AddDrawable(e);
-            e.RemoveC<AnimatedSpriteComp>();
             var sc = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
             sc.AnimType = animType;
             sc.SlowdownFactor = slowDownFactor;
@@ -181,8 +178,6 @@ namespace TTengine.Core
         public Entity CreateSpriteField(Entity e, string fieldBitmapFile, string spriteBitmapFile)
         {
             AddDrawable(e);
-            e.RemoveC<SpriteComp>();
-            e.RemoveC<SpriteFieldComp>();
             var sfc = new SpriteFieldComp(fieldBitmapFile);
             var sc = new SpriteComp(spriteBitmapFile);
             sfc.FieldSpacing = new Vector2(sc.Width, sc.Height);
@@ -200,7 +195,6 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             if (!e.HasC<ScaleComp>())  e.AddC(new ScaleComp());
-            e.RemoveC<TextComp>();
             var tc = new TextComp(text, fontName);
             e.AddC(tc);
             return e;
@@ -218,8 +212,6 @@ namespace TTengine.Core
         public Entity CreateScreenlet(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
                                         int width = 0, int height = 0)
         {
-            e.RemoveC<ScreenComp>();
-            e.RemoveC<DrawComp>();
             var sc = new ScreenComp(hasRenderBuffer, width, height);
             sc.BackgroundColor = backgroundColor;            
             e.AddC(sc);
@@ -239,9 +231,6 @@ namespace TTengine.Core
         public Entity CreateChannel(Entity e, Color backgroundColor,
                                         int width = 0, int height = 0)
         {
-            e.RemoveC<WorldComp>();
-            e.RemoveC<ScreenComp>();
-
 			var wc = new WorldComp(); // create world
 
 			// create a screenlet Entity within the Channel's (sub) world
@@ -278,7 +267,6 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFxScreenlet(Entity e, String effectFile)
         {
-            e.RemoveC<ScreenComp>();
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
@@ -292,8 +280,6 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFxSprite(Entity e, string effectFile)
         {
-            e.RemoveC<SpriteRectComp>();
-            e.RemoveC<ScreenComp>();
             AddDrawable(e);
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
@@ -311,7 +297,6 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateSpriteFill(Entity e)
         {
-            e.RemoveC<SpriteComp>();
             AddDrawable(e);
             var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));
             e.AddC(sc);
