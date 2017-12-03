@@ -20,11 +20,11 @@ namespace TTengineTest
         {
             Factory.BallSprite = "paul-hardman_circle-four";
 
-            var fxScreen = Factory.CreateFxScreenlet(Factory.New(), "Grayscale");
+            var fxScreen = Factory.CreateFxScreen(Factory.New(), "Grayscale");
             BuildTo(fxScreen);
             Factory.CreateRotatingBall(Factory.New(), new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
 
-            var fxScreen2 = Factory.CreateFxScreenlet(Factory.New(), "RandomColor");
+            var fxScreen2 = Factory.CreateFxScreen(Factory.New(), "RandomColor");
             BuildTo(fxScreen2);
             Factory.CreateRotatingBall(Factory.New(), new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
 

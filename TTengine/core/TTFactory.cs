@@ -201,15 +201,15 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Creates a Screenlet, an Entity that has a ScreenComp to 
+        /// Creates a Screen, an Entity that has a ScreenComp to 
         /// which graphics can be rendered. 
         /// </summary>
-        /// <param name="backgroundColor">Background color of the Screenlet</param>
-        /// <param name="hasRenderBuffer">if true, Screenlet will have its own render buffer</param>
-        /// <param name="height">Screenlet height, if not given uses default backbuffer height</param>
-        /// <param name="width">Screenlet width, if not given uses default backbuffer width</param>
+        /// <param name="backgroundColor">Background color of the Screen</param>
+        /// <param name="hasRenderBuffer">if true, Screen will have its own render buffer</param>
+        /// <param name="height">Screen height, if not given uses default backbuffer height</param>
+        /// <param name="width">Screen width, if not given uses default backbuffer width</param>
         /// <returns>Newly created Entity with a ScreenComp.</returns>
-        public Entity CreateScreenlet(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
+        public Entity CreateScreen(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
                                         int width = 0, int height = 0)
         {
             var sc = new ScreenComp(hasRenderBuffer, width, height);
@@ -221,7 +221,7 @@ namespace TTengine.Core
 
         /// <summary>
         /// Creates a new Channel, which is an Entity with inside it a separate EntityWorld containing a dedicated ScreenComp to
-        /// which that World renders, which can be then shown as a sprite. Parameters are same as for CreateScreenlet() above.
+        /// which that World renders, which can be then shown as a sprite. Parameters are same as for CreateScreen() above.
 		/// In summary: A World inside a Sprite.
         /// </summary>
         /// <param name="backgroundColor">Background drawing color</param>
@@ -233,12 +233,12 @@ namespace TTengine.Core
         {
 			var wc = new WorldComp(); // create world
 
-			// create a screenlet Entity within the Channel's (sub) world
-			Entity screenlet = wc.World.CreateEntity();
+            // create a Screen Entity within the Channel's (sub) world
+            Entity screen = New();
 			var sc = new ScreenComp (true, width, height);
 			wc.Screen = sc;				// store the Screen as part of the World
 			sc.BackgroundColor = backgroundColor;
-			screenlet.AddC (sc);
+			screen.AddC (sc);
 
             // create the channel Entity, based on Sprite
             CreateSprite(e, sc);
@@ -261,11 +261,11 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Creates an FX Screenlet that renders a layer with shader Effect to the current active BuildScreen
+        /// Creates an FX Screen that renders a layer with shader Effect to the current active BuildScreen
         /// TODO: convert to an AddFx syntax
         /// </summary>
         /// <returns></returns>
-        public Entity CreateFxScreenlet(Entity e, String effectFile)
+        public Entity CreateFxScreen(Entity e, String effectFile)
         {
             var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
@@ -287,7 +287,7 @@ namespace TTengine.Core
             e.AddC(sc);
             var spc = new SpriteRectComp();
             e.AddC(spc);
-            e.C<DrawComp>().DrawScreen = sc; // let sprite draw itself to the effect-generating screenlet sc
+            e.C<DrawComp>().DrawScreen = sc; // let sprite draw itself to the effect-generating Screen sc
             return e;
         }
 

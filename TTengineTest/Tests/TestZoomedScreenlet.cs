@@ -23,7 +23,7 @@ namespace TTengineTest
         public override void Create()
         {
             // dedicated screen for rendering the level using blocky (non interpolated) graphics bitmap
-            var levScr = Factory.CreateScreenlet(Factory.New(), Color.Black,true);
+            var levScr = Factory.CreateScreen(Factory.New(), Color.Black,true);
             levScr.C<ScreenComp>().SpriteBatch.samplerState = SamplerState.PointClamp; // nice 'n blocky
             BuildTo(levScr);
             var s = Factory.CreateSprite(Factory.New(), "Quest14-Level1.png");

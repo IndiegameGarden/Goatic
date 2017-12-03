@@ -52,7 +52,7 @@ namespace Game1
 
         public Entity CreateNovaBall(Entity e, float x, float y, int type=1)
         {
-            Entity fx = CreateFxScreenlet(New(), "Nova");
+            Entity fx = CreateFxScreen(New(), "Nova");
             CreateSprite(e, "supernova"+type);
             e.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp { Scale = 2, ScaleSpeed = 0.01 };
@@ -120,7 +120,7 @@ namespace Game1
 
         public Entity CreateHypnoScreenlet(Entity e)
         {
-            CreateFxScreenlet(e, "Hypno");
+            CreateFxScreen(e, "Hypno");
             AddScript(e, ScriptHypno );
             return e;
         }
@@ -135,7 +135,7 @@ namespace Game1
 
         public Entity CreateMandelbrotScreenlet(Entity e)
         {
-            CreateFxScreenlet(e, "MandelbrotJulia");
+            CreateFxScreen(e, "MandelbrotJulia");
             AddScript(e, ScriptMandelbrotFx );
             return e;
         }
@@ -148,7 +148,7 @@ namespace Game1
 
         public Entity CreateJuliaScreenlet(Entity e)
         {
-            CreateFxScreenlet(e, "MandelbrotJulia");
+            CreateFxScreen(e, "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
             AddScript(e, ScriptJuliaFx);
