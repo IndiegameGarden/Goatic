@@ -50,26 +50,20 @@ namespace Game1
             return e;
         }
 
-        public Entity CreateNovaBall(float x, float y, int type=1)
+        public Entity CreateNovaBall(Entity e, float x, float y, int type=1)
         {
             Entity fx = CreateFxScreenlet(New(), "Nova");
-            Entity e = CreateSprite(New(), "supernova"+type);
+            CreateSprite(e, "supernova"+type);
             e.C<SpriteComp>().CenterToMiddle();
-            var sc = new ScaleComp(2);
+            var sc = new ScaleComp { Scale = 2, ScaleSpeed = 0.01 };
             e.AddC(sc);
             var pc = e.C<PositionComp>();
             pc.Position = new Vector2(x, y);
-            var rc = new RotateComp();
-            rc.RotateSpeed = 0.1; // TODO in constructor args?
+            var rc = new RotateComp { RotateSpeed = 0.1 };
             e.AddC(rc);
-            AddScript(e, GrowNovaScript);            
+            AddScript(e, (ctx) => { e.C<ScaleComp>().ScaleTarget *= 1.001; } );            
             e.C<DrawComp>().DrawScreen = fx.C<ScreenComp>(); // draw nova onto the Shader/FX screen
             return e;
-        }
-
-        void GrowNovaScript(ScriptComp sc)
-        {
-            sc.Entity.C<ScaleComp>().Scale *= 1.001;
         }
 
         /// <summary>
@@ -77,37 +71,30 @@ namespace Game1
         /// </summary>
         /// <param name="radius">the relative size scaling, 1 is normal</param>
         /// <returns></returns>
-        public Entity CreateBall(double radius)
+        public Entity CreateBall(Entity e, double radius)
         {
-            Entity e = New();
             CreateSprite(e, "paul-hardman_circle-four");
             e.AddC(new ScaleComp(radius));
             return e;
         }
 
-        public Entity CreateMovingTextlet(Vector2 pos, string text)
+        public Entity CreateMovingTextlet(Entity e, Vector2 pos, string text)
         {
-            var t = New();
-            CreateText(t,text);
-            t.C<PositionComp>().Position = pos;
-            t.C<DrawComp>().DrawColor = Color.Black;
-            t.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
-            t.C<ScaleComp>().Scale = 0.5;
-            return t;
-        }
-
-        public void RotateModifierScript(ScriptComp ctx, double value)
-        {
-            ctx.Entity.C<DrawComp>().DrawRotation = (float)value;
+            CreateText(e,text);
+            e.C<PositionComp>().Position = pos;
+            e.C<DrawComp>().DrawColor = Color.Black;
+            e.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
+            e.C<ScaleComp>().Scale = 0.5;
+            return e;
         }
 
         /// <summary>
         /// create a moving ball with given position and velocity
         /// </summary>
         /// <returns></returns>
-        public Entity CreateMovingBall(Vector2 pos, Vector2 velo)
+        public Entity CreateMovingBall(Entity e, Vector2 pos, Vector2 velo)
         {
-            var ball = CreateBall(RandomMath.RandomBetween(0.96f, 1.08f));
+            var ball = CreateBall(e, RandomMath.RandomBetween(0.96f, 1.08f));
 
             // position and velocity set
             ball.C<PositionComp>().Position = pos;
@@ -116,24 +103,23 @@ namespace Game1
             return ball;
         }
 
-        public Entity CreateMovingBall(Vector3 pos, Vector2 velo)
+        public Entity CreateMovingBall(Entity e, Vector3 pos, Vector2 velo)
         {
-            return CreateMovingBall(new Vector2(pos.X, pos.Y), velo);
+            return CreateMovingBall(e, new Vector2(pos.X, pos.Y), velo);
         }
 
-        public Entity CreateRotatingBall(Vector2 pos, Vector2 velo, double rotSpeed)
+        public Entity CreateRotatingBall(Entity e, Vector2 pos, Vector2 velo, double rotSpeed)
         {
-            var ball = CreateMovingBall(pos, velo);
-            ball.C<ScaleComp>().Scale = 0.7;
+            CreateMovingBall(e, pos, velo);
+            e.C<ScaleComp>().Scale = 0.7;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
-            ball.AddC(rc);
-            return ball;
+            e.AddC(rc);
+            return e;
         }
 
-        public Entity CreateHypnoScreenlet()
+        public Entity CreateHypnoScreenlet(Entity e)
         {
-            var e = New();
             CreateFxScreenlet(e, "Hypno");
             AddScript(e, ScriptHypno );
             return e;
@@ -147,9 +133,8 @@ namespace Game1
             effect.Parameters["Time"].SetValue((float)ctx.SimTime);
         }
 
-        public Entity CreateMandelbrotScreenlet()
+        public Entity CreateMandelbrotScreenlet(Entity e)
         {
-            var e = New();
             CreateFxScreenlet(e, "MandelbrotJulia");
             AddScript(e, ScriptMandelbrotFx );
             return e;
@@ -161,9 +146,8 @@ namespace Game1
             effect.Parameters["Zoom"].SetValue((float)( 3 - ctx.SimTime/20.0 ));
         }
 
-        public Entity CreateJuliaScreenlet()
+        public Entity CreateJuliaScreenlet(Entity e)
         {
-            var e = New();
             CreateFxScreenlet(e, "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
@@ -171,9 +155,9 @@ namespace Game1
             return e;
         }
 
-        public Entity CreateJuliaFxSprite()
+        public Entity CreateJuliaFxSprite(Entity e)
         {            
-            var e = CreateFxSprite(New(), "MandelbrotJulia");
+            CreateFxSprite(e, "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
             AddScript(e, ScriptJuliaFx);

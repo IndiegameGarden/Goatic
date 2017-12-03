@@ -19,8 +19,8 @@ namespace Game1.Levels
             SetAnchorPosition(ctx);
             BuildTo(LevelChannel);
 
-            Finalize(CreateNovaBall(200, 200));
-            Finalize(CreateNovaBall(800, 200));
+            Finalize(CreateNovaBall(New(), 200, 200));
+            Finalize(CreateNovaBall(New(), 800, 200));
 
         }
 

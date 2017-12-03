@@ -16,26 +16,26 @@ namespace Game1.Levels
         public void BuildTestShaders()
         {
             BuildTo(BackgroundChannel);
-            var fxScreen = CreateHypnoScreenlet();
+            var fxScreen = CreateHypnoScreenlet(New());
             BuildTo(fxScreen);
-            CreateRotatingBall(new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
+            CreateRotatingBall(New(), new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
 
             BuildTo(BackgroundChannel);
-            var fxScreen2 = CreateMandelbrotScreenlet();
+            var fxScreen2 = CreateMandelbrotScreenlet(New());
             BuildTo(fxScreen2);
-            CreateRotatingBall(new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
+            CreateRotatingBall(New(), new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
 
             BuildTo(BackgroundChannel);
-            var fxScreen3 = CreateJuliaScreenlet();
+            var fxScreen3 = CreateJuliaScreenlet(New());
             BuildTo(fxScreen3);
-            CreateRotatingBall(new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
+            CreateRotatingBall(New(), new Vector2(800f, 200f), new Vector2(5f, 5f), -0.1);
 
         }
 
         public void BuildTestShaderBackground()
         {
             BuildTo(BackgroundChannel);
-            CreateJuliaFxSprite();
+            CreateJuliaFxSprite(New());
 
         }
 
