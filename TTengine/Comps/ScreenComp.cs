@@ -66,18 +66,6 @@ namespace TTengine.Core
             }
         }
 
-        public RenderTarget2D RenderTargetBackBuffer
-        {
-            get
-            {
-                if (renderTargetBackBuffer == null)
-                {
-                    renderTargetBackBuffer = new RenderTarget2D(TTGame.Instance.GraphicsDevice, Width, Height);
-                }
-                return renderTargetBackBuffer;
-            }
-        }
-
         /// <summary>Width of screen in pixels</summary>
         public int Width { get { return screenWidth; } }
 
