@@ -226,26 +226,26 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="backgroundColor">Background drawing color</param>
         /// <param name="width">Channel's screen width or if not given or 0 will use RenderBuffer width</param>
-        /// <param name="height">Channel's screen height or if not given or 0 will use for RenderBuffer height</param>
+        /// <param name="height">Channel's screen height or if not given or 0 will use RenderBuffer height</param>
         /// <returns></returns>
-        public Entity CreateChannel(Entity e, Color backgroundColor,
+        public Entity CreateChannel(Entity eChan, Color backgroundColor,
                                         int width = 0, int height = 0)
         {
 			var wc = new WorldComp(); // create world
 
             // create a Screen Entity within the Channel's (sub) world
-            Entity screen = New();
+            Entity eScr = wc.World.CreateEntity();  // Note: creation should happen within wc.World !
 			var sc = new ScreenComp (true, width, height);
 			wc.Screen = sc;				// store the Screen as part of the World
 			sc.BackgroundColor = backgroundColor;
-			screen.AddC (sc);
+			eScr.AddC (sc);
 
             // create the channel Entity, based on Sprite
-            CreateSprite(e, sc);
+            CreateSprite(eChan, sc);
 
 			// make this sprite into a Channel by adding the World
-            e.AddC(wc);
-            return e;
+            eChan.AddC(wc);
+            return eChan;
         }
 
         /// <summary>
@@ -256,8 +256,7 @@ namespace TTengine.Core
         public Entity CreateChannelLike(Entity e, Entity templateChannel) 
         {
             ScreenComp sc = templateChannel.C<WorldComp>().Screen;
-            CreateChannel(e,sc.BackgroundColor, sc.Width, sc.Height);
-            return e;
+            return CreateChannel(e,sc.BackgroundColor, sc.Width, sc.Height);
         }
 
         /// <summary>
