@@ -39,18 +39,24 @@ namespace TTengine.Core
             this.BuildScreen = TTGame.Instance.RootScreen;
         }
 
-        public void BuildTo(EntityWorld world)
+        internal void BuildTo(EntityWorld world)
         {
             BuildWorld = world;
         }
 
-        public void BuildTo(ScreenComp screen)
+        internal void BuildTo(ScreenComp screen)
         {
             BuildScreen = screen;
         }
 
+        public void BuildToRoot()
+        {
+            BuildTo(TTGame.Instance.RootWorld);
+            BuildTo(TTGame.Instance.RootScreen);
+        }
+
         /// <summary>
-        /// Switch factory's building output to given Channel, World or Screen
+        /// Switch factory's building output to given Channel, World, Layer, or Screen
         /// </summary>
         /// <param name="e">an Entity which may contain a WorldComp, a ScreenComp, or both. In case of both,
         /// the Entity is a Channel.</param>
@@ -260,45 +266,36 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Creates an FX Screen that renders a layer with shader Effect to the current active BuildScreen
-        /// TODO: convert to an AddFx syntax
+        /// Create a shader effect layer to which one or more Entities/sprites can render
         /// </summary>
+        /// <param name="e">Entity that will carry the fx layer</param>
+        /// <param name="fxFile">name of shader effect in Content (name).fx </param>
         /// <returns></returns>
-        public Entity CreateFxScreen(Entity e, String effectFile)
+        public Entity CreateFx(Entity e, string fxFile)
         {
-            var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
-            var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
-            sc.SpriteBatch.effect = fx; // set the effect in SprBatch
-            e.AddC(sc);
+            var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
+            if (!e.HasC<ScreenComp>())  e.AddC(new ScreenComp(BuildScreen.RenderTarget));
+            e.C<ScreenComp>().SpriteBatch.effect = fx; // set the effect in SprBatch
             return e;
         }
 
         /// <summary>
-        /// Creates an FX Sprite that renders a shader Effect in a rectangle of screen-filling size
+        /// Creates an FX Sprite that renders a shader Effect in a rectangle. By default, the rect is
+        /// of screen-filling size (when width=height=0).
         /// </summary>
+        /// <param name="width">width of rectangle</param>
+        /// <param name="height">Height of rectangle</param>
         /// <returns></returns>
-        public Entity CreateFxSprite(Entity e, string effectFile)
+        public Entity CreateFxSprite(Entity e, string fxFile, int width=0, int height=0)
         {
             AddDrawable(e);
-            var fx = TTGame.Instance.Content.Load<Effect>(effectFile);
+            var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
             var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
             e.AddC(sc);
-            var spc = new SpriteRectComp();
+            var spc = new SpriteRectComp { Width = width, Height = height };
             e.AddC(spc);
             e.C<DrawComp>().DrawScreen = sc; // let sprite draw itself to the effect-generating Screen sc
-            return e;
-        }
-
-        /// <summary>
-        /// Create a Sprite which is a rect covering the entire display
-        /// </summary>
-        /// <returns></returns>
-        public Entity CreateSpriteFill(Entity e)
-        {
-            AddDrawable(e);
-            var sc = new SpriteComp(new Texture2D(TTGame.Instance.GraphicsDevice, 1, 1));
-            e.AddC(sc);
             return e;
         }
 

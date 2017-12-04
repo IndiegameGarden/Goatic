@@ -11,15 +11,16 @@ using Artemis.Interface;
 namespace TTengineTest
 {
     /// <summary>
-    /// Shader test with texture sampling, creates an EffectScreenlet and renders sprites to it
+    /// Shader test with texture sampling, applied to entire screen
     /// </summary>
     class TestTextureSamplingShader : Test
     {
 
         public override void Create()
         {
-            var fxScreen = Factory.CreateFxScreen(Factory.New(), "Grayscale");
-            BuildTo(fxScreen);
+            //Factory.SetFx("Grayscale");
+            var fx1 = Factory.CreateFx(Factory.New(), "Grayscale");
+            BuildTo(fx1);
 
             var t = new TestRotation();
             t.Create();

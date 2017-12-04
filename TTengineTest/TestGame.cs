@@ -36,9 +36,14 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestFxSprite());
+            DoTest(new TestTextureSamplingShader());
+            DoTest(new TestBasicShader());
+            DoTest(new TestMixedShaders());
+            DoTest(new TestLinearMotion());
+            DoTest(new TestRotation());
             DoTest(new TestModifiers());
             DoTest(new TestScriptThreadedSystemForBuilding());
-            DoTest(new TestTextureSamplingShader());
             DoTest(new TestTransparentChannels());
             DoTest(new TestRelativeMotion());
             DoTest(new TestMultiChannels());
@@ -51,10 +56,6 @@ namespace TTengineTest
             DoTest(new TestBTAI());
             DoTest(new TestSphereCollision());
             DoTest(new TestAnimatedSprite());
-            DoTest(new TestBasicShader());
-            DoTest(new TestMixedShaders()); 
-            DoTest(new TestLinearMotion());
-            DoTest(new TestRotation());
             DoTest(new TestSpritePixelGetSet());            
 
             // pick the initial one and activate it
@@ -119,8 +120,7 @@ namespace TTengineTest
 
         private void DoTest(Test test)
         {
-            Factory.BuildTo(RootWorld);
-            Factory.BuildTo(RootScreen);
+            Factory.BuildToRoot();
 
             var ch = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
             Factory.CreateChannel(ch, test.BackgroundColor);
@@ -129,8 +129,10 @@ namespace TTengineTest
             test.BuildToDefault(); // build test to the new channel (test.Channel)
             test.Create();
 
-            // add framerate counter
+            // add framerate counter and text overlays
             test.BuildToDefault();
+            //var scrText = Factory.CreateScreen(Factory.New(), Color.Transparent);
+            //Factory.BuildTo(scrText);
             var col = TTUtil.InvertColor(test.BackgroundColor);
             Factory.CreateFrameRateCounter(Factory.New(), col, 20);
 

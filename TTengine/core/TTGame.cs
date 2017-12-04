@@ -4,6 +4,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Artemis;
+using TTengine.Comps;
 using TTengine.Util;
 using TTMusicEngine;
 

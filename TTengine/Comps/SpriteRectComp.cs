@@ -1,15 +1,5 @@
 // (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-
-using TTengine.Core;
-
-using Artemis;
 using Artemis.Interface;
 
 namespace TTengine.Comps
@@ -20,26 +10,19 @@ namespace TTengine.Comps
     /// </summary>
     public class SpriteRectComp : IComponent
     {
+        /// <summary>
+        /// Width of rectangle or 0 for screen-filling rectangle.
+        /// </summary>
         public int Width = 0;
+
+        /// <summary>
+        /// Height of rectangle or 0 for screen-filling rectangle.
+        /// </summary>
         public int Height = 0;
 
-        /// <summary>
-        /// Create an entire-screen-filling rectangle (with both Width/Height set to 0)
-        /// </summary>
         public SpriteRectComp()
         {
-
-        }
-
-        /// <summary>
-        /// Create a rectangle sprite of given width and height
-        /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        public SpriteRectComp(int width, int height)
-        {
-            Width = width;
-            Height = height;
+            ;
         }
 
     }

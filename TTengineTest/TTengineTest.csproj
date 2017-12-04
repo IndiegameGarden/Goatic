@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Tests\TestFxSprite.cs" />
     <Compile Include="Tests\TestScriptThreadedSystemForBuilding.cs" />
     <Compile Include="Tests\TestTransparentChannels.cs" />
     <Compile Include="Tests\TestPostEffects.cs" />
@@ -75,6 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\MandelbrotJulia.fx" />
+    <None Include="Content\FixedColor.fx" />
+    <None Include="Content\Grayscale.fx" />
+    <None Include="Content\RandomColor.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -1,14 +1,11 @@
 // (c) 2010-2015 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Artemis.Interface;
+using TTengine.Core;
 
-namespace TTengine.Core
+namespace TTengine.Comps
 {
     /// <summary>
     /// Screen to which graphics are rendered together with a TTSpriteBatch, 
