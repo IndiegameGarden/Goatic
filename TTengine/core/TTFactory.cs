@@ -49,10 +49,12 @@ namespace TTengine.Core
             BuildScreen = screen;
         }
 
-        public void BuildToRoot()
+        public FactoryState BuildToRoot()
         {
+            var st = new FactoryState(this, BuildWorld, BuildScreen);
             BuildTo(TTGame.Instance.RootWorld);
             BuildTo(TTGame.Instance.RootScreen);
+            return st;
         }
 
         /// <summary>
@@ -60,8 +62,9 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="e">an Entity which may contain a WorldComp, a ScreenComp, or both. In case of both,
         /// the Entity is a Channel.</param>
-        public void BuildTo(Entity e)
+        public FactoryState BuildTo(Entity e)
         {
+            var st = new FactoryState(this, BuildWorld, BuildScreen);
             if (e.HasC<WorldComp>())
             {
                 var wc = e.C<WorldComp>();
@@ -71,6 +74,7 @@ namespace TTengine.Core
             }
             if (e.HasC<ScreenComp>())
                 BuildScreen = e.C<ScreenComp>();
+            return st;
         }
 
         /// <summary>

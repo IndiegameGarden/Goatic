@@ -21,14 +21,14 @@ namespace TTengineTest
             Factory.BallSprite = "paul-hardman_circle-four";
 
             var fx1 = Factory.CreateFx(Factory.New(), "Grayscale");
-            BuildTo(fx1);
-            Factory.CreateRotatingBall(Factory.New(), new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
+            using (BuildTo(fx1))
+                Factory.CreateRotatingBall(Factory.New(), new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
 
             var fx2 = Factory.CreateFx(Factory.New(), "RandomColor");
-            BuildTo(fx2);
-            Factory.CreateRotatingBall(Factory.New(), new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
+            using (BuildTo(fx2))
+                Factory.CreateRotatingBall(Factory.New(), new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
 
-            BuildToDefault();
+            // this will build to default
             Factory.CreateRotatingBall(Factory.New(), new Vector2(900f, 100f), new Vector2(5f, 5f), 0.1);
         }
 

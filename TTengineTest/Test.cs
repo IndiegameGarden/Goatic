@@ -43,9 +43,9 @@ namespace TTengineTest
         /// <seealso cref="BuildToDefault"/>
         /// </summary>
         /// <param name="screen"></param>
-        public void BuildTo(Entity screen)
+        public FactoryState BuildTo(Entity screen)
         {
-            Factory.BuildTo(screen);
+            return Factory.BuildTo(screen);
         }
 
         /// <summary>

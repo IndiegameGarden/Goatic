@@ -38,10 +38,10 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestMixedShaders());
             DoTest(new TestFxSprite());
             DoTest(new TestTextureSamplingShader());
             DoTest(new TestBasicShader());
-            DoTest(new TestMixedShaders());
             DoTest(new TestLinearMotion());
             DoTest(new TestRotation());
             DoTest(new TestModifiers());

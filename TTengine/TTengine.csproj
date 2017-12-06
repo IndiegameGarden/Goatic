@@ -64,6 +64,7 @@
     <Compile Include="Comps\WorldComp.cs" />
     <Compile Include="Core\Comp.cs" />
     <Compile Include="Comps\TargetMotionComp.cs" />
+    <Compile Include="Core\FactoryState.cs" />
     <Compile Include="Core\IUpdate.cs" />
     <Compile Include="Core\TargetVector.cs" />
     <Compile Include="Modifiers\IVectorFunction.cs" />
