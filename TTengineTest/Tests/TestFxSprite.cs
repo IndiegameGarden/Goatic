@@ -12,6 +12,11 @@ namespace TTengineTest
     class TestFxSprite: Test
     {
 
+        public TestFxSprite()
+        {
+            this.BackgroundColor = Color.Black;
+        }
+
         public override void Create()
         {
             var fx = CreateJuliaFxSprite(Factory.New());         

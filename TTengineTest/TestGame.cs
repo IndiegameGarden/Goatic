@@ -10,6 +10,7 @@ using TTengine.Comps;
 using TTengine.Util;
 
 using Artemis;
+using Artemis.Utils;
 
 
 namespace TTengineTest
@@ -22,7 +23,8 @@ namespace TTengineTest
         public static TestFactory Factory;
         KeyboardState kbOld = Keyboard.GetState();
         int channel = 0;
-        List<Entity> testChannels = new List<Entity>();
+        List<Test> tests = new List<Test>();
+        Entity textOverlayChannel;
 
         public TestGame()
         {
@@ -56,7 +58,10 @@ namespace TTengineTest
             DoTest(new TestBTAI());
             DoTest(new TestSphereCollision());
             DoTest(new TestAnimatedSprite());
-            DoTest(new TestSpritePixelGetSet());            
+            DoTest(new TestSpritePixelGetSet());
+
+            // create the text overlay channel
+            this.textOverlayChannel = CreateTextOverlayChannel();
 
             // pick the initial one and activate it
             ZapChannel(0);
@@ -65,9 +70,9 @@ namespace TTengineTest
 
         protected override void UnloadContent()
         {
-            foreach(Entity c in testChannels)
+            foreach(Test t in tests)
             {
-                c.C<WorldComp>().World.UnloadContent();
+                t.Channel.C<WorldComp>().World.UnloadContent();
             }
             base.UnloadContent();
         }
@@ -105,17 +110,42 @@ namespace TTengineTest
         {
             int nch = channel + delta;
             if (nch < 0)
-                nch += testChannels.Count;
-            if (nch >= testChannels.Count)
-                nch -= testChannels.Count;
+                nch += tests.Count;
+            if (nch >= tests.Count)
+                nch -= tests.Count;
             if (channel != nch)
             {
-                testChannels[channel].IsEnabled = false;
-                testChannels[channel].Refresh();
+                tests[channel].Channel.IsEnabled = false;
+                tests[channel].Channel.Refresh();
             }
-            testChannels[nch].IsEnabled = true;
-            testChannels[nch].Refresh();
+            tests[nch].Channel.IsEnabled = true;
+            tests[nch].Channel.Refresh();
             channel = nch;
+
+            // update text overlays with font color of the test
+            // TBD
+            Bag<Entity> t = this.textOverlayChannel.C<WorldComp>().World.EntityManager.GetEntities(Aspect.All(new Type[]{ typeof(TextComp) }));
+            foreach (Entity e in t)
+            {
+                e.C<DrawComp>().DrawColor = tests[channel].FontColor;
+                e.C<TextComp>().Text = tests[channel].GetType().Name;
+            }
+
+        }
+
+        private Entity CreateTextOverlayChannel()
+        {
+            Factory.BuildToRoot();
+            var ch = Factory.CreateChannel(Factory.New(), Color.Transparent);
+            Factory.BuildTo(ch);
+
+            // create framerate counter stats
+            Factory.CreateFrameRateCounter(Factory.New(), Color.White, 20);
+
+            // add test info as text
+            Factory.CreateTextlet(Factory.New(), new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight - 40f), "TestGame", Color.White, 0f);
+
+            return ch;
         }
 
         private void DoTest(Test test)
@@ -125,19 +155,11 @@ namespace TTengineTest
             var ch = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
             Factory.CreateChannel(ch, test.BackgroundColor);
             test.Channel = ch;
-            testChannels.Add(ch);
             test.BuildToDefault(); // build test to the new channel (test.Channel)
-            test.Create();
+            test.Create();  // create all the test's content
+            test.FontColor = TTUtil.InvertColor(test.BackgroundColor);
+            tests.Add(test);
 
-            // add framerate counter and text overlays
-            test.BuildToDefault();
-            //var scrText = Factory.CreateScreen(Factory.New(), Color.Transparent);
-            //Factory.BuildTo(scrText);
-            var col = TTUtil.InvertColor(test.BackgroundColor);
-            Factory.CreateFrameRateCounter(Factory.New(), col, 20);
-
-            // add test info as text
-            Factory.CreateTextlet(Factory.New(),new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight-40f), test.GetType().Name, col, 0f);
         }
 
     }

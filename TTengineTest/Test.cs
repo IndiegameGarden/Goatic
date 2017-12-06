@@ -20,13 +20,21 @@ namespace TTengineTest
         /// <summary>default background color for this test</summary>
         public Color BackgroundColor = Color.White;
 
+        /// <summary>
+        /// font color for this test
+        /// </summary>
+        public Color FontColor = Color.Black;
+
         /// <summary>The Channel onto which this Test will render</summary>
         public Entity Channel;
 
+        /// <summary>
+        /// Factory used by test to create Entities
+        /// </summary>
         public TestFactory Factory;
 
         /// <summary>
-        /// Create the entities for this specific test
+        /// Create all the entities for this specific test
         /// </summary>
         public abstract void Create();
 
