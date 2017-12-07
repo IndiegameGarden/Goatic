@@ -80,6 +80,7 @@
     <None Include="Content\FixedColor.fx" />
     <None Include="Content\Grayscale.fx" />
     <None Include="Content\RandomColor.fx" />
+    <None Include="Content\Bloom1.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

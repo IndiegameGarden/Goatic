@@ -11,7 +11,7 @@ using Artemis.Interface;
 namespace TTengineTest
 {
     /// <summary>
-    /// Shader test showing sprites that use different shaders, including no-shader.
+    /// Shader test showing sprites that use different shader fx, including no-shader.
     /// </summary>
     public class TestMixedShaders : Test
     {
@@ -21,14 +21,14 @@ namespace TTengineTest
             Factory.BallSprite = "paul-hardman_circle-four";
 
             var fx1 = Factory.CreateFx(Factory.New(), "Grayscale");
-            using (BuildTo(fx1))
-                Factory.CreateRotatingBall(Factory.New(), new Vector2(100f, 100f), new Vector2(5f, 5f), 0.1);
+            using (Factory.BuildTo(fx1))
+                Factory.CreateRotatingBall(Factory.New(), pos: new Vector2(100f, 100f), velo: new Vector2(5f, 5f), rotSpeed: 0.1);
 
             var fx2 = Factory.CreateFx(Factory.New(), "RandomColor");
-            using (BuildTo(fx2))
+            using (Factory.BuildTo(fx2))
                 Factory.CreateRotatingBall(Factory.New(), new Vector2(500f, 400f), new Vector2(5f, 5f), -0.1);
 
-            // this will build to default
+            // no shader effect
             Factory.CreateRotatingBall(Factory.New(), new Vector2(900f, 100f), new Vector2(5f, 5f), 0.1);
         }
 

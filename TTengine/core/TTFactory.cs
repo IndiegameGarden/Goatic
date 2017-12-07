@@ -27,31 +27,39 @@ namespace TTengine.Core
     /// </summary>
     public class TTFactory
     {
-        /// <summary>The Artemis entity world currently used by this Factory for building new Entities in.</summary>
-        public EntityWorld BuildWorld;
+        protected EntityWorld buildWorld;
 
-        /// <summary>The Screen that newly built Entities in this Factory will by default render to.</summary>
-        public ScreenComp BuildScreen;
+        protected ScreenComp buildScreen;
 
         public TTFactory()
         {
-            this.BuildWorld = TTGame.Instance.RootWorld;
-            this.BuildScreen = TTGame.Instance.RootScreen;
+            this.buildWorld = TTGame.Instance.RootWorld;
+            this.buildScreen = TTGame.Instance.RootScreen;
         }
 
         internal void BuildTo(EntityWorld world)
         {
-            BuildWorld = world;
+            buildWorld = world;
         }
 
         internal void BuildTo(ScreenComp screen)
         {
-            BuildScreen = screen;
+            buildScreen = screen;
         }
 
+        /// <summary>The Artemis entity world currently used by this Factory for building new Entities in.</summary>
+        public EntityWorld BuildWorld { get { return buildWorld;  } }
+
+        /// <summary>The Screen that newly built Entities in this Factory will render to.</summary>
+        public ScreenComp BuildScreen {  get { return buildScreen;  } }
+
+        /// <summary>
+        /// Switch factory's building output to the root channel of the game.
+        /// </summary>
+        /// <returns></returns>
         public FactoryState BuildToRoot()
         {
-            var st = new FactoryState(this, BuildWorld, BuildScreen);
+            var st = new FactoryState(this, buildWorld, buildScreen);
             BuildTo(TTGame.Instance.RootWorld);
             BuildTo(TTGame.Instance.RootScreen);
             return st;
@@ -64,16 +72,16 @@ namespace TTengine.Core
         /// the Entity is a Channel.</param>
         public FactoryState BuildTo(Entity e)
         {
-            var st = new FactoryState(this, BuildWorld, BuildScreen);
+            var st = new FactoryState(this, buildWorld, buildScreen);
             if (e.HasC<WorldComp>())
             {
                 var wc = e.C<WorldComp>();
-                BuildWorld = wc.World;
+                buildWorld = wc.World;
                 if (wc.Screen != null)
-                    BuildScreen = wc.Screen;
+                    buildScreen = wc.Screen;
             }
             if (e.HasC<ScreenComp>())
-                BuildScreen = e.C<ScreenComp>();
+                buildScreen = e.C<ScreenComp>();
             return st;
         }
 
@@ -84,7 +92,7 @@ namespace TTengine.Core
         /// <returns>New empty Entity which is enabled</returns>
         public Entity New()
         {
-            Entity e = BuildWorld.CreateEntity();
+            Entity e = buildWorld.CreateEntity();
             return e;
         }
 
@@ -96,7 +104,7 @@ namespace TTengine.Core
         /// <returns>New empty Entity which is disabled</returns>
         public Entity NewDisabled()
         {
-            Entity e = BuildWorld.CreateEntity();
+            Entity e = buildWorld.CreateEntity();
             e.IsEnabled = false;
             return e;
         }
@@ -128,7 +136,7 @@ namespace TTengine.Core
         public Entity AddDrawable(Entity e)
         {
             AddMotion(e);
-            if (!e.HasC<DrawComp>()) e.AddC(new DrawComp(BuildScreen));
+            if (!e.HasC<DrawComp>()) e.AddC(new DrawComp(buildScreen));
             return e;
         }
 
@@ -225,7 +233,7 @@ namespace TTengine.Core
             var sc = new ScreenComp(hasRenderBuffer, width, height);
             sc.BackgroundColor = backgroundColor;            
             e.AddC(sc);
-            e.AddC(new DrawComp(BuildScreen));
+            e.AddC(new DrawComp(buildScreen));
             return e;
         }
 
@@ -278,7 +286,7 @@ namespace TTengine.Core
         public Entity CreateFx(Entity e, string fxFile)
         {
             var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
-            if (!e.HasC<ScreenComp>())  e.AddC(new ScreenComp(BuildScreen.RenderTarget));
+            if (!e.HasC<ScreenComp>())  e.AddC(new ScreenComp(buildScreen.RenderTarget));
             e.C<ScreenComp>().SpriteBatch.effect = fx; // set the effect in SprBatch
             return e;
         }
@@ -294,7 +302,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
-            var sc = new ScreenComp(BuildScreen.RenderTarget); // renders to the existing screen buffer
+            var sc = new ScreenComp(buildScreen.RenderTarget); // renders to the existing screen buffer
             sc.SpriteBatch.effect = fx; // set the effect in SprBatch
             e.AddC(sc);
             var spc = new SpriteRectComp { Width = width, Height = height };

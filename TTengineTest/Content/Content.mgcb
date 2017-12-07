@@ -154,3 +154,9 @@
 /processorParam:DebugMode=Auto
 /build:MandelbrotJulia.fx
 
+#begin Bloom1.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Bloom1.fx
+
