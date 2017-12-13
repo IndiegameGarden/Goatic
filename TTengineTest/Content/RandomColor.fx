@@ -84,7 +84,7 @@ VSOutput VSBasic(VSInput vin)
 
 float4 PixelShaderFunction(float4 position : SV_Position, float4 color : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
-    float4 tex = tex2D(Texture, coords);
+    float4 tex = tex2D(TextureSampler, coords);
     tex.rgb = tex.rgb * float3(random(coords), random(coords/2) , random(coords/3) );
     return tex;
 }
@@ -100,6 +100,6 @@ technique Technique1
     pass Pass1  
     {  
         PixelShader = compile ps_4_0_level_9_1 PixelShaderFunction();
-		VertexShader = compile vs_4_0_level_9_1 VSBasic();
+		//VertexShader = compile vs_4_0_level_9_1 VSBasic();
     }  
 }
