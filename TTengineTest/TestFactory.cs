@@ -56,8 +56,7 @@ namespace TTengineTest
         {
             var ball = CreateMovingBall(e, pos, velo);
             ball.C<ScaleComp>().Scale = 0.7;
-            var rc = new RotateComp();
-            rc.RotateSpeed = rotSpeed;
+            var rc = new RotateComp { RotateSpeed = rotSpeed };
             ball.AddC(rc);
             return ball;
         }

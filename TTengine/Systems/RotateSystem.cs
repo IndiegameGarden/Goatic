@@ -20,8 +20,7 @@ namespace TTengine.Systems
 
         public override void Process(Entity entity, RotateComp rotComp)
         {
-            if (rotComp.RotateSpeed > 0)
-                rotComp.Rotate += rotComp.RotateSpeed * Dt;            
+            rotComp.Rotate += rotComp.RotateSpeed * Dt;            
         }
     }
 
