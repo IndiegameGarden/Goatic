@@ -7,6 +7,7 @@ using TTengine.Core;
 using TTengine.Comps;
 using TTengine.Modifiers;
 using Artemis.Interface;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TTengineTest
 {
@@ -30,11 +31,11 @@ namespace TTengineTest
 
             var fx3 = Factory.CreateFx(Factory.New(), "FixedColor");
             using (Factory.BuildTo(fx3))
-                Factory.CreateRotatingBall(Factory.New(), new Vector2(1100f, 300f), new Vector2(1f, -2f), 0.034);
+                Factory.CreateRotatingBall(Factory.New(), new Vector2(1100f, 300f), new Vector2(1f, -2f), 0.1);
 
             var fx4 = Factory.CreateFx(Factory.New(), "Bloom1");
             using (Factory.BuildTo(fx4))
-                Factory.CreateRotatingBall(Factory.New(), new Vector2(900f, 680f), new Vector2(-1f, -1f), -0.34);
+                Factory.CreateRotatingBall(Factory.New(), new Vector2(900f, 680f), new Vector2(-1f, -1f), -0.1);
 
             // no shader effect
             Factory.CreateRotatingBall(Factory.New(), new Vector2(900f, 100f), new Vector2(5f, 5f), 0.1);

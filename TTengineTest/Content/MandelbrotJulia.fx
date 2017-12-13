@@ -38,16 +38,16 @@ float ComputeValue(float2 v, float2 offset)
 	return (float(iteration) - (log(log(sqrt(vxsquare + vysquare))) / log(2.0))) / float(Iterations);
 }
 
-float4 Mandelbrot_PixelShader(float4 position : SV_Position, float4 color : COLOR0, float2 texCoord : TEXCOORD0) : COLOR0
+float4 Mandelbrot_PixelShader(float4 position : SV_Position, float4 color : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
-	float2 v = (texCoord - 0.5) * Zoom * float2(1, Aspect) - Pan;
+	float2 v = (coords - 0.5) * Zoom * float2(1, Aspect) - Pan;
 	float val = ComputeValue(v, v);
 	return float4(sin(val * ColorScale.x), sin(val * ColorScale.y), sin(val * ColorScale.z), 1);
 }
 
-float4 Julia_PixelShader(float4 position : SV_Position, float4 color : COLOR0, float2 texCoord : TEXCOORD0) : COLOR0
+float4 Julia_PixelShader(float4 position : SV_Position, float4 color : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
-	float2 v = (texCoord - 0.5) * Zoom * float2(1, Aspect) - Pan;
+	float2 v = (coords - 0.5) * Zoom * float2(1, Aspect) - Pan;
 	float val = ComputeValue(v, JuliaSeed);
 	return float4(sin(val * ColorScale.x), sin(val * ColorScale.y), sin(val * ColorScale.z), 1);
 }
