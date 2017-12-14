@@ -156,6 +156,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\TTDefaultFont.spritefont" />
+    <None Include="Content\TTFrameRateCounter.spritefont" />
     <None Include="fmodex.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -209,7 +209,7 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="text"></param>
         /// <param name="fontName"></param>
-        public Entity CreateText(Entity e, string text, string fontName = "Font1")
+        public Entity CreateText(Entity e, string text, string fontName = "TTDefaultFont")
         {
             AddDrawable(e);
             if (!e.HasC<ScaleComp>())  e.AddC(new ScaleComp());
@@ -330,7 +330,7 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFrameRateCounter(Entity e, Color textColor, int pixelsOffsetVertical = 0)
         {
-            CreateText(e,"##");
+            CreateText(e,"##","TTFrameRateCounter");
             e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
             e.C<DrawComp>().DrawColor = textColor;
             AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
