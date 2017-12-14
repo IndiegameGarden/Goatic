@@ -15,18 +15,18 @@ namespace TTengineTest
     class TestSpritePixelGetSet : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
-            Factory.BallSprite = "amazing1.png";
-            Factory.BuildScreen.SpriteBatch.samplerState = SamplerState.PointClamp; // set 'blocky' screen mode
+            BallSprite = "amazing1.png";
+            BuildScreen.SpriteBatch.samplerState = SamplerState.PointClamp; // set 'blocky' screen mode
 
             // sprite
             var velo = new Vector2(5f, 3f);
-            var spr = Factory.CreateMovingBall(Factory.New(), new Vector2(335f, 350f), velo);
+            var spr = CreateMovingBall(New(), new Vector2(335f, 350f), velo);
             spr.C<ScaleComp>().Scale = 10f;
 
             // add script to sprite
-            Factory.AddScript(spr, ChangePixelsRandomlyScript);
+            AddScript(spr, ChangePixelsRandomlyScript);
 
         }
 

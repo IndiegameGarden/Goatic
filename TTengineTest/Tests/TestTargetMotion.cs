@@ -9,13 +9,13 @@ namespace TTengineTest
     {
         const float MOVE_SPEED_MULTIPLIER = 80f;
 
-        public override void Create()
+        public override void BuildAll()
         {
-            Factory.BallSprite = "red-circle_frank-tschakert";
+            BallSprite = "red-circle_frank-tschakert";
             var velo = new Vector2(-0.2f,-0.05f);
             var pos = new Vector2(300f, 300f);
             velo *= MOVE_SPEED_MULTIPLIER;
-            var ball = Factory.CreateMovingBall(Factory.New(), pos, velo );
+            var ball = CreateMovingBall(New(), pos, velo );
             ball.AddC(new TargetMotionComp());
             ball.C<TargetMotionComp>().Target = new Vector2(800f, 500f);
             ball.C<TargetMotionComp>().TargetVelocity = 2*MOVE_SPEED_MULTIPLIER;

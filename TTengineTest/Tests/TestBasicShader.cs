@@ -8,13 +8,15 @@ namespace TTengineTest
     class TestBasicShader : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
-            var fx = Factory.CreateFx(Factory.New(), "FixedColor");
-            BuildTo(fx);
-
-            var t = new TestRotation();
-            t.Create();
+            var fx = CreateFx(New(), "FixedColor");
+            using (BuildTo(fx))
+            {
+                var t = new TestRotation();
+                t.BuildLike(this);
+                t.BuildAll();
+            }
 
             
         }

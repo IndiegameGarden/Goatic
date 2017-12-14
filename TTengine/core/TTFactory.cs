@@ -37,6 +37,12 @@ namespace TTengine.Core
             this.buildScreen = TTGame.Instance.RootScreen;
         }
 
+        public TTFactory(TTFactory parent)
+        {
+            this.buildWorld = parent.buildWorld;
+            this.buildScreen = parent.buildScreen;
+        }
+
         internal void BuildTo(EntityWorld world)
         {
             buildWorld = world;
@@ -82,6 +88,18 @@ namespace TTengine.Core
             }
             if (e.HasC<ScreenComp>())
                 buildScreen = e.C<ScreenComp>();
+            return st;
+        }
+
+        /// <summary>
+        /// Switch factory's building target to the same as the given other factory f
+        /// </summary>
+        /// <param name="f"></param>
+        public FactoryState BuildLike(TTFactory f)
+        {
+            var st = new FactoryState(this, buildWorld, buildScreen);
+            BuildTo(f.buildWorld);
+            BuildTo(f.buildScreen);
             return st;
         }
 

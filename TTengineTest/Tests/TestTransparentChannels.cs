@@ -15,36 +15,40 @@ namespace TTengineTest
     /// </summary>
     class TestTransparentChannels : Test
     {
-        public override void Create()
+        public override void BuildAll()
         {
             // put some content in the background channel
-            var chbg = Factory.CreateChannel(Factory.New(), this.BackgroundColor);            
-            BuildTo(chbg);
-            var t0 = new TestSphereCollision();
-            t0.Create();
+            var chbg = CreateChannel(New(), this.BackgroundColor);
+            using (BuildTo(chbg))
+            {
+                var t0 = new TestSphereCollision();
+                t0.BuildLike(this);
+                t0.BuildAll();
+            }
 
-            BuildToDefault();
             // create a first child channel - should become transparent
-            var ch1 = Factory.CreateChannel(Factory.New(), Color.Transparent, 600, 400);
+            var ch1 = CreateChannel(New(), Color.Transparent, 600, 400);
 			ch1.C<PositionComp>().Position = new Vector2(50f, 50f);
             Color c1 = ch1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
-            Factory.AddScript(ch1, ScriptInspectTextureColor);
+            AddScript(ch1, ScriptInspectTextureColor);
             ch1.C<WorldComp>().Screen.Zoom = 0.5f;
 
             // second item - a regular sprite with transparency RUNTIME LOADED
-            var spr1 = Factory.CreateSprite(Factory.New(), "red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
+            var spr1 = CreateSprite(New(), "red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
             spr1.C<PositionComp>().Position = new Vector2(800f, 50f);
             Color c2 = spr1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
 
             // 3rd item - a regular compiled content sprite with transparency content pipeline loaded
-            var spr2 = Factory.CreateSprite(Factory.New(), "red-circle_frank-tschakert"); 
+            var spr2 = CreateSprite(New(), "red-circle_frank-tschakert"); 
             spr2.C<PositionComp>().Position = new Vector2(1050f, 50f);
 
-			// for channel, build the content into it.
-			BuildTo(ch1);
-			var t1 = new TestScaling();
-			t1.Create();
-
+            // for channel ch1, build some content into it.
+            using (BuildTo(ch1))
+            {
+                var t1 = new TestScaling();
+                t1.BuildLike(this);
+                t1.BuildAll();
+            }
         }
 
         void ScriptInspectTextureColor(ScriptComp ctx)

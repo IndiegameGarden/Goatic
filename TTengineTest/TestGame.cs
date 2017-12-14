@@ -40,6 +40,7 @@ namespace TTengineTest
             //DoTest(new TestPostEffects()); //FIXME
             DoTest(new TestMixedShaders());
             DoTest(new TestFxSprite());
+            DoTest(new TestAnimatedSprite());
             DoTest(new TestTextureSamplingShader());
             DoTest(new TestBasicShader());
             DoTest(new TestLinearMotion());
@@ -57,7 +58,6 @@ namespace TTengineTest
             DoTest(new TestScaling());            
             DoTest(new TestBTAI());
             DoTest(new TestSphereCollision());
-            DoTest(new TestAnimatedSprite());
             DoTest(new TestSpritePixelGetSet());
 
             // create the text overlay channel
@@ -143,7 +143,7 @@ namespace TTengineTest
             Factory.CreateFrameRateCounter(Factory.New(), Color.White, 20);
 
             // add test info as text
-            Factory.CreateTextlet(Factory.New(), new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight - 40f), "TestGame", Color.White, 0f);
+            Factory.CreateText(Factory.New(), new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight - 40f), "TestGame", Color.White, 0f);
 
             return ch;
         }
@@ -154,10 +154,11 @@ namespace TTengineTest
 
             var ch = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
             Factory.CreateChannel(ch, test.BackgroundColor);
-            test.Channel = ch;
-            test.BuildToDefault(); // build test to the new channel (test.Channel)
-            test.Create();  // create all the test's content
             test.FontColor = TTUtil.InvertColor(test.BackgroundColor);
+
+            test.Channel = ch;
+            test.BuildTo(ch); // build test to the new channel (test.Channel)
+            test.BuildAll();  // create all the test's content
             tests.Add(test);
 
         }

@@ -17,21 +17,20 @@ namespace TTengineTest
             this.BackgroundColor = Color.Black;
         }
 
-        public override void Create()
+        public override void BuildAll()
         {
-            var fx = CreateJuliaFxSprite(Factory.New());         
+            var fx = CreateJuliaFxSprite(New());         
         }
 
         public Entity CreateJuliaFxSprite(Entity e)
         {
-            Factory.CreateFxSprite(e, "MandelbrotJulia");
+            CreateFxSprite(e, "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;
             fx.CurrentTechnique = fx.Techniques[1]; // select Julia
-            Factory.AddScript(e, (ctx) =>
+            AddScript(e, (ctx) =>
                 {
-                    var effect = e.C<ScreenComp>().SpriteBatch.effect;
                     var t = (float)ctx.SimTime;
-                    effect.Parameters["JuliaSeed"].SetValue(new Vector2(0.39f + t * 0.004f, -0.2f + t * 0.003f));
+                    fx.Parameters["JuliaSeed"].SetValue(new Vector2(0.39f + t * 0.004f, -0.2f + t * 0.003f));
                 }
             );
 

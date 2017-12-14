@@ -14,11 +14,11 @@ namespace TTengineTest
     /// <summary>Testing the Gamepad (XInput type only) basics</summary>
     class TestGamepad : Test
     {
-        public override void Create()
+        public override void BuildAll()
         {
-            var b = Factory.CreateMovingBall(Factory.New(), Factory.BuildScreen.Center, Vector2.Zero);
+            var b = CreateMovingBall(New(), BuildScreen.Center, Vector2.Zero);
             b.AddC(new PlayerInputComp());
-            Factory.AddScript(b, ScriptMoveByGamepad);
+            AddScript(b, ScriptMoveByGamepad);
         }
 
         void ScriptMoveByGamepad(ScriptComp ctx)

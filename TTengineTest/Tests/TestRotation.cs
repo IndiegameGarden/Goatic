@@ -12,9 +12,9 @@ namespace TTengineTest
     {
         const float MOVE_SPEED_MULTIPLIER = 80f;
 
-        public override void Create()
+        public override void BuildAll()
         {
-            Factory.BallSprite = "paul-hardman_circle-four";
+            BallSprite = "paul-hardman_circle-four";
             double spd = 0.2;
             for (float x = 250f; x < 800f; x += 200f)
             {
@@ -22,7 +22,7 @@ namespace TTengineTest
                 {
                     var velo = Vector2.Zero;
                     velo *= MOVE_SPEED_MULTIPLIER;
-                    var ball = Factory.CreateMovingBall(Factory.New(), new Vector2(x, y), velo );
+                    var ball = CreateMovingBall(New(), new Vector2(x, y), velo );
                     ball.C<ScaleComp>().Scale = 0.19;
                     var rc = new RotateComp();
                     rc.RotateSpeed = spd;

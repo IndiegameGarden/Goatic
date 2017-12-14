@@ -16,15 +16,15 @@ namespace TTengineTest
             BackgroundColor = Color.White;
         }
 
-        public override void Create()
+        public override void BuildAll()
         {
-            Factory.BallSprite = "red-circle_frank-tschakert";
+            BallSprite = "red-circle_frank-tschakert";
             int i = 0;
             for (float x = 250f; x < 800f; x += 200f)
             {
                 for (float y = 150f; y < 668f; y += 200f)
                 {
-                    var b = Factory.CreateMovingBall(Factory.New(),new Vector2(x, y), Vector2.Zero, 1, 0.2f + i*0.0001f);
+                    var b = CreateMovingBall(New(),new Vector2(x, y), Vector2.Zero, 1, 0.2f + i*0.0001f);
                     b.AddC(new ScaleComp());
 
                     // to each ball, we add a sinusoid based modification of the Scale parameter.
@@ -33,7 +33,7 @@ namespace TTengineTest
                     m.Frequency = RandomMath.RandomBetween(0.04f, 0.3f);
                     m.Phase = RandomMath.RandomBetween(0f, MathHelper.TwoPi);
                     m.Offset = RandomMath.RandomBetween(0.45f, 0.8f);
-                    Factory.AddFunctionScript(b, delegate(ScriptComp ctx, double value)
+                    AddFunctionScript(b, delegate(ScriptComp ctx, double value)
                         {ctx.Entity.C<ScaleComp>().Scale = value;} , m);
 
                     i++;

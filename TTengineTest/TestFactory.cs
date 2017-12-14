@@ -1,6 +1,5 @@
 ﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System;
 using Microsoft.Xna.Framework;
 
 using TTengine.Core;
@@ -12,7 +11,7 @@ using TTengine.Modifiers;
 namespace TTengineTest
 {
     /// <summary>
-    /// Factory to create new game-specific entities
+    /// Factory to create new test-specific entities
     /// </summary>
     public class TestFactory: TTFactory
     {
@@ -68,7 +67,7 @@ namespace TTengineTest
             return ball;
         }
 
-        public Entity CreateTextlet(Entity e, Vector2 pos, string text, Color col, float layerDepth = 0.5f)
+        public Entity CreateText(Entity e, Vector2 pos, string text, Color col, float layerDepth = 0.5f)
         {
             CreateText(e,text);
             e.C<PositionComp>().Position = pos;
@@ -79,5 +78,4 @@ namespace TTengineTest
         }
 
     }
-
 }

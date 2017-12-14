@@ -14,29 +14,29 @@ namespace TTengineTest
     class TestRelativeMotion : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
-            Factory.BallSprite = "red-circle";
+            BallSprite = "red-circle";
 
             // parent ball
             var velo = new Vector2(3f,0.3f);
-            var ball = Factory.CreateMovingBall(Factory.New(), new Vector2(35f, 250f), velo );
+            var ball = CreateMovingBall(New(), new Vector2(35f, 250f), velo );
             ball.C<ScaleComp>().Scale = 0.15f;
 
             // child ball 1
-            var cball = Factory.CreateMovingBall(Factory.New(), new Vector2(200f, 0f), Vector2.Zero);
+            var cball = CreateMovingBall(New(), new Vector2(200f, 0f), Vector2.Zero);
             cball.C<ScaleComp>().Scale = 0.1f;
             cball.C<PositionComp>().Depth = 0f;
-            Factory.AddScript(cball,CirclingPositionScript);
+            AddScript(cball,CirclingPositionScript);
 
             // set parent-child relation for the position
             ball.C<PositionComp>().AddChild(cball.C<PositionComp>());
 
             // child ball 2
-            var cball2 = Factory.CreateMovingBall(Factory.New(), new Vector2(200f, 0f), Vector2.Zero);
+            var cball2 = CreateMovingBall(New(), new Vector2(200f, 0f), Vector2.Zero);
             cball2.C<ScaleComp>().Scale = 0.07f;
             cball2.C<PositionComp>().Depth = 0f;
-            Factory.AddScript(cball2, CirclingPositionScript2);
+            AddScript(cball2, CirclingPositionScript2);
 
             // set parent-child relation for the position
             cball.C<PositionComp>().AddChild(cball2.C<PositionComp>());

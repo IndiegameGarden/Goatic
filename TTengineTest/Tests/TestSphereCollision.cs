@@ -14,21 +14,21 @@ namespace TTengineTest
     public class TestSphereCollision : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
-            Factory.BallSprite = "red-circle";
+            BallSprite = "red-circle";
             int BALLS_PER_ROW = 9;
 
             for (int i = 0; i < 35; i++)
             {
                 float radius = RandomMath.RandomBetween(0.1f, 0.5f);
-                var ball = Factory.CreateBall(Factory.New(),radius, 0.1f+i*0.001f);
+                var ball = CreateBall(New(),radius, 0.1f+i*0.001f);
                 ball.C<PositionComp>().Position = new Vector2(150f * (i % BALLS_PER_ROW),
                                                                     200f * (float)Math.Floor((double)(i / BALLS_PER_ROW)));
                 ball.C<VelocityComp>().Velocity2D = RandomMath.RandomDirection() * 30f;
                 ball.AddC(new SphereShapeComp(radius * 250f));
 
-                Factory.AddScript(ball, BallColorSetScript);
+                AddScript(ball, BallColorSetScript);
             }
         }
 

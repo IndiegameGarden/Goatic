@@ -8,14 +8,15 @@ namespace TTengineTest
     class TestTextureSamplingShader : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
-            //Factory.SetFx("Grayscale");
-            var fx1 = Factory.CreateFx(Factory.New(), "Grayscale");
-            BuildTo(fx1);
-
-            var t = new TestRotation();
-            t.Create();
+            var fx1 = CreateFx(New(), "Grayscale");
+            using (BuildTo(fx1))
+            {
+                var t = new TestRotation();
+                t.BuildLike(this);
+                t.BuildAll();
+            }
         }
 
     }

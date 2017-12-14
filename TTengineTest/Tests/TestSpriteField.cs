@@ -12,9 +12,9 @@ namespace TTengineTest
     /// <summary>Testing the linear motion of objects on screen</summary>
     class TestSpriteField : Test
     {
-        public override void Create()
+        public override void BuildAll()
         {
-            var e = Factory.CreateSpriteField(Factory.New(),"amazing1.png", "tree");   // TODO white circle
+            var e = CreateSpriteField(New(),"amazing1.png", "tree");   // TODO white circle
             e.AddC(new VelocityComp());
 
             e.C<VelocityComp>().Velocity2D = new Vector2(5f, 5f);

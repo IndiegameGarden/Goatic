@@ -17,9 +17,9 @@ namespace TTengineTest
     class TestBTAI : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
-            var ball = Factory.CreateBall(Factory.New(),1);
+            var ball = CreateBall(New(),1);
             ball.C<PositionComp>().Position = new Vector2(300f, 300f);
             ball.C<VelocityComp>().Velocity2D = new Vector2(25f, 25f);
 

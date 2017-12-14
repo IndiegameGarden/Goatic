@@ -14,7 +14,7 @@ namespace TTengineTest
     class TestTemplate : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
         }
 

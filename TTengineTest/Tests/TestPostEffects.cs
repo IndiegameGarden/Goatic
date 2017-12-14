@@ -14,12 +14,12 @@ namespace TTengineTest
     class TestPostEffects : Test
     {
 
-        public override void Create()
+        public override void BuildAll()
         {
             // create an additional child channel that renders onto the main channel
             // content for 1st screen: call upon another unit test
             var t1 = new TestRelativeMotion();
-            var ch1 = Factory.CreateChannel(Factory.New(), Color.White, 800, 400);
+            var ch1 = CreateChannel(New(), Color.White, 800, 400);
             throw new NotImplementedException();
 
             /*
@@ -28,7 +28,7 @@ namespace TTengineTest
 
             // main channel: shows the child channels as sprites
             BuildToDefault();
-            var scr1 = Factory.CreateSprite(ch1);
+            var scr1 = CreateSprite(ch1);
             scr1.GetComponent<PositionComp>().Position = new Vector2(50f, 50f);
             //scr1.GetComponent<VelocityComp>().Velocity2D = new Vector2(5f, 0.5f);
             */
