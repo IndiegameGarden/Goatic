@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Tests\TestCrtEffect.cs" />
     <Compile Include="Tests\TestFxSprite.cs" />
     <Compile Include="Tests\TestScriptThreadedSystemForBuilding.cs" />
     <Compile Include="Tests\TestTransparentChannels.cs" />

@@ -62,6 +62,7 @@
     <Compile Include="Comps\TextComp.cs" />
     <Compile Include="Comps\VelocityComp.cs" />
     <Compile Include="Comps\WorldComp.cs" />
+    <Content Include="Content\crt-lottes.fx" />
     <Compile Include="Core\Comp.cs" />
     <Compile Include="Comps\TargetMotionComp.cs" />
     <Compile Include="Core\FactoryState.cs" />

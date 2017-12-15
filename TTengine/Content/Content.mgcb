@@ -27,3 +27,9 @@
 /processorParam:TextureFormat=Compressed
 /build:TTDefaultFont.spritefont
 
+#begin crt-lottes.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:crt-lottes.fx
+
