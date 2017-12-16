@@ -139,26 +139,6 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Add Entity position and velocity
-        /// </summary>
-        public Entity AddMotion(Entity e)
-        {
-            if (!e.HasC<PositionComp>()) e.AddC(new PositionComp());
-            if (!e.HasC<VelocityComp>()) e.AddC(new VelocityComp());
-            return e;
-        }
-
-        /// <summary>
-        /// Add Entity position and velocity, and make it drawable
-        /// </summary>
-        public Entity AddDrawable(Entity e)
-        {
-            AddMotion(e);
-            if (!e.HasC<DrawComp>()) e.AddC(new DrawComp(buildScreen));
-            return e;
-        }
-
-        /// <summary>
         /// Create a Sprite, which is a moveable graphic
         /// </summary>
         /// <param name="graphicsFile">The content graphics file with or without extension. If
@@ -244,14 +224,77 @@ namespace TTengine.Core
         /// <param name="hasRenderBuffer">if true, Screen will have its own render buffer</param>
         /// <param name="height">Screen height, if not given uses default backbuffer height</param>
         /// <param name="width">Screen width, if not given uses default backbuffer width</param>
-        /// <returns>Newly created Entity with a ScreenComp.</returns>
+        /// <param name="isSprite">If set to true, will also make this Entity a Sprite.</param>
+        /// <returns>Newly created Entity with a ScreenComp and DrawComp.</returns>
         public Entity CreateScreen(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
-                                        int width = 0, int height = 0)
+                                        int width = 0, int height = 0, bool isSprite = false)
         {
             var sc = new ScreenComp(hasRenderBuffer, width, height);
             sc.BackgroundColor = backgroundColor;            
             e.AddC(sc);
             e.AddC(new DrawComp(buildScreen));
+            if (isSprite)
+            {
+                AddMotion(e);
+                e.AddC(new SpriteComp(sc));
+            }
+            return e;
+        }
+
+        /// <summary>
+        /// Creates a Screen Sprite, which has a ScreenComp to which graphics can be rendered and also is plotted as 
+        /// a sprite with the texture being the Screen's contents. Parameters as for CreateScreen().
+        /// </summary>
+        public Entity CreateScreenSprite(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
+                                        int width = 0, int height = 0)
+        {
+            return CreateScreen(e, backgroundColor, hasRenderBuffer, width, height, true);
+        }
+
+        /// <summary>
+        /// Create a shader effect layer to which one or more Entities/sprites can render
+        /// </summary>
+        /// <param name="e">Entity that will carry the fx layer</param>
+        /// <param name="fxFile">name of shader effect in Content (name).fx </param>
+        /// <returns></returns>
+        public Entity CreateFx(Entity e, string fxFile)
+        {
+            var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
+            if (!e.HasC<ScreenComp>()) e.AddC(new ScreenComp(buildScreen.RenderTarget));
+            e.C<ScreenComp>().SpriteBatch.effect = fx; // set the effect in SprBatch
+            return e;
+        }
+
+        /// <summary>
+        /// Creates an FX Sprite that renders a shader Effect in a rectangle. By default, the rect is
+        /// of screen-filling size (when width=height=0).
+        /// </summary>
+        /// <param name="width">width of rectangle</param>
+        /// <param name="height">Height of rectangle</param>
+        /// <returns></returns>
+        public Entity CreateFxSprite(Entity e, string fxFile, int width = 0, int height = 0)
+        {
+            AddDrawable(e);
+            var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
+            var sc = new ScreenComp(buildScreen.RenderTarget); // renders to the existing screen buffer
+            sc.SpriteBatch.effect = fx; // set the effect in SprBatch
+            e.AddC(sc);
+            var spc = new SpriteRectComp { Width = width, Height = height };
+            e.AddC(spc);
+            e.C<DrawComp>().DrawScreen = sc; // let sprite draw itself to the effect-generating Screen sc
+            return e;
+        }
+
+        /// <summary>
+        /// Creates a new FrameRateCounter. TODO: screen position set.
+        /// </summary>
+        /// <returns></returns>
+        public Entity CreateFrameRateCounter(Entity e, Color textColor, int pixelsOffsetVertical = 0)
+        {
+            CreateText(e, "##", "TTFrameRateCounter");
+            e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
+            e.C<DrawComp>().DrawColor = textColor;
+            AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
             return e;
         }
 
@@ -296,36 +339,22 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Create a shader effect layer to which one or more Entities/sprites can render
+        /// Add Entity position and velocity
         /// </summary>
-        /// <param name="e">Entity that will carry the fx layer</param>
-        /// <param name="fxFile">name of shader effect in Content (name).fx </param>
-        /// <returns></returns>
-        public Entity CreateFx(Entity e, string fxFile)
+        public Entity AddMotion(Entity e)
         {
-            var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
-            if (!e.HasC<ScreenComp>())  e.AddC(new ScreenComp(buildScreen.RenderTarget));
-            e.C<ScreenComp>().SpriteBatch.effect = fx; // set the effect in SprBatch
+            if (!e.HasC<PositionComp>()) e.AddC(new PositionComp());
+            if (!e.HasC<VelocityComp>()) e.AddC(new VelocityComp());
             return e;
         }
 
         /// <summary>
-        /// Creates an FX Sprite that renders a shader Effect in a rectangle. By default, the rect is
-        /// of screen-filling size (when width=height=0).
+        /// Add Entity position and velocity, and make it drawable
         /// </summary>
-        /// <param name="width">width of rectangle</param>
-        /// <param name="height">Height of rectangle</param>
-        /// <returns></returns>
-        public Entity CreateFxSprite(Entity e, string fxFile, int width=0, int height=0)
+        public Entity AddDrawable(Entity e)
         {
-            AddDrawable(e);
-            var fx = TTGame.Instance.Content.Load<Effect>(fxFile);
-            var sc = new ScreenComp(buildScreen.RenderTarget); // renders to the existing screen buffer
-            sc.SpriteBatch.effect = fx; // set the effect in SprBatch
-            e.AddC(sc);
-            var spc = new SpriteRectComp { Width = width, Height = height };
-            e.AddC(spc);
-            e.C<DrawComp>().DrawScreen = sc; // let sprite draw itself to the effect-generating Screen sc
+            AddMotion(e);
+            if (!e.HasC<DrawComp>()) e.AddC(new DrawComp(buildScreen));
             return e;
         }
 
@@ -339,19 +368,6 @@ namespace TTengine.Core
                 e.C<AudioComp>().AudioScript = soundScript;
             else
                 e.AddC(new AudioComp(soundScript));
-            return e;
-        }
-
-        /// <summary>
-        /// Creates a new FrameRateCounter. TODO: screen position set.
-        /// </summary>
-        /// <returns></returns>
-        public Entity CreateFrameRateCounter(Entity e, Color textColor, int pixelsOffsetVertical = 0)
-        {
-            CreateText(e,"##","TTFrameRateCounter");
-            e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
-            e.C<DrawComp>().DrawColor = textColor;
-            AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
             return e;
         }
 
@@ -415,23 +431,38 @@ namespace TTengine.Core
         /// Apply a channel fit (scale, move) such that the channelToFit will be centered in
         /// and shrunk or stretched to the extent that it optimally fits parentChannel.
         /// </summary>
-        /// <param name="channelToFit"></param>
-        /// <param name="parentChannel"></param>
-        public Entity ProcessChannelFit(Entity channelToFit, Entity parentChannel, bool canStretch = true, 
+        /// <param name="entToFit">Screen or Channel to fit to parentEnt</param>
+        /// <param name="parentEnt">Parent Screen or Channel</param>
+        public Entity ProcessFitSize(Entity entToFit, Entity parentEnt, bool canStretch = true, 
                                              bool canShrink = true, int maxPixelsCutOffVertical = 0)
         {
-            var scrToFit = channelToFit.C<WorldComp>().Screen;
-            PositionComp pos = channelToFit.C<PositionComp>();
-            SpriteComp spr = channelToFit.C<SpriteComp>();
-            ScaleComp scl = channelToFit.C<ScaleComp>();
-            var parentScr = parentChannel.C<WorldComp>().Screen;
+            ScreenComp scrToFit;
+            if (entToFit.HasC<WorldComp>())
+                scrToFit = entToFit.C<WorldComp>().Screen;
+            else if (entToFit.HasC<ScreenComp>())
+                scrToFit = entToFit.C<ScreenComp>();
+            else
+                throw new NotImplementedException("Unrecognized entToFit in ProcessFitSize()");
+
+            PositionComp pos = entToFit.C<PositionComp>();
+            SpriteComp spr = entToFit.C<SpriteComp>();
+            ScaleComp scl = entToFit.C<ScaleComp>();
+
+            ScreenComp parentScr;
+            if (parentEnt.HasC<WorldComp>())
+                parentScr = parentEnt.C<WorldComp>().Screen;
+            else if (parentEnt.HasC<ScreenComp>())
+                parentScr = parentEnt.C<ScreenComp>();
+            else
+                throw new NotImplementedException("Unrecognized parentEnt in ProcessFitSize()");
+
             float scale = 1.0f;
 
             // if no scale comp yet, add one
             if (scl == null)
             {
                 scl = new ScaleComp();
-                channelToFit.AddC(scl);
+                entToFit.AddC(scl);
             }
 
             // position channel to the middle of parent.
@@ -463,7 +494,7 @@ namespace TTengine.Core
             // apply scale
             scl.Scale = scale;
 
-            return channelToFit;
+            return entToFit;
         }
 
     }

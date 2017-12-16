@@ -28,19 +28,20 @@
 #pragma parameter bloomAmount "bloom amt" 0.15 0.0 1.0 0.05
 #pragma parameter shape "filter kernel shape" 2.0 0.0 10.0 0.05
 
-#define hardScan -8.0
-#define hardPix -3.0
-#define warpX 0.031
-#define warpY 0.041
-#define maskDark 0.5
-#define maskLight 1.5
-#define scaleInLinearGamma 1
-#define shadowMask 4
-#define brightboost 1
-#define hardBloomScan -2.0
-#define hardBloomPix -1.5
-#define bloomAmount 1.0/16.0
-#define shape 2.0
+// Parameters that can be adapted - see limits above
+float hardScan = -8.0;
+float hardPix = -3.0;
+float warpX = 0.031;
+float warpY = 0.041;
+float maskDark = 0.7;
+float maskLight = 1.5;
+float scaleInLinearGamma = 1;
+float shadowMask = 4;
+float brightboost = 1;
+float hardBloomScan = -2.0;
+float hardBloomPix = -1.5;
+float bloomAmount = 1.0 / 16.0;
+float shape = 2.0;
 
 //Uncomment to reduce instructions with simpler linearization
 //(fixes HD3000 Sandy Bridge IGP)
@@ -322,7 +323,6 @@ float4 crt_lottes(float2 texture_size, float2 video_size, float2 output_size, fl
 	return float4(ToSrgb(outColor.rgb), 1.0);
 }
 
-// float4 position : SV_Position, float4 color : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 float4 main_fragment(float4 position : SV_Position, float4 color : COLOR0, float2 tex : TEXCOORD0) : COLOR0
 {
 	return crt_lottes(texture_size, video_size, output_size, tex, decal);
