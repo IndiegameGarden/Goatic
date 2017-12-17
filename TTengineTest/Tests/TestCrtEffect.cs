@@ -23,30 +23,17 @@ namespace TTengineTest
 
         public override void BuildAll()
         {
-            var fx = CreateFx(New(), "crt-lottes");
-            Entity chan;
-
-            using (BuildTo(fx))
-            {
-                chan = CreateChannel(New(), Color.Black, 960, 720);
-                ProcessFitSize(chan, this.Channel);
-            }
+            EffectParameterCollection p;
+            var chan = CreateCrtChannel(New(), Color.Black, 960, 720, out p);
 
             // set a script for shader params
-            EffectParameterCollection p = fx.C<ScreenComp>().SpriteBatch.effect.Parameters;
-            AddFunctionScript(fx, 
+            AddFunctionScript(chan,
                 (ctx, v) => {
                     p["warpX"].SetValue((float)v);
                     p["warpY"].SetValue((float)v);
-                }, 
-                new SineFunction { Amplitude = 0.6, Offset = 0.061, Frequency = 0.3 } 
+                },
+                new SineFunction { Amplitude = 0.6, Offset = 0.061, Frequency = 0.3 }
             );
-
-            // TODO: move some of this to factory
-            p["video_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
-            p["output_size"].SetValue(new Vector2(BuildScreen.Width, BuildScreen.Height));
-            p["texture_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
-            //p["modelViewProj"].SetValue(Matrix.Identity);
 
             // fill the channel with content
             using (BuildTo(chan))

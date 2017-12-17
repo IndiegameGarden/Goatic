@@ -307,7 +307,7 @@ namespace TTengine.Core
         /// <param name="height">Channel's screen height or if not given or 0 will use RenderBuffer height</param>
         /// <returns></returns>
         public Entity CreateChannel(Entity eChan, Color backgroundColor,
-                                        int width = 0, int height = 0, string fxFile = null)
+                                        int width = 0, int height = 0)
         {
 			var wc = new WorldComp(); // create world
 
@@ -335,6 +335,26 @@ namespace TTengine.Core
         {
             ScreenComp sc = templateChannel.C<WorldComp>().Screen;
             return CreateChannel(e,sc.BackgroundColor, sc.Width, sc.Height);
+        }
+
+        public Entity CreateCrtChannel(Entity chan, Color backgroundColor, int width, int height, out EffectParameterCollection fxParams)
+        {
+            var fx = CreateFx(New(), "crt-lottes");
+
+            using (BuildTo(fx))
+            {
+                CreateChannel(chan, backgroundColor, width, height);
+                ProcessFitSize(chan, BuildScreen);
+            }
+
+            EffectParameterCollection p = fx.C<ScreenComp>().SpriteBatch.effect.Parameters;
+            p["video_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
+            p["output_size"].SetValue(new Vector2(BuildScreen.Width, BuildScreen.Height));
+            p["texture_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
+            //p["modelViewProj"].SetValue(Matrix.Identity);
+
+            fxParams = p;
+            return chan;
         }
 
         /// <summary>
@@ -431,8 +451,8 @@ namespace TTengine.Core
         /// and shrunk or stretched to the extent that it optimally fits parentChannel.
         /// </summary>
         /// <param name="entToFit">Screen or Channel to fit to parentEnt</param>
-        /// <param name="parentEnt">Parent Screen or Channel</param>
-        public Entity ProcessFitSize(Entity entToFit, Entity parentEnt, bool canStretch = true, 
+        /// <param name="parentScr">Parent Screen</param>
+        public Entity ProcessFitSize(Entity entToFit, ScreenComp parentScr, bool canStretch = true,
                                              bool canShrink = true, int maxPixelsCutOffVertical = 0)
         {
             ScreenComp scrToFit;
@@ -446,14 +466,6 @@ namespace TTengine.Core
             PositionComp pos = entToFit.C<PositionComp>();
             SpriteComp spr = entToFit.C<SpriteComp>();
             ScaleComp scl = entToFit.C<ScaleComp>();
-
-            ScreenComp parentScr;
-            if (parentEnt.HasC<WorldComp>())
-                parentScr = parentEnt.C<WorldComp>().Screen;
-            else if (parentEnt.HasC<ScreenComp>())
-                parentScr = parentEnt.C<ScreenComp>();
-            else
-                throw new NotImplementedException("Unrecognized parentEnt in ProcessFitSize()");
 
             float scale = 1.0f;
 
@@ -486,7 +498,7 @@ namespace TTengine.Core
                 // squeeze in to fit height
                 if ((scale * (float)scrToFit.Height - (float)maxPixelsCutOffVertical) > parentScr.Height)
                 {
-                    scale *= ((float)parentScr.Height) / ((float)(scrToFit.Height-maxPixelsCutOffVertical)) ;
+                    scale *= ((float)parentScr.Height) / ((float)(scrToFit.Height - maxPixelsCutOffVertical));
                 }
             }
 
@@ -494,6 +506,28 @@ namespace TTengine.Core
             scl.Scale = scale;
 
             return entToFit;
+        }
+
+    
+
+        /// <summary>
+        /// Apply a channel fit (scale, move) such that the channelToFit will be centered in
+        /// and shrunk or stretched to the extent that it optimally fits parentChannel.
+        /// </summary>
+        /// <param name="entToFit">Screen or Channel to fit to parentEnt</param>
+        /// <param name="parentEnt">Parent Screen or Channel</param>
+        public Entity ProcessFitSize(Entity entToFit, Entity parentEnt, bool canStretch = true, 
+                                                bool canShrink = true, int maxPixelsCutOffVertical = 0)
+        {
+            ScreenComp parentScr;
+            if (parentEnt.HasC<WorldComp>())
+                parentScr = parentEnt.C<WorldComp>().Screen;
+            else if (parentEnt.HasC<ScreenComp>())
+                parentScr = parentEnt.C<ScreenComp>();
+            else
+                throw new NotImplementedException("Unrecognized parentEnt in ProcessFitSize()");
+
+            return ProcessFitSize(entToFit, parentScr, canStretch, canShrink, maxPixelsCutOffVertical);
         }
 
     }
