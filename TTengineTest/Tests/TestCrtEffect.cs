@@ -16,6 +16,11 @@ namespace TTengineTest
     class TestCrtEffect : Test
     {
 
+        public TestCrtEffect(): base()
+        {
+            this.BackgroundColor = Color.Black;    
+        }
+
         public override void BuildAll()
         {
             var fx = CreateFx(New(), "crt-lottes");

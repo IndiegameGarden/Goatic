@@ -44,10 +44,7 @@ namespace TTengine.Core
         /// </summary>
         public void BeginParameterized()
         {
-            if (effect == null)
-              Begin(spriteSortMode, blendState, samplerState, depthStencilState, rasterizerState);
-            else
-              Begin(spriteSortMode, blendState, samplerState, depthStencilState, rasterizerState, effect);
+            Begin(spriteSortMode, blendState, samplerState, depthStencilState, rasterizerState, effect);
         }
         
     }
