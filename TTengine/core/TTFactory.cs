@@ -224,18 +224,17 @@ namespace TTengine.Core
         /// <param name="hasRenderBuffer">if true, Screen will have its own render buffer</param>
         /// <param name="height">Screen height, if not given uses default backbuffer height</param>
         /// <param name="width">Screen width, if not given uses default backbuffer width</param>
-        /// <param name="isSprite">If set to true, will also make this Entity a Sprite.</param>
+        /// <param name="isSprite">If set to true, will also make this Entity a Sprite, with bitmap being the screen's contents.</param>
         /// <returns>Newly created Entity with a ScreenComp and DrawComp.</returns>
         public Entity CreateScreen(Entity e, Color backgroundColor, bool hasRenderBuffer = false,
                                         int width = 0, int height = 0, bool isSprite = false)
         {
+            AddDrawable(e);
             var sc = new ScreenComp(hasRenderBuffer, width, height);
             sc.BackgroundColor = backgroundColor;            
             e.AddC(sc);
-            e.AddC(new DrawComp(buildScreen));
             if (isSprite)
             {
-                AddMotion(e);
                 e.AddC(new SpriteComp(sc));
             }
             return e;
