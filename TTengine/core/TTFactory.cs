@@ -307,22 +307,22 @@ namespace TTengine.Core
         /// <param name="height">Channel's screen height or if not given or 0 will use RenderBuffer height</param>
         /// <returns></returns>
         public Entity CreateChannel(Entity eChan, Color backgroundColor,
-                                        int width = 0, int height = 0)
+                                        int width = 0, int height = 0, string fxFile = null)
         {
 			var wc = new WorldComp(); // create world
 
             // create a Screen Entity within the Channel's (sub) world
-            Entity eScr = wc.World.CreateEntity();  // Note: creation should happen within wc.World !
+            Entity eScr = wc.World.CreateEntity();  // Note: creation should happen within wc.World ! See notebook 17-dec-2017
 			var sc = new ScreenComp (true, width, height);
 			wc.Screen = sc;				// store the Screen as part of the World
 			sc.BackgroundColor = backgroundColor;
 			eScr.AddC (sc);
+            // add the new World
+            eChan.AddC(wc);
 
-            // create the channel Entity, based on Sprite
+            // create the Sprite
             CreateSprite(eChan, sc);
 
-			// make this sprite into a Channel by adding the World
-            eChan.AddC(wc);
             return eChan;
         }
 
