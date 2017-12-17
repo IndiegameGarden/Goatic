@@ -24,31 +24,32 @@ namespace TTengineTest
         public override void BuildAll()
         {
             var fx = CreateFx(New(), "crt-lottes");
-            Entity entScr;
+            Entity chan;
 
             using (BuildTo(fx))
             {
-                entScr = CreateScreenSprite(New(), Color.Black, true, 960, 720);
-                ProcessFitSize(entScr, this.Channel);
+                chan = CreateChannel(New(), Color.Black, 960, 720);
+                ProcessFitSize(chan, this.Channel);
             }
 
-            var sc = entScr.C<ScreenComp>();
-            var sc2 = BuildScreen;
+            // set a script for shader params
             EffectParameterCollection p = fx.C<ScreenComp>().SpriteBatch.effect.Parameters;
             AddFunctionScript(fx, 
                 (ctx, v) => {
                     p["warpX"].SetValue((float)v);
                     p["warpY"].SetValue((float)v);
                 }, 
-                new SineFunction { Amplitude = 0.6, Offset = 0.061, Frequency = 0.3 });
+                new SineFunction { Amplitude = 0.6, Offset = 0.061, Frequency = 0.3 } 
+            );
 
             // TODO: move some of this to factory
-            p["video_size"].SetValue(new Vector2(sc.Width, sc.Height));
-            p["output_size"].SetValue(new Vector2(sc2.Width, sc2.Height));
-            p["texture_size"].SetValue(new Vector2(sc.Width, sc.Height));
+            p["video_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
+            p["output_size"].SetValue(new Vector2(BuildScreen.Width, BuildScreen.Height));
+            p["texture_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
             //p["modelViewProj"].SetValue(Matrix.Identity);
 
-            using (BuildTo(entScr))
+            // fill the channel with content
+            using (BuildTo(chan))
             {
                 var t = new TestMultiChannels(); // TestSphereCollision();
                 t.BuildLike(this);
