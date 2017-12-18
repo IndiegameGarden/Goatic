@@ -23,8 +23,8 @@ namespace TTengineTest
 
         public override void BuildAll()
         {
-            EffectParameterCollection p;
-            var chan = CreateCrtChannel(New(), Color.Black, 960, 720, out p);
+            var chan = CreateCrtChannel(New(), Color.Black, 960, 720);
+            var p = GetFxParameters(chan);
 
             // set a script for shader params
             AddFunctionScript(chan,

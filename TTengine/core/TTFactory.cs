@@ -337,7 +337,15 @@ namespace TTengine.Core
             return CreateChannel(e,sc.BackgroundColor, sc.Width, sc.Height);
         }
 
-        public Entity CreateCrtChannel(Entity chan, Color backgroundColor, int width, int height, out EffectParameterCollection fxParams)
+        /// <summary>
+        /// Create a new channel with CRT shader effect
+        /// </summary>
+        /// <param name="chan"></param>
+        /// <param name="backgroundColor"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public Entity CreateCrtChannel(Entity chan, Color backgroundColor, int width, int height)
         {
             var fx = CreateFx(New(), "crt-lottes");
 
@@ -353,7 +361,6 @@ namespace TTengine.Core
             p["texture_size"].SetValue(new Vector2(chan.C<SpriteComp>().Width, chan.C<SpriteComp>().Height));
             //p["modelViewProj"].SetValue(Matrix.Identity);
 
-            fxParams = p;
             return chan;
         }
 
@@ -529,6 +536,25 @@ namespace TTengine.Core
 
             return ProcessFitSize(entToFit, parentScr, canStretch, canShrink, maxPixelsCutOffVertical);
         }
+
+        /// <summary>
+        /// Get the shader Fx parameters for the Effect that is used to render the Entity e
+        /// </summary>
+        /// <param name="e">An Entity with a DrawComp</param>
+        /// <returns>ScreenComp's spritebatch's effect's parameters collection, an EffectParameterCollection.
+        /// Or null in case the Entity renders without Effect to the screen.</returns>
+        public EffectParameterCollection GetFxParameters(Entity e)
+        {
+            if (!e.HasC<DrawComp>())
+                return null;
+            if (e.C<DrawComp>().DrawScreen == null)
+                return null;
+            if (e.C<DrawComp>().DrawScreen.SpriteBatch.effect == null)
+                return null;
+
+            return e.C<DrawComp>().DrawScreen.SpriteBatch.effect.Parameters;
+        }
+
 
     }
 }
