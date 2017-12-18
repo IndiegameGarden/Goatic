@@ -454,19 +454,31 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Apply a channel fit (scale, move) such that the channelToFit will be centered in
-        /// and shrunk or stretched to the extent that it optimally fits parentChannel.
+        /// Apply a channel/screen/sprite fit (with scale, move) such that the entToFit will be centered in
+        /// and shrunk or stretched to the extent that it optimally fits the screen parentScr.
         /// </summary>
-        /// <param name="entToFit">Screen or Channel to fit to parentEnt</param>
+        /// <param name="entToFit">Screen/Channel/Sprite to fit to parentScr</param>
         /// <param name="parentScr">Parent Screen</param>
         public Entity ProcessFitSize(Entity entToFit, ScreenComp parentScr, bool canStretch = true,
                                              bool canShrink = true, int maxPixelsCutOffVertical = 0)
         {
-            ScreenComp scrToFit;
+            int h, w; // height / width of entToFit
+
             if (entToFit.HasC<WorldComp>())
-                scrToFit = entToFit.C<WorldComp>().Screen;
+            {
+                h = entToFit.C<WorldComp>().Screen.Height;
+                w = entToFit.C<WorldComp>().Screen.Width;
+            }
             else if (entToFit.HasC<ScreenComp>())
-                scrToFit = entToFit.C<ScreenComp>();
+            {
+                h = entToFit.C<ScreenComp>().Height;
+                w = entToFit.C<ScreenComp>().Width;
+            }
+            else if (entToFit.HasC<SpriteComp>())
+            {
+                h = entToFit.C<SpriteComp>().Height;
+                w = entToFit.C<SpriteComp>().Width;
+            }
             else
                 throw new NotImplementedException("Unrecognized entToFit in ProcessFitSize()");
 
@@ -488,24 +500,24 @@ namespace TTengine.Core
             spr.CenterToMiddle();
 
             // squeeze in to fit width
-            if (canShrink && scrToFit.Width > parentScr.Width)
+            if (canShrink && w > parentScr.Width)
             {
-                scale = ((float)parentScr.Width) / ((float)scrToFit.Width);
+                scale = ((float)parentScr.Width) / ((float)w);
                 // squeeze in to fit height
-                if ((((scrToFit.Height - maxPixelsCutOffVertical) * scale)) > (parentScr.Height * scale))
+                if ((((h - maxPixelsCutOffVertical) * scale)) > (parentScr.Height * scale))
                 {
-                    scale *= ((float)parentScr.Height) / ((float)(scrToFit.Height - maxPixelsCutOffVertical));
+                    scale *= ((float)parentScr.Height) / ((float)(h - maxPixelsCutOffVertical));
                 }
             }
 
             // expand to fit width
-            if (canStretch && scrToFit.Width < parentScr.Width)
+            if (canStretch && w < parentScr.Width)
             {
-                scale = ((float)parentScr.Width) / ((float)scrToFit.Width);
+                scale = ((float)parentScr.Width) / ((float)w);
                 // squeeze in to fit height
-                if ((scale * (float)scrToFit.Height - (float)maxPixelsCutOffVertical) > parentScr.Height)
+                if ((scale * (float)h - (float)maxPixelsCutOffVertical) > parentScr.Height)
                 {
-                    scale *= ((float)parentScr.Height) / ((float)(scrToFit.Height - maxPixelsCutOffVertical));
+                    scale *= ((float)parentScr.Height) / ((float)(h - maxPixelsCutOffVertical));
                 }
             }
 
@@ -515,13 +527,13 @@ namespace TTengine.Core
             return entToFit;
         }
 
-    
+
 
         /// <summary>
-        /// Apply a channel fit (scale, move) such that the channelToFit will be centered in
-        /// and shrunk or stretched to the extent that it optimally fits parentChannel.
+        /// Apply a channel/screen/sprite fit (with scale, move) such that the entToFit will be centered in
+        /// and shrunk or stretched to the extent that it optimally fits the parentEnt.
         /// </summary>
-        /// <param name="entToFit">Screen or Channel to fit to parentEnt</param>
+        /// <param name="entToFit">Screen/Channel/Sprite to fit to parentEnt</param>
         /// <param name="parentEnt">Parent Screen or Channel</param>
         public Entity ProcessFitSize(Entity entToFit, Entity parentEnt, bool canStretch = true, 
                                                 bool canShrink = true, int maxPixelsCutOffVertical = 0)
