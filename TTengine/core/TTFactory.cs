@@ -9,6 +9,7 @@ using Artemis;
 using TTengine.Comps;
 using TTengine.Modifiers;
 using TTMusicEngine.Soundevents;
+using TTengine.Factories.Shape3DFactoryItems;
 
 namespace TTengine.Core
 {
@@ -297,6 +298,16 @@ namespace TTengine.Core
             return e;
         }
 
+        public Entity CreateSphere(Entity e, Vector3 pos, float diameter = 1.0f, int tesselation = 16)
+        {
+            AddDrawable(e);
+            e.C<PositionComp>().Position = new Vector2(pos.X, pos.Y);
+            e.C<PositionComp>().Depth = pos.Z;
+            var gc = new GeomComp(new SpherePrimitive(BuildScreen.SpriteBatch.GraphicsDevice , diameter, tesselation));
+            e.AddC(gc);
+            return e;
+        }
+
         /// <summary>
         /// Creates a new Channel, which is an Entity with inside it a separate EntityWorld containing a dedicated ScreenComp to
         /// which that World renders, which can be then shown as a sprite. Parameters are same as for CreateScreen() above.
@@ -381,6 +392,12 @@ namespace TTengine.Core
         {
             AddMotion(e);
             if (!e.HasC<DrawComp>()) e.AddC(new DrawComp(buildScreen));
+            return e;
+        }
+
+        public Entity AddScalable(Entity e)
+        {
+            if (!e.HasC<ScaleComp>()) e.AddC(new ScaleComp());
             return e;
         }
 

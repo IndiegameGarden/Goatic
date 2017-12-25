@@ -78,7 +78,7 @@ namespace Game1
             return e;
         }
 
-        public Entity CreateMovingTextlet(Entity e, Vector2 pos, string text)
+        public Entity CreateMovingText(Entity e, Vector2 pos, string text)
         {
             CreateText(e,text);
             e.C<PositionComp>().Position = pos;
@@ -118,7 +118,7 @@ namespace Game1
             return e;
         }
 
-        public Entity CreateHypnoScreenlet(Entity e)
+        public Entity CreateHypnoScreen(Entity e)
         {
             CreateFx(e, "Hypno");
             AddScript(e, ScriptHypno );
@@ -133,7 +133,7 @@ namespace Game1
             effect.Parameters["Time"].SetValue((float)ctx.SimTime);
         }
 
-        public Entity CreateMandelbrotScreenlet(Entity e)
+        public Entity CreateMandelbrotScreen(Entity e)
         {
             CreateFx(e, "MandelbrotJulia");
             AddScript(e, ScriptMandelbrotFx );
@@ -146,7 +146,7 @@ namespace Game1
             effect.Parameters["Zoom"].SetValue((float)( 3 - ctx.SimTime/20.0 ));
         }
 
-        public Entity CreateJuliaScreenlet(Entity e)
+        public Entity CreateJuliaScreen(Entity e)
         {
             CreateFx(e, "MandelbrotJulia");
             var fx = e.C<ScreenComp>().SpriteBatch.effect;

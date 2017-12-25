@@ -38,6 +38,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestGeom3D());
             DoTest(new TestFxSprite());
             DoTest(new TestFxSprite2());
             DoTest(new TestCrtEffect());
@@ -53,7 +54,7 @@ namespace TTengineTest
             DoTest(new TestRelativeMotion());
             DoTest(new TestMultiChannels());
             DoTest(new TestGamepad());
-            DoTest(new TestZoomedScreenlet());
+            DoTest(new TestZoomedScreen());
             DoTest(new TestAudioBasics()); //FIXME? audio plays too soon
             DoTest(new TestContentLoad());
             DoTest(new TestTargetMotion());

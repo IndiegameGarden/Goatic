@@ -1,9 +1,9 @@
 // (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-// parameters used directly from Efflet class
+// parameters from DrawComp (TODO check if used)
 float4 DrawColor = float4(1,1,1,1);
 
-// parameters defined for interfacing with HypnoEfflet class
+// parameters defined for this specific effect
 float Time = 0;
 float Zoom = 50;
 float3 ColorScale = float3(4,5,6);

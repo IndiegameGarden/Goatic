@@ -10,8 +10,8 @@ namespace TTengine.Comps
     /// <summary>
     /// Screen to which graphics are rendered together with a TTSpriteBatch, 
     /// optionally containing a separate RenderBuffer.
-    /// Attaching a ScreenComp to an Entity makes it a Screenlet.
-    /// <seealso cref="ScreenletSystem"/>
+    /// Attaching a ScreenComp to an Entity makes it a Screen.
+    /// <seealso cref="ScreenSystem"/>
     /// </summary>
     public class ScreenComp: IComponent
     {
@@ -75,6 +75,8 @@ namespace TTengine.Comps
         /// <summary>The default spritebatch associated to this screen, for drawing to it</summary>
         public TTSpriteBatch SpriteBatch;
 
+        public  Matrix ViewM, ProjM;
+
         #region Private and internal variables        
         private int screenWidth = 0;
         private int screenHeight = 0;
@@ -114,6 +116,14 @@ namespace TTengine.Comps
             aspectRatio = (float)screenWidth / (float)screenHeight;
             Center = new Vector2( (float)screenWidth/2.0f, (float)screenHeight/2.0f);
             ZoomCenter = Center;
+
+            // 3d geometry
+            // Create a view and projection matrix for our camera
+            ViewM = Matrix.CreateLookAt( new Vector3(0f, 0f, -100f), Vector3.Zero, Vector3.Up);
+            ProjM = Matrix.CreatePerspectiveFieldOfView(
+                MathHelper.PiOver4, TTGame.Instance.GraphicsDevice.Viewport.AspectRatio, 1f, 1000f);
+
+
         }
 
     }

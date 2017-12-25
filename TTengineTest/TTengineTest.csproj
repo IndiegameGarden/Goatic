@@ -38,6 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Test3DStandalone.cs" />
+    <Compile Include="Tests\TestGeom3D.cs" />
     <Compile Include="Tests\TestCrtEffect.cs" />
     <Compile Include="Tests\TestFxSprite2.cs" />
     <Compile Include="Tests\TestFxSprite.cs" />

@@ -45,12 +45,12 @@ namespace TTengine.Util
                 frameRateAvg = (int)( (double)timer.CountTotal / timeTotal );
             string msg;
             if (TTGame.Instance.IsProfiling)
-                msg = string.Format("{0,4:D4} FPS [{1,4:D4}] Tupd={2,5:N1}ms Tdrw={3,5:N1}ms", timer.Count, frameRateAvg,
+                msg = string.Format("{0,5:D4} FPS [{1,5:D4}] Tupd={2,5:N1}ms Tdrw={3,5:N1}ms", timer.Count, frameRateAvg,
                     Math.Round(1000.0 * TTGame.Instance.ProfilingTimerUpdate.TimePerCount),
                     Math.Round(1000.0 * TTGame.Instance.ProfilingTimerDraw.TimePerCount) 
                 );
             else
-                msg = string.Format("{0,4} FPS [{1,4}]", timer.Count, frameRateAvg);
+                msg = string.Format("{0,5} FPS [{1,5}]", timer.Count, frameRateAvg);
             textComp.Text = msg;
         }
 

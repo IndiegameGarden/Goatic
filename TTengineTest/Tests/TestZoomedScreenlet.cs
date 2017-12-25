@@ -12,10 +12,10 @@ using Artemis.Interface;
 namespace TTengineTest
 {
     /// <summary>Zooms in on a part of a rendered Screenlet. Useful for e.g. scrolling level.</summary>
-    class TestZoomedScreenlet : Test
+    class TestZoomedScreen : Test
     {
 
-        public TestZoomedScreenlet()
+        public TestZoomedScreen()
         {
             BackgroundColor = Color.DarkGray;
         }
