@@ -19,20 +19,22 @@ namespace TTengineTest
             //this.BackgroundColor = Color.Transparent;
             this.BallSprite = "Op-art-circle_Marco-Braun";
 
-            var s = AddScalable( CreateSphere(New(),new Vector3(20f,0f,0f),25.0f) );
+            var s = AddScalable( CreateSphere(New(),new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f),50.0f) );
             AddFunctionScript(s, (ctx, v) =>
                 {
                     s.C<ScaleComp>().Scale = v;
-                }, new SineFunction { Amplitude = 0.5, Offset = 1.0, Frequency = 0.333 }
+                }, new SineFunction { Amplitude = 0.12, Offset = 1.0, Frequency = 0.333 }
             );
             var pic = new PlayerInputComp();
             s.AddC(pic);
             AddScript(s, (ctx) =>
                 {
-                    s.C<PositionComp>().Position += pic.Direction;
+                    s.C<PositionComp>().Position += pic.Direction * (float)ctx.Dt * 250.0f;
                 });
 
-            CreateRotatingBall(New(), new Vector2(900f, 700f), Vector2.Zero, 0.05);
+            // 2D ball follows the 3D one in (x,y)
+            var b = CreateRotatingBall(New(), Vector2.Zero, Vector2.Zero, 0.05);
+            AddScript(b, (ctx) => { b.C<PositionComp>().Position = s.C<PositionComp>().Position; });
         }
 
     }
