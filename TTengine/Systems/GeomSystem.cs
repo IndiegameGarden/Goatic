@@ -46,9 +46,10 @@ namespace TTengine.Systems
             var v = new Vector3(dc.DrawPosition.X, dc.DrawPosition.Y, dc.LayerDepth); // TODO
             // world, view, projection , color
             //var wm = Matrix.CreateTranslation(v);
-            var wm = Matrix.CreateWorld(v, Vector3.Forward, Vector3.Up);
-            if (e.HasC<ScaleComp>())
+            var wm = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Left);
+            if (e.HasC<ScaleComp>())    // apply object size scaling
                 wm *= Matrix.CreateScale((float) e.C<ScaleComp>().Scale);
+            wm *= Matrix.CreateTranslation(v); // apply position
             g.Draw(wm,scr.ViewM,scr.ProjM,dc.DrawColor);
         }
     }

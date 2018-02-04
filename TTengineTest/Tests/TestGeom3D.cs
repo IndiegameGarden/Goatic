@@ -25,6 +25,13 @@ namespace TTengineTest
                     s.C<ScaleComp>().Scale = v;
                 }, new SineFunction { Amplitude = 0.5, Offset = 1.0, Frequency = 0.333 }
             );
+            var pic = new PlayerInputComp();
+            s.AddC(pic);
+            AddScript(s, (ctx) =>
+                {
+                    s.C<PositionComp>().Position += pic.Direction;
+                });
+
             CreateRotatingBall(New(), new Vector2(900f, 700f), Vector2.Zero, 0.05);
         }
 
