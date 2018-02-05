@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Artemis.Interface;
 using TTengine.Core;
+using System;
 
 namespace TTengine.Comps
 {
@@ -72,6 +73,17 @@ namespace TTengine.Comps
         /// <summary>Screen aspectratio</summary> 
         public float AspectRatio { get { return aspectRatio;  } }
 
+        public float FOV
+        {
+            get { return fov;}
+            set {
+                fov = value;
+                // Create a view and projection matrix for our camera
+                float z = Center.X / (float)Math.Tan(fov);
+                ViewM = Matrix.CreateLookAt(new Vector3(Center.X, Center.Y, -z), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);
+                ProjM = Matrix.CreatePerspectiveFieldOfView(fov, aspectRatio, 0.1f, 9500f); // TODO near and far planes setting
+            }
+        }
         /// <summary>The default spritebatch associated to this screen, for drawing to it</summary>
         public TTSpriteBatch SpriteBatch;
 
@@ -80,7 +92,7 @@ namespace TTengine.Comps
         #region Private and internal variables        
         private int screenWidth = 0;
         private int screenHeight = 0;
-        private float aspectRatio;
+        private float aspectRatio, fov;
         private /*internal*/ RenderTarget2D renderTarget;
         #endregion
 
@@ -118,11 +130,7 @@ namespace TTengine.Comps
             ZoomCenter = Center;
 
             // 3d geometry
-            // Create a view and projection matrix for our camera
-            ViewM = Matrix.CreateLookAt( new Vector3(Center.X,Center.Y, -Center.Y), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);
-            ProjM = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, TTGame.Instance.GraphicsDevice.Viewport.AspectRatio, 0.1f, 1500f);
-            //ProjM = Matrix.CreatePerspective(screenWidth,screenHeight, 0.01f, 1000f);
-
+            this.FOV = MathHelper.PiOver4;
 
         }
 

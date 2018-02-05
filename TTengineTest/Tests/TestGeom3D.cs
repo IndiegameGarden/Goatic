@@ -19,7 +19,7 @@ namespace TTengineTest
             //this.BackgroundColor = Color.Transparent;
             this.BallSprite = "Op-art-circle_Marco-Braun";
 
-            var s = AddScalable( CreateSphere(New(),new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f),50.0f) );
+            var s = AddScalable( CreateSphere(New(),new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f),25.0f) );
             AddFunctionScript(s, (ctx, v) =>
                 {
                     s.C<ScaleComp>().Scale = v;
