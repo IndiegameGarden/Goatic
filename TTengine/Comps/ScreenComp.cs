@@ -119,8 +119,8 @@ namespace TTengine.Comps
 
             // 3d geometry
             // Create a view and projection matrix for our camera
-            ViewM = Matrix.CreateLookAt( new Vector3(Center.X,Center.Y, -400f), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);
-            ProjM = Matrix.CreatePerspectiveFieldOfView(MathHelper.Pi/1.67f, TTGame.Instance.GraphicsDevice.Viewport.AspectRatio, 0.01f, 500f);
+            ViewM = Matrix.CreateLookAt( new Vector3(Center.X,Center.Y, -Center.Y), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);
+            ProjM = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, TTGame.Instance.GraphicsDevice.Viewport.AspectRatio, 0.1f, 1500f);
             //ProjM = Matrix.CreatePerspective(screenWidth,screenHeight, 0.01f, 1000f);
 
 
