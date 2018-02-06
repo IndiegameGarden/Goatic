@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TTengine.Core;
 #endregion
 
 namespace TTengine.Factories.Shape3DFactoryItems
@@ -109,6 +110,8 @@ namespace TTengine.Factories.Shape3DFactoryItems
 
             basicEffect.EnableDefaultLighting();
             basicEffect.PreferPerPixelLighting = false;
+            //basicEffect.TextureEnabled = true;
+            //basicEffect.Texture = TTGame.Instance.Content.Load<Texture2D>("paul-hardman_circle-four");
             //basicEffect.VertexColorEnabled = true;
             //basicEffect.LightingEnabled = false; // http://www.gamefromscratch.com/post/2015/08/20/Monogame-Tutorial-Beginning-3D-Programming.aspx
 
@@ -181,8 +184,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
 
                 int primitiveCount = indices.Count / 3;
 
-                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
-                                                     vertices.Count, 0, primitiveCount);
+                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertices.Count, 0, primitiveCount);
 
             }
         }
