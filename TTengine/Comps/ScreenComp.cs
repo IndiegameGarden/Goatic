@@ -78,22 +78,25 @@ namespace TTengine.Comps
             get { return fov;}
             set {
                 fov = value;
-                // Create a view and projection matrix for our camera
-                float z = Center.X / (float)Math.Tan(fov);
+                // Create a view and projection matrix for our camera, to match 2D coordinate system exactly
+                float z = Center.Y / (float)Math.Tan(fov/2f);
                 ViewM = Matrix.CreateLookAt(new Vector3(Center.X, Center.Y, -z), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);
-                ProjM = Matrix.CreatePerspectiveFieldOfView(fov, aspectRatio, 0.1f, 9500f); // TODO near and far planes setting
+                ProjM = Matrix.CreatePerspectiveFieldOfView(fov, aspectRatio, 0.1f, 9500f); // TODO near and far planes setting logic                
             }
         }
         /// <summary>The default spritebatch associated to this screen, for drawing to it</summary>
         public TTSpriteBatch SpriteBatch;
 
+        /// <summary>
+        /// View and Projection matrices used for the 3D objects on this screen
+        /// </summary>
         public  Matrix ViewM, ProjM;
 
         #region Private and internal variables        
         private int screenWidth = 0;
         private int screenHeight = 0;
         private float aspectRatio, fov;
-        private /*internal*/ RenderTarget2D renderTarget;
+        private RenderTarget2D renderTarget;
         #endregion
 
         /// <summary>
@@ -130,7 +133,7 @@ namespace TTengine.Comps
             ZoomCenter = Center;
 
             // 3d geometry
-            this.FOV = MathHelper.PiOver4;
+            this.FOV = MathHelper.Pi/8;
 
         }
 
