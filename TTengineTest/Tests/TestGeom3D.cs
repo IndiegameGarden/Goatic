@@ -13,13 +13,16 @@ namespace TTengineTest
     /// <summary></summary>
     class TestGeom3D : Test
     {
+        public TestGeom3D()
+        {
+            this.BackgroundColor = Color.Black;
+        }
 
         public override void BuildAll()
         {
-            //this.BackgroundColor = Color.Transparent;
             this.BallSprite = "Op-art-circle_Marco-Braun";
 
-            var s = AddScalable( CreateSphere(New(),new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f),50.0f) );
+            var s = AddScalable( CreateSphere(New(),new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f),250.0f) );
             AddFunctionScript(s, (ctx, v) =>
                 {
                     s.C<ScaleComp>().Scale = v;
@@ -34,6 +37,8 @@ namespace TTengineTest
 
             // 2D ball follows the 3D one in (x,y)
             var b = CreateRotatingBall(New(), Vector2.Zero, Vector2.Zero, 0.05);
+            AddScalable(b);
+            b.C<ScaleComp>().Scale = 2;
             AddScript(b, (ctx) => { b.C<PositionComp>().Position = s.C<PositionComp>().Position; });
         }
 

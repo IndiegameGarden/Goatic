@@ -33,7 +33,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
 
         // During the process of constructing a primitive model, vertex
         // and index data is stored on the CPU in these managed lists.
-        List<VertexPositionNormal> vertices = new List<VertexPositionNormal>();
+        List<VertexPositionNormalTexture> vertices = new List<VertexPositionNormalTexture>();
         List<ushort> indices = new List<ushort>();
 
 
@@ -42,7 +42,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
         // store it on the GPU ready for efficient rendering.
         VertexBuffer vertexBuffer;
         IndexBuffer indexBuffer;
-        BasicEffect basicEffect;
+        BasicEffect fx;
 
 
         #endregion
@@ -54,9 +54,9 @@ namespace TTengine.Factories.Shape3DFactoryItems
         /// Adds a new vertex to the primitive model. This should only be called
         /// during the initialization process, before InitializePrimitive.
         /// </summary>
-        protected void AddVertex(Vector3 position, Vector3 normal)
+        protected void AddVertex(Vector3 position, Vector3 normal, Vector2 texCoord)
         {
-            vertices.Add(new VertexPositionNormal(position, normal));
+            vertices.Add(new VertexPositionNormalTexture(position, normal, texCoord));
         }
 
 
@@ -90,10 +90,10 @@ namespace TTengine.Factories.Shape3DFactoryItems
         protected void InitializePrimitive(GraphicsDevice graphicsDevice)
         {
             // Create a vertex declaration, describing the format of our vertex data.
+            // see http://virtuallyprogramming.com/Fundamentals/VerticesAndIndicies.html
 
             // Create a vertex buffer, and copy our vertex data into it.
-            vertexBuffer = new VertexBuffer(graphicsDevice,
-                                            typeof(VertexPositionNormal),
+            vertexBuffer = new VertexBuffer(graphicsDevice, typeof(VertexPositionNormalTexture),
                                             vertices.Count, BufferUsage.None);
 
             vertexBuffer.SetData(vertices.ToArray());
@@ -105,15 +105,14 @@ namespace TTengine.Factories.Shape3DFactoryItems
             indexBuffer.SetData(indices.ToArray());
 
             // Create a BasicEffect, which will be used to render the primitive.
-            basicEffect = new BasicEffect(graphicsDevice);
-            basicEffect.Alpha = 1f;
-
-            basicEffect.EnableDefaultLighting();
-            basicEffect.PreferPerPixelLighting = false;
-            //basicEffect.TextureEnabled = true;
-            //basicEffect.Texture = TTGame.Instance.Content.Load<Texture2D>("paul-hardman_circle-four");
-            //basicEffect.VertexColorEnabled = true;
-            //basicEffect.LightingEnabled = false; // http://www.gamefromscratch.com/post/2015/08/20/Monogame-Tutorial-Beginning-3D-Programming.aspx
+            fx = new BasicEffect(graphicsDevice);
+            fx.Alpha = 1f;            
+            fx.EnableDefaultLighting();
+            fx.PreferPerPixelLighting = false;
+            fx.TextureEnabled = true;
+            fx.Texture = TTGame.Instance.Content.Load<Texture2D>("earth8k"); // https://developer.xamarin.com/guides/cross-platform/game_development/monogame/3d/part2/
+            fx.LightingEnabled = true; // http://www.gamefromscratch.com/post/2015/08/20/Monogame-Tutorial-Beginning-3D-Programming.aspx
+            fx.FogEnabled = false;
 
 
         }
@@ -151,8 +150,8 @@ namespace TTengine.Factories.Shape3DFactoryItems
                 if (indexBuffer != null)
                     indexBuffer.Dispose();
 
-                if (basicEffect != null)
-                    basicEffect.Dispose();
+                if (fx != null)
+                    fx.Dispose();
             }
         }
 
@@ -174,18 +173,14 @@ namespace TTengine.Factories.Shape3DFactoryItems
 
             // Set our vertex declaration, vertex buffer, and index buffer.
             graphicsDevice.SetVertexBuffer(vertexBuffer);
-
             graphicsDevice.Indices = indexBuffer;            
-
+            int primitiveCount = indices.Count / 3;
 
             foreach (EffectPass effectPass in effect.CurrentTechnique.Passes)
             {
                 effectPass.Apply();
-
-                int primitiveCount = indices.Count / 3;
-
-                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertices.Count, 0, primitiveCount);
-
+                //graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertices.Count, 0, primitiveCount);
+                graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, primitiveCount);
             }
         }
 
@@ -200,14 +195,16 @@ namespace TTengine.Factories.Shape3DFactoryItems
         public void Draw(Matrix world, Matrix view, Matrix projection, Color color)
         {
             // Set BasicEffect parameters.
-            basicEffect.World = world;
-            basicEffect.View = view;
-            basicEffect.Projection = projection;
-            basicEffect.DiffuseColor = color.ToVector3();
-            basicEffect.Alpha = color.A / 255.0f;
+            fx.World = world;
+            fx.View = view;
+            fx.Projection = projection;
+            fx.DiffuseColor = color.ToVector3();
+            fx.Alpha = color.A / 255.0f;
 
-            GraphicsDevice device = basicEffect.GraphicsDevice;
+            GraphicsDevice device = fx.GraphicsDevice;
             device.DepthStencilState = DepthStencilState.Default;
+            //device.SamplerStates[1].AddressU = TextureAddressMode.Wrap;
+            //device.SamplerStates[1].AddressV = TextureAddressMode.Wrap;
 
             if (color.A < 255)
             {
@@ -221,7 +218,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
             }
 
             // Draw the model, using BasicEffect.
-            Draw(basicEffect);
+            Draw(fx);
         }
 
 

@@ -44,9 +44,10 @@ namespace TTengine.Factories.Shape3DFactoryItems
             int horizontalSegments = tessellation * 2;
 
             float radius = diameter / 2;
+            int Nrepeats = 1;
 
             // Start with a single vertex at the bottom of the sphere.
-            AddVertex(Vector3.Down * radius, Vector3.Down);
+            AddVertex(Vector3.Down * radius, Vector3.Down, Nrepeats * new Vector2(0.5f,1f));
 
             // Create rings of vertices at progressively higher latitudes.
             for (int i = 0; i < verticalSegments - 1; i++)
@@ -64,14 +65,14 @@ namespace TTengine.Factories.Shape3DFactoryItems
                     float dx = (float)Math.Cos(longitude) * dxz;
                     float dz = (float)Math.Sin(longitude) * dxz;
 
-                    Vector3 normal = new Vector3(dx, dy, dz);
-
-                    AddVertex(normal * radius, normal);
+                    Vector3 normal = new Vector3(dx, dy, dz);                    
+                    Vector2 texCoord = Nrepeats * new Vector2( ((float)j)/((float)horizontalSegments) , ((float)i/((float)verticalSegments)) ) ;
+                    AddVertex(normal * radius, normal, texCoord);
                 }
             }
 
             // Finish with a single vertex at the top of the sphere.
-            AddVertex(Vector3.Up * radius, Vector3.Up);
+            AddVertex(Vector3.Up * radius, Vector3.Up, Nrepeats * new Vector2(0.5f,0f));
 
             // Create a fan connecting the bottom vertex to the bottom latitude ring.
             for (int i = 0; i < horizontalSegments; i++)
