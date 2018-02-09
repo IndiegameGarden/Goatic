@@ -395,16 +395,18 @@ namespace TTengine.Core
             return e;
         }
 
-        public Entity AddScalable(Entity e)
+        /// <summary>
+        /// Add Entity scalability
+        /// </summary>
+        public Entity AddScalable(Entity e, double initialScale = 1.0)
         {
-            if (!e.HasC<ScaleComp>()) e.AddC(new ScaleComp());
+            if (!e.HasC<ScaleComp>()) e.AddC(new ScaleComp(initialScale));
             return e;
         }
 
         /// <summary>
         /// Add audio script to Entity
         /// </summary>
-        /// <param name="soundScript"></param>
         public Entity AddAudio(Entity e, SoundEvent soundScript)
         {
             if (e.HasC<AudioComp>())
@@ -417,8 +419,6 @@ namespace TTengine.Core
         /// <summary>
         /// Add custom code script to Entity
         /// </summary>
-        /// <param name="e"></param>
-        /// <param name="script"></param>
         public Entity AddScript(Entity e, IScript script)
         {
             if (!e.HasC<ScriptComp>())

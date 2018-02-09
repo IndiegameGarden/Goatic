@@ -195,7 +195,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
         public void Draw(Matrix world, Matrix view, Matrix projection, Color color)
         {
             // Set BasicEffect parameters.
-            fx.World = world;
+            fx.World = world; // * Matrix.CreateRotationZ(-MathHelper.PiOver2);
             fx.View = view;
             fx.Projection = projection;
             fx.DiffuseColor = color.ToVector3();
