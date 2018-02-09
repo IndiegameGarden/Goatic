@@ -80,7 +80,7 @@ namespace TTengine.Comps
                 fov = value;
                 // Create a view and projection matrix for our camera, to match 2D coordinate system exactly
                 float z = Center.Y / (float)Math.Tan(fov/2f);
-                ViewM = Matrix.CreateLookAt(new Vector3(Center.X, Center.Y, -z), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);
+                ViewM = Matrix.CreateLookAt(new Vector3(Center.X, Center.Y, -z), new Vector3(Center.X, Center.Y, 0f), Vector3.Down);                
                 ProjM = Matrix.CreatePerspectiveFieldOfView(fov, aspectRatio, 0.1f, 9500f); // TODO near and far planes setting logic                
             }
         }

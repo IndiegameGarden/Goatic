@@ -66,7 +66,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
                     float dz = (float)Math.Sin(longitude) * dxz;
 
                     Vector3 normal = new Vector3(dx, dy, dz);                    
-                    Vector2 texCoord = Nrepeats * new Vector2( ((float)j)/((float)horizontalSegments) , ((float)i/((float)verticalSegments)) ) ;
+                    Vector2 texCoord = Nrepeats * new Vector2( ((float)j)/((float)horizontalSegments) , 1f-((float)i/((float)verticalSegments)) ) ;
                     AddVertex(normal * radius, normal, texCoord);
                 }
             }

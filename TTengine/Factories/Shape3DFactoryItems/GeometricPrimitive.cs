@@ -105,23 +105,24 @@ namespace TTengine.Factories.Shape3DFactoryItems
             indexBuffer.SetData(indices.ToArray());
 
             // Create a BasicEffect, which will be used to render the primitive.
-            fx = new BasicEffect(graphicsDevice);
-            fx.Alpha = 1f;            
+            fx = new BasicEffect(graphicsDevice) {
+                Alpha = 1f,
+                PreferPerPixelLighting = false,
+                TextureEnabled = true,
+                Texture = TTGame.Instance.Content.Load<Texture2D>("earth8k"), // https://developer.xamarin.com/guides/cross-platform/game_development/monogame/3d/part2/
+                LightingEnabled = true, // http://www.gamefromscratch.com/post/2015/08/20/Monogame-Tutorial-Beginning-3D-Programming.aspx
+                FogEnabled = false
+            };
             fx.EnableDefaultLighting();
-            fx.PreferPerPixelLighting = false;
-            fx.TextureEnabled = true;
-            fx.Texture = TTGame.Instance.Content.Load<Texture2D>("earth8k"); // https://developer.xamarin.com/guides/cross-platform/game_development/monogame/3d/part2/
-            fx.LightingEnabled = true; // http://www.gamefromscratch.com/post/2015/08/20/Monogame-Tutorial-Beginning-3D-Programming.aspx
-            fx.FogEnabled = false;
-
+            
 
         }
 
 
-        /// <summary>
-        /// Finalizer.
-        /// </summary>
-        ~GeometricPrimitive()
+    /// <summary>
+    /// Finalizer.
+    /// </summary>
+    ~GeometricPrimitive()
         {
             Dispose(false);
         }
@@ -195,7 +196,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
         public void Draw(Matrix world, Matrix view, Matrix projection, Color color)
         {
             // Set BasicEffect parameters.
-            fx.World = world; // * Matrix.CreateRotationZ(-MathHelper.PiOver2);
+            fx.World = world; // * Matrix.CreateRotationY(-MathHelper.PiOver2);
             fx.View = view;
             fx.Projection = projection;
             fx.DiffuseColor = color.ToVector3();
