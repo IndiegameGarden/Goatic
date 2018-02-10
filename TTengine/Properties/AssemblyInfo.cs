@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TTengine")]
-[assembly: AssemblyProduct("TTengine")]
+[assembly: AssemblyTitle("TTengine 5 game engine for C#")]
+[assembly: AssemblyProduct("TTengine 5")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("Experimental 2D game engine for C# on top of MonoGame 3.x")]
+[assembly: AssemblyDescription("Experimental 2D/3D game engine for C# on top of MonoGame 3.x")]
 [assembly: AssemblyCompany("IndiegameGarden.com")]
-[assembly: AssemblyCopyright("Copyright © IndiegameGarden 2010-2017")]
+[assembly: AssemblyCopyright("Copyright © IndiegameGarden 2010-2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("5.0")]
+[assembly: AssemblyFileVersion("5.0")]
