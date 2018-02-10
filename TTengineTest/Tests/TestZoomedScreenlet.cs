@@ -32,12 +32,12 @@ namespace TTengineTest
                 s.AddC(new ScaleComp(1.0));
                 var targFunc = new MoveToTargetFunction
                 {
-                    CurrentValue = new Vector2(1.0f, 0f),
-                    Target = new Vector2(15.0f, 0f),
+                    CurrentValue = new Vector3(1.0f, 0f, 0f),
+                    Target = new Vector3(15.0f, 0f, 0f),
                     Speed = 1
                 };
                 AddScript(s, (ctx) => { s.C<ScaleComp>().Scale = targFunc.Value(ctx).X; });
-                s.C<PositionComp>().Position = Channel.C<WorldComp>().Screen.Center;
+                s.C<PositionComp>().PositionXY = Channel.C<WorldComp>().Screen.Center;
             }
 
             // -- main channel: shows the child channel using a sprite

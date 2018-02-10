@@ -17,7 +17,7 @@ namespace TTengineTest
             var e = CreateSpriteField(New(),"amazing1.png", "tree");   // TODO white circle
             e.AddC(new VelocityComp());
 
-            e.C<VelocityComp>().Velocity2D = new Vector2(5f, 5f);
+            e.C<VelocityComp>().VelocityXY = new Vector2(5f, 5f);
 
             SpriteFieldComp sfc = e.C<SpriteFieldComp>();
             sfc.FieldPos = new Vector2(0f, 0f);

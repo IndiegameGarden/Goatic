@@ -23,9 +23,9 @@ namespace TTengineTest
             {
                 float radius = RandomMath.RandomBetween(0.1f, 0.5f);
                 var ball = CreateBall(New(),radius, 0.1f+i*0.001f);
-                ball.C<PositionComp>().Position = new Vector2(150f * (i % BALLS_PER_ROW),
+                ball.C<PositionComp>().PositionXY = new Vector2(150f * (i % BALLS_PER_ROW),
                                                                     200f * (float)Math.Floor((double)(i / BALLS_PER_ROW)));
-                ball.C<VelocityComp>().Velocity2D = RandomMath.RandomDirection() * 30f;
+                ball.C<VelocityComp>().VelocityXY = RandomMath.RandomDirection() * 30f;
                 ball.AddC(new SphereShapeComp(radius * 250f));
 
                 AddScript(ball, BallColorSetScript);

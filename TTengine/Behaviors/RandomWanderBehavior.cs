@@ -66,7 +66,7 @@ namespace TTengine.Behaviors
         /// <param name="context">BT Entity/processing information</param>
         protected virtual void OnExecute(BTAIContext context)
         {
-            context.Entity.C<VelocityComp>().Velocity = new Vector2(CurrentDirection.X, CurrentDirection.Y);
+            context.Entity.C<VelocityComp>().VelocityXY = new Vector2(CurrentDirection.X, CurrentDirection.Y);
         }
 
 

@@ -32,7 +32,7 @@ namespace TTengineTest
             s.AddC(pic);
             AddScript(s, (ctx) =>
                 {
-                    s.C<PositionComp>().Position += pic.Direction * (float)ctx.Dt * 250.0f;
+                    s.C<PositionComp>().PositionXY += pic.Direction * (float)ctx.Dt * 250.0f;
                 });
 
             // 2D ball follows the 3D one in (x,y)

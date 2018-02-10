@@ -292,7 +292,7 @@ namespace TTengine.Core
         public Entity CreateFrameRateCounter(Entity e, Color textColor, int pixelsOffsetVertical = 0)
         {
             CreateText(e, "##", "TTFrameRateCounter");
-            e.C<PositionComp>().Position = new Vector2(2f, 2f + pixelsOffsetVertical);
+            e.C<PositionComp>().Position = new Vector3(2f, 2f + pixelsOffsetVertical,0f);
             e.C<DrawComp>().DrawColor = textColor;
             AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
             return e;
@@ -301,8 +301,7 @@ namespace TTengine.Core
         public Entity CreateSphere(Entity e, Vector3 pos, float diameter = 1.0f, int tesselation = 16)
         {
             AddDrawable(e);
-            e.C<PositionComp>().Position = new Vector2(pos.X, pos.Y);
-            e.C<PositionComp>().Depth = pos.Z;
+            e.C<PositionComp>().Position = pos;
             var gc = new GeomComp(new SpherePrimitive(BuildScreen.SpriteBatch.GraphicsDevice , diameter, tesselation));
             e.AddC(gc);
             return e;
@@ -513,7 +512,7 @@ namespace TTengine.Core
             }
 
             // position channel to the middle of parent.
-            pos.Position = parentScr.Center;
+            pos.PositionXY = parentScr.Center;
             spr.CenterToMiddle();
 
             // squeeze in to fit width

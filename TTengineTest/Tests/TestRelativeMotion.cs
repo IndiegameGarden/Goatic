@@ -48,7 +48,7 @@ namespace TTengineTest
             const float R = 50f;
             const double F = 0.1;
             double t = ctx.SimTime ;
-            ctx.Entity.C<PositionComp>().Position = 
+            ctx.Entity.C<PositionComp>().PositionXY = 
                 new Vector2((float)(R * Math.Sin(MathHelper.TwoPi * F * t)) , 
                             (float)(R * Math.Cos(MathHelper.TwoPi * F * t)));
         }
@@ -58,7 +58,7 @@ namespace TTengineTest
             const float R = 30f;
             const double F = 0.14;
             double t = ctx.SimTime;
-            ctx.Entity.C<PositionComp>().Position = 
+            ctx.Entity.C<PositionComp>().PositionXY = 
                 new Vector2((float)(R * Math.Sin(MathHelper.TwoPi * F * t)), 
                             (float)(R * Math.Cos(MathHelper.TwoPi * F * t)));
         }

@@ -57,8 +57,7 @@ namespace Game1
             e.C<SpriteComp>().CenterToMiddle();
             var sc = new ScaleComp { Scale = 2, ScaleSpeed = 0.01 };
             e.AddC(sc);
-            var pc = e.C<PositionComp>();
-            pc.Position = new Vector2(x, y);
+            e.C<PositionComp>().Position = new Vector3(x, y, 0.5f);
             var rc = new RotateComp { RotateSpeed = 0.1 };
             e.AddC(rc);
             AddScript(e, (ctx) => { e.C<ScaleComp>().ScaleTarget *= 1.001; } );            
@@ -81,9 +80,9 @@ namespace Game1
         public Entity CreateMovingText(Entity e, Vector2 pos, string text)
         {
             CreateText(e,text);
-            e.C<PositionComp>().Position = pos;
+            e.C<PositionComp>().PositionXY = pos;
             e.C<DrawComp>().DrawColor = Color.Black;
-            e.C<VelocityComp>().Velocity = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
+            e.C<VelocityComp>().VelocityXY = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
             e.C<ScaleComp>().Scale = 0.5;
             return e;
         }
@@ -97,9 +96,9 @@ namespace Game1
             var ball = CreateBall(e, RandomMath.RandomBetween(0.96f, 1.08f));
 
             // position and velocity set
-            ball.C<PositionComp>().Position = pos;
+            ball.C<PositionComp>().PositionXY = pos;
             ball.C<PositionComp>().Depth = RandomMath.RandomBetween(0.5f,0.6f); // random Z position
-            ball.C<VelocityComp>().Velocity2D = velo;
+            ball.C<VelocityComp>().Velocity = new Vector3(velo.X,velo.Y,0f);
             return ball;
         }
 

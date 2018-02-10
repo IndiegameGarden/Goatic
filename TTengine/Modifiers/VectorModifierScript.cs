@@ -13,7 +13,7 @@ namespace TTengine.Modifiers
     /// </summary>
     /// <param name="ctx">script context supplied during script execution</param>
     /// <param name="functionValue">value of function that is passed to script code</param>
-    public delegate void VectorScriptDelegate(ScriptComp ctx, Vector2 functionValue);
+    public delegate void VectorScriptDelegate(ScriptComp ctx, Vector3 functionValue);
 
     /// <summary>
     /// A script object that first computes a function and then calls a delegate (piece of code) to use

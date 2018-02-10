@@ -100,17 +100,6 @@ namespace TTengine.Comps
         #endregion
 
         /// <summary>
-        /// translate a Vector2 relative coordinate to pixel coordinates for this Screen
-        /// </summary>
-        /// <param name="pos">relative coordinate to translate</param>
-        /// <returns>translated to pixels coordinate</returns>
-        public Vector2 ToPixels(Vector2 pos)
-        {
-            var v = (pos - ZoomCenter) * Zoom + Center;
-            return v;
-        }
-
-        /// <summary>
         /// If RenderTarget or the TTGame screenbuffer (window) changed size, call this method
         /// to get all the proper dimensions variables set again. This call will reset
         /// ZoomCenter to the (new) center.

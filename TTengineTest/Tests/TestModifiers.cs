@@ -37,7 +37,7 @@ namespace TTengineTest
 
             // TargetModifier to set its position towards a target
             var targFunc = new MoveToTargetFunction();
-            targFunc.Target = new Vector2(0f, 0f);
+            targFunc.Target = Vector3.Zero;
             targFunc.CurrentValue = b2.C<PositionComp>().Position;
             targFunc.Speed = 40;
             AddScript(b2, (sc) => { b2.C<PositionComp>().Position = targFunc.Value(sc); } );

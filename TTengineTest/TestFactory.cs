@@ -41,8 +41,8 @@ namespace TTengineTest
             var ball = CreateBall(e,radius,layerDepth);
 
             // position and velocity set
-            ball.C<PositionComp>().Position = pos;
-            ball.C<VelocityComp>().Velocity2D = velo;
+            ball.C<PositionComp>().PositionXY = pos;
+            ball.C<VelocityComp>().VelocityXY = velo;
             return ball;
         }
 
@@ -70,7 +70,7 @@ namespace TTengineTest
         public Entity CreateText(Entity e, Vector2 pos, string text, Color col, float layerDepth = 0.5f)
         {
             CreateText(e,text);
-            e.C<PositionComp>().Position = pos;
+            e.C<PositionComp>().PositionXY = pos;
             e.C<PositionComp>().Depth = layerDepth;
             e.C<DrawComp>().DrawColor = col;
             e.C<ScaleComp>().Scale = 0.8;

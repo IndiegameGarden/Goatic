@@ -30,7 +30,7 @@ namespace Game1.Levels
         /// creation time). Build scripts may shift the anchor position to and fro. A LevelComp
         /// (background builder object) will typically set the AnchorPosition initially.
         /// </summary>
-        protected Vector2 AnchorPosition = Vector2.Zero;
+        protected Vector3 AnchorPosition = Vector3.Zero;
 
         /// <summary>
         /// Called at start of each build script in order to set the AnchorPosition to

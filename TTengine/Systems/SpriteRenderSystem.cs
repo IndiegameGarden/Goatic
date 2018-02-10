@@ -67,18 +67,17 @@ namespace TTengine.Systems
 
             var scr = drawComp.DrawScreen;
             
-            // update drawpos interpolated
+            // update drawpos interpolated - FIXME dont do this repeatedly in systems
             var p = posComp.PositionAbs;
             float tlag = (float)TTGame.Instance.TimeLag;
             if (tlag > 0f && entity.HasC<VelocityComp>())
-                p += tlag * entity.C<VelocityComp>().Velocity2D;
-            drawComp.DrawPosition = scr.ToPixels(p);
-            drawComp.LayerDepth = posComp.Depth; 
+                p += tlag * entity.C<VelocityComp>().Velocity;
+            drawComp.DrawPosition = p; 
 
             TTSpriteBatch sb = scr.SpriteBatch;
 
             // draw sprite
-            sb.Draw(spriteComp.Texture, drawComp.DrawPosition, null, drawComp.DrawColor,
+            sb.Draw(spriteComp.Texture, drawComp.DrawPositionXY, null, drawComp.DrawColor,
                 drawComp.DrawRotation, spriteComp.Center, drawComp.DrawScale, SpriteEffects.None, drawComp.LayerDepth);
 
         }
@@ -107,12 +106,12 @@ namespace TTengine.Systems
 
             var scr = dc.DrawScreen;
 
-            // update drawpos interpolated
+            // update drawpos interpolated FIXME do only once instead of in multiple systems.
             var p = pc.PositionAbs;
             float tlag = (float)TTGame.Instance.TimeLag;
             if (tlag > 0f && entity.HasC<VelocityComp>())
-                p += tlag * entity.C<VelocityComp>().Velocity2D;
-            dc.DrawPosition = scr.ToPixels(p);
+                p += tlag * entity.C<VelocityComp>().Velocity;
+            dc.DrawPosition = p;
             dc.LayerDepth = pc.Depth;
 
             TTSpriteBatch sb = scr.SpriteBatch;

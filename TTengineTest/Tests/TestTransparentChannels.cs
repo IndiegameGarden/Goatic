@@ -28,19 +28,19 @@ namespace TTengineTest
 
             // create a first child channel - should become transparent
             var ch1 = CreateChannel(New(), Color.Transparent, 600, 400);
-			ch1.C<PositionComp>().Position = new Vector2(50f, 50f);
+			ch1.C<PositionComp>().PositionXY = new Vector2(50f, 50f);
             Color c1 = ch1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
             AddScript(ch1, ScriptInspectTextureColor);
             ch1.C<WorldComp>().Screen.Zoom = 0.5f;
 
             // second item - a regular sprite with transparency RUNTIME LOADED
             var spr1 = CreateSprite(New(), "red-circle_frank-tschakert_runtime-load.png"); // ("Op-art-circle_Marco-Braun");
-            spr1.C<PositionComp>().Position = new Vector2(800f, 50f);
+            spr1.C<PositionComp>().PositionXY = new Vector2(800f, 50f);
             Color c2 = spr1.C<SpriteComp>().GetPixel(0, 0);  // for debug inspection only
 
             // 3rd item - a regular compiled content sprite with transparency content pipeline loaded
             var spr2 = CreateSprite(New(), "red-circle_frank-tschakert"); 
-            spr2.C<PositionComp>().Position = new Vector2(1050f, 50f);
+            spr2.C<PositionComp>().PositionXY = new Vector2(1050f, 50f);
 
             // for channel ch1, build some content into it.
             using (BuildTo(ch1))

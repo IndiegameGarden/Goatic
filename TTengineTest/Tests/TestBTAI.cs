@@ -20,8 +20,8 @@ namespace TTengineTest
         public override void BuildAll()
         {
             var ball = CreateBall(New(),1);
-            ball.C<PositionComp>().Position = new Vector2(300f, 300f);
-            ball.C<VelocityComp>().Velocity2D = new Vector2(25f, 25f);
+            ball.C<PositionComp>().Position = new Vector3(300f, 300f, 0.5f);
+            ball.C<VelocityComp>().VelocityXY = new Vector2(25f, 25f);
 
             // Behavior Tree AI
             BTAIComp ai = new BTAIComp();

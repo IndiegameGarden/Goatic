@@ -39,9 +39,8 @@ namespace TTengine.Systems
             var p = pc.PositionAbs;
             float tlag = (float)TTGame.Instance.TimeLag;
             if (tlag > 0f && e.HasC<VelocityComp>())
-                p += tlag * e.C<VelocityComp>().Velocity2D;
-            dc.DrawPosition = scr.ToPixels(p);
-            dc.LayerDepth = pc.Depth;
+                p += tlag * e.C<VelocityComp>().Velocity;
+            dc.DrawPosition = p;
 
             var v = new Vector3(dc.DrawPosition.X, dc.DrawPosition.Y, dc.LayerDepth); // TODO
             // world, view, projection , color

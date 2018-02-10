@@ -25,7 +25,7 @@ namespace Game1.Levels
             var sc = new ScaleComp(2);
             waterPlanet.AddC(sc);
             var pc = waterPlanet.C<PositionComp>();
-            pc.Position = new Vector2(400f,400f); // TODO in constructor args?
+            pc.PositionXY = new Vector2(400f,400f); // TODO in constructor args?
             var rc = new RotateComp();
             rc.RotateSpeed = 0.1; // TODO in constructor args?
             waterPlanet.AddC(rc);
@@ -41,7 +41,7 @@ namespace Game1.Levels
             var ac = animCircle.C<AnimatedSpriteComp>();
             var pc = animCircle.C<PositionComp>();
             ac.MaxFrame = 29;
-            pc.Position = new Vector2(100f, 100f);
+            pc.PositionXY = new Vector2(100f, 100f);
             Finalize(animCircle);
         }
     }
