@@ -14,45 +14,45 @@ using TTMusicEngine.Soundevents;
 
 namespace TTengineTest
 {
-    /// <summary>Testing the linear motion of objects on screen</summary>
+    /// <summary>Testing basic audio and music play</summary>
     class TestAudioBasics: Test
     {
         public override void BuildAll()
         {
-            AddAudio(New(), Test_Sample());
-            //CreateAudiolet(Test_Repeat());
+            AddAudio(New(), TestScript());
+            AddAudio(New(), TestRepeat());
+            CreateText(New(), new Vector2(100f, 100f), "Single chord at t =  3.0", Color.Blue );
+            var str = "Current time    t = ";
+            var t = CreateText(New(), new Vector2(100f, 200f), str, Color.Red );
+            AddScript(t, (ctx) => { ctx.Entity.C<TextComp>().Text = String.Format("Current time    t = {0:000.000}" , ctx.SimTime);  } );
         }
 
         /// <summary>
-        /// simple sample play test
+        /// simple sample play test script
         /// </summary>
         /// <returns></returns>
-        public SoundEvent Test_Sample()
+        public SoundEvent TestScript()
         {
-            SoundEvent soundScript = new SoundEvent("Test_Sample");
-            SoundEvent evDing = new SampleSoundEvent("ambient-echoing-ding.wav");
-            soundScript.AddEvent(0, evDing);
+            SoundEvent soundScript = new SoundEvent("TestScript");
+            SoundEvent evChord = new SampleSoundEvent("single-arpeggio-chord.wav");
+            soundScript.AddEvent(3.0, evChord);
             return soundScript;
         }
 
         /**
          * simple test of generic Repeat feature - on a SoundEvent. Not directly applied on SampleSoundEvent here.
          */
-        public SoundEvent Test_Repeat()
+        public SoundEvent TestRepeat()
         {
-            SoundEvent soundScript = new SoundEvent("Test_Repeat");
-            // try a once event
+            SoundEvent soundScript = new SoundEvent("TestRepeat");
+
             SampleSoundEvent evDing = new SampleSoundEvent("ambient-echoing-ding.wav");
-            evDing.Repeat = 1;
-            soundScript.AddEvent(1, evDing);
-
-            SampleSoundEvent evDing2 = new SampleSoundEvent(evDing);
             SoundEvent dingHolderEv = new SoundEvent();
-            dingHolderEv.AddEvent(0, evDing2);
-            dingHolderEv.Repeat = 10;
-            soundScript.AddEvent(5, dingHolderEv);
+            dingHolderEv.AddEvent(0, evDing);
+            dingHolderEv.Repeat = 3;
+            soundScript.AddEvent(10.0, dingHolderEv);
 
-            soundScript.UpdateDuration(60);
+            soundScript.UpdateDuration(60); // FIXME should not be needed
             return soundScript;
         }
 

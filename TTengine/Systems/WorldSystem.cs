@@ -13,12 +13,13 @@ namespace TTengine.Systems
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.WorldSystem)]
     public class WorldSystem : EntityComponentProcessingSystem<WorldComp>
     {
-        public override void Process(Entity entity, WorldComp worldComp)
+        public override void Process(Entity entity, WorldComp wc)
         {
-            if (worldComp.TimeWarp != 1.0)
-                worldComp.World.Update(new TimeSpan((long)((double)EntityWorld.Delta * worldComp.TimeWarp)));
+            ProcessTime(wc);
+            if (wc.TimeWarp != 1.0)
+                wc.World.Update(new TimeSpan((long)((double)EntityWorld.Delta * wc.TimeWarp)));
             else
-                worldComp.World.Update(EntityWorld.DeltaTimeSpan);
+                wc.World.Update(EntityWorld.DeltaTimeSpan);
         }
     }
 

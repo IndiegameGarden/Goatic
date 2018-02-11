@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System.Text;
-using TTengine.Core;
+using System.Collections.Generic;
 using Artemis;
 
 /// <summary>
-/// File contains support for two main types of script:
+/// ScriptComp contains support for two main types of script:
 /// 1) Delegate methods that are run as scripts OnUpdate
 /// 2) IScript Objects that represent scripts with their OnUpdate/OnDraw methods
 /// </summary>
@@ -52,14 +50,8 @@ namespace TTengine.Comps
     /// </summary>
     public class ScriptComp: Comp
     {
-        /// <summary>Simulation time counter that is used by scripts - counting since ScriptComp creation.</summary>
-        public double SimTime = 0;
-
-        /// <summary>Delta time of the last Update() simulation step performed, or 0 if not performed yet.</summary>
-        public double Dt = 0;
-
         /// <summary>
-        /// The Entity that this ScriptComp is attached to, value used by scripts to access any Components.
+        /// The Entity that this ScriptComp is attached to, used by scripts to access any Components.
         /// </summary>
         public Entity Entity = null;
 

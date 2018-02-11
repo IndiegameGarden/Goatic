@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using TTengine.Core;
-using TTMusicEngine.Soundevents;
 using Artemis.Interface;
 
 namespace TTengine.Comps

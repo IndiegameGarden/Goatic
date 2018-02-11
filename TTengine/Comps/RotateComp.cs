@@ -1,6 +1,6 @@
-﻿using System;
-using TTengine.Core;
-using Artemis.Interface;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
+using Artemis;
 
 namespace TTengine.Comps
 {

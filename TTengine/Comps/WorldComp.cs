@@ -1,17 +1,13 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using TTengine.Core;
 using Artemis;
-using Artemis.Interface;
 
 namespace TTengine.Comps
 {
     /// <summary>
     /// Component that contains a (separate) EntityWorld
     /// </summary>
-    public class WorldComp: IComponent
+    public class WorldComp: Comp
     {
         /// <summary>The EntityWorld that is being contained in this component</summary>
         public EntityWorld World;
@@ -22,7 +18,7 @@ namespace TTengine.Comps
         public double TimeWarp = 1.0;
 
 		/// <summary>
-		/// The Screen that this World renders to, or null if not rendering to a specific Screen.
+		/// The Screen that World renders to, or null if not rendering to a specific Screen.
 		/// </summary>
 		public ScreenComp Screen = null;
 

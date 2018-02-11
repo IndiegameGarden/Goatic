@@ -27,7 +27,7 @@ namespace Game1
         public Game1()
         {
             Instance = this;
-            IsAudio = false;    // set to true if audio is needed
+            IsAudio = false;    // set to true if audio by MusicEngine is needed
         }
 
         protected override void LoadContent()

@@ -1,18 +1,10 @@
 ﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
+using Artemis;
+using Microsoft.Xna.Framework;
+
 namespace TTengine.Comps
 {
-    #region Using statements
-
-    using Artemis;
-    using Artemis.Attributes;
-    using Artemis.Interface;
-
-    using Microsoft.Xna.Framework;
-    using TTengine.Core;
-
-    #endregion
-
     /// <summary>The Position component.</summary>
     /// just to show how to use the pool =P 
     /// (just add this annotation and extend ArtemisComponentPool =P)

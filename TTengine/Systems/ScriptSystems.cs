@@ -12,9 +12,9 @@ namespace TTengine.Systems
     public class ScriptSystemUpdate : EntityComponentProcessingSystem<ScriptComp>
     {
         public override void Process(Entity entity, ScriptComp sc)
-        {            
-            sc.SimTime += Dt;
-            sc.Dt = Dt;
+        {
+            ProcessTime(sc);
+            
             foreach (var script in sc.Scripts)
                 script.OnUpdate(sc);
         }

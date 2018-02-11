@@ -69,9 +69,7 @@ namespace TTengineTest
 
         public Entity CreateText(Entity e, Vector2 pos, string text, Color col, float layerDepth = 0.5f)
         {
-            CreateText(e,text);
-            e.C<PositionComp>().PositionXY = pos;
-            e.C<PositionComp>().Depth = layerDepth;
+            CreateText(e,text,new Vector3(pos.X,pos.Y,layerDepth));
             e.C<DrawComp>().DrawColor = col;
             e.C<ScaleComp>().Scale = 0.8;
             return e;

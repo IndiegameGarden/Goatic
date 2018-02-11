@@ -192,9 +192,9 @@ namespace TTMusicEngine.Impl
                     int idealPlayPosMs = (int) Math.Round(rp.Time * 1000.0);
                     channel.getPosition(ref playPosMs, FMOD.TIMEUNIT.MS);
                     
-                    if (Math.Abs(((int)playPosMs) - idealPlayPosMs) > 5000 && idealPlayPosMs >= 0)  // FIXME specify error margin better, somewhere? configurable per sample?
+                    if (Math.Abs(((int)playPosMs) - idealPlayPosMs) > MusicEngine.MAX_PLAY_MISALIGNMENT_MS && idealPlayPosMs >= 0)
                     {
-                        //FIXME HACK enable tracking when needed !!! below.
+                        //set audio play position back to what is desired
                         channel.setPosition((uint)idealPlayPosMs, FMOD.TIMEUNIT.MS);
                         playPosMs = (uint)idealPlayPosMs;
                     }

@@ -26,7 +26,7 @@ namespace TTengineTest
             // Behavior Tree AI
             BTAIComp ai = new BTAIComp();
             var randomWanderBehavior = new RandomWanderBehavior(1, 6);
-            ai.rootNode = new PrioritySelector(randomWanderBehavior);
+            ai.Root = new PrioritySelector(randomWanderBehavior);
             ball.AddC(ai);
         }
 

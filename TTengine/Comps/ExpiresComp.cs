@@ -37,7 +37,6 @@
 namespace TTengine.Comps
 {
     using Artemis.Interface;
-    using TTengine.Core;
 
     /// <summary>The expires.</summary>
     public class ExpiresComp : IComponent

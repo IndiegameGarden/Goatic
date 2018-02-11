@@ -18,7 +18,7 @@ namespace TTengine.Core
         /// <summary>The currently running (single) instance of TTGame</summary>
         public static TTGame Instance;
 
-        /// <summary>If set to true in Game's constructor, starts both the TTMusicEngine and AudioSystem</summary>
+        /// <summary>If set to true in Game's constructor, starts both the MusicEngine and AudioSystem</summary>
         protected bool IsAudio = false;
 
         /// <summary>The XNA GraphicsDeviceManager for this Game</summary>
@@ -70,7 +70,7 @@ namespace TTengine.Core
             Content.RootDirectory = "Content";
 #if DEBUG
             IsProfiling = true;
-            GraphicsMgr.SynchronizeWithVerticalRetrace = false; // FPS: as fast as possible
+            GraphicsMgr.SynchronizeWithVerticalRetrace = false; // FPS: as fast as possible, FIXME make that selectable
 #else
             IsProfiling = false;
             GraphicsMgr.SynchronizeWithVerticalRetrace = true;
@@ -96,11 +96,10 @@ namespace TTengine.Core
             RootScreen = new ScreenComp(false, 0, 0);
             Factory.BuildTo(RootScreen);
 
-            // the TTMusicEngine
+            // the MusicEngine
             if (IsAudio)
             {
                 AudioEngine = MusicEngine.GetInstance();
-                AudioEngine.AudioPath = "Content";
                 if (!AudioEngine.Initialize())
                     throw new Exception(AudioEngine.StatusMsg);
             }

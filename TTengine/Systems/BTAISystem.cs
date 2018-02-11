@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System.Text;
+using System;
 using Artemis;
 using Artemis.System;
 using Artemis.Attributes;
@@ -22,35 +21,37 @@ namespace TTengine.Systems
 
         protected override void Begin()
         {
-            // once per update-cycle, set timing in updParams
+            // once per update-cycle, set timing in context object
             ctx.Dt = this.Dt;
-            ctx.SimTime += ctx.Dt;
         }
 
-        public override void Process(Entity entity, BTAIComp btComp)
+        public override void Process(Entity entity, BTAIComp bc)
         {
-            ctx.Entity = entity;
-            ctx.BTComp = btComp;
+            ProcessTime(bc);
 
-            if (btComp.rootNode.LastStatus == null)
-                btComp.rootNode.Start(ctx);
-            else if (btComp.rootNode.LastStatus == RunStatus.Success)
-                btComp.rootNode.Start(ctx);
-            btComp.rootNode.Tick(ctx);
+            // set context object to current situation / entity
+            ctx.Entity = entity;
+            ctx.BTAI = bc;
+
+            if (bc.Root.LastStatus == null)
+                bc.Root.Start(ctx);
+            else if (bc.Root.LastStatus == RunStatus.Success)
+                bc.Root.Start(ctx);
+            bc.Root.Tick(ctx);
 
             // after every BTAI Tree execution, check which comps are enabled/disabled as a result
-            foreach (var c in btComp.CompsToDisable)
+            foreach (var c in bc.CompsToDisable)
             {
-                if (!btComp.CompsToEnable.Contains(c))
+                if (!bc.CompsToEnable.Contains(c))
                     throw new NotImplementedException();
             }
             // 'enable' request always higher priority than a 'disable' request.
-            foreach (var c in btComp.CompsToEnable)
+            foreach (var c in bc.CompsToEnable)
             {
                 throw new NotImplementedException();
             }
-            btComp.CompsToEnable.Clear();
-            btComp.CompsToDisable.Clear();
+            bc.CompsToEnable.Clear();
+            bc.CompsToDisable.Clear();
         }
 
     }

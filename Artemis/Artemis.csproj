@@ -48,6 +48,7 @@
     <Compile Include="Blackboard\Trigger.cs" />
     <Compile Include="Blackboard\TriggerMultiCondition.cs" />
     <Compile Include="Blackboard\TriggerStateType.cs" />
+    <Compile Include="Comp.cs" />
     <Compile Include="ComponentMapper.cs" />
     <Compile Include="ComponentPool.cs" />
     <Compile Include="ComponentPoolable.cs" />

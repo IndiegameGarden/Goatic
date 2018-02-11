@@ -65,7 +65,6 @@
     <Compile Include="Comps\WorldComp.cs" />
     <Content Include="Content\clouds.fx" />
     <Content Include="Content\crt-lottes.fx" />
-    <Compile Include="Core\Comp.cs" />
     <Compile Include="Comps\TargetMotionComp.cs" />
     <Compile Include="Core\FactoryState.cs" />
     <Compile Include="Core\IUpdate.cs" />

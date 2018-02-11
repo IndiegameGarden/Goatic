@@ -10,15 +10,21 @@ namespace TTMusicEngine
      */
     public class MusicEngine
     {
+        /// <summary>
+        /// Maximum time in milliseconds that a playing sample can be misaligned to its ideal playing time. When larger,
+        /// sample play position correction will be applied automatically.
+        /// </summary>
+        public static int MAX_PLAY_MISALIGNMENT_MS = 100;
+
         // use an audio engine
         private static FMOD.System _fmodEngine = null;
         // singleton
         private static MusicEngine _instance = null;
         // where to load samples from, can be set by user
-        string _audioPath = ".";
-        string errMsg = "";
-        FMOD.RESULT errResult = FMOD.RESULT.OK;
-        bool initOk = false;
+        private string _audioPath = "Content";
+        private string errMsg = "";
+        private FMOD.RESULT errResult = FMOD.RESULT.OK;
+        private bool initOk = false;
 
         public static MusicEngine GetInstance()
         {

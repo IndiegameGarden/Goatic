@@ -1,4 +1,4 @@
-#region File description
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SpriteRenderSystem.cs" company="GAMADU.COM">
@@ -32,7 +32,6 @@
 //   The render system.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-#endregion File description
 
 namespace TTengine.Systems
 {

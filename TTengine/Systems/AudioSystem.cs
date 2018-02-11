@@ -1,9 +1,5 @@
-﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System;
-using System.Collections.Generic;
-
-using System.Text;
 using TTengine.Core;
 using TTengine.Comps;
 using TTMusicEngine;
@@ -15,8 +11,17 @@ using Artemis.System;
 
 namespace TTengine.Systems
 {
-    [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.AudioSystemDraw)]
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.AudioSystem)]
     public class AudioSystem : EntityComponentProcessingSystem<AudioComp>
+    {
+        public override void Process(Entity entity, AudioComp ac)
+        {
+            ProcessTime(ac);
+        }
+    }
+
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.AudioSystemDraw)]
+    public class AudioSystemRender : EntityComponentProcessingSystem<AudioComp>
     {
         RenderParams rp = new RenderParams();
         MusicEngine audioEngine = null;
@@ -29,11 +34,7 @@ namespace TTengine.Systems
         }
 
         public override void Process(Entity entity, AudioComp ac)
-        {            
-            if (!ac.IsPaused)
-            {
-                ac.SimTime += Dt;
-            }
+        {
             rp.Time = ac.SimTime;
             rp.Ampl = ac.Ampl;
             audioEngine.Render(ac.AudioScript, rp);

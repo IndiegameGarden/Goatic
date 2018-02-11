@@ -77,16 +77,6 @@ namespace Game1
             return e;
         }
 
-        public Entity CreateMovingText(Entity e, Vector2 pos, string text)
-        {
-            CreateText(e,text);
-            e.C<PositionComp>().PositionXY = pos;
-            e.C<DrawComp>().DrawColor = Color.Black;
-            e.C<VelocityComp>().VelocityXY = 0.2f * new Vector2(RandomMath.RandomUnit() - 0.5f, RandomMath.RandomUnit() - 0.5f);
-            e.C<ScaleComp>().Scale = 0.5;
-            return e;
-        }
-
         /// <summary>
         /// create a moving ball with given position and velocity
         /// </summary>

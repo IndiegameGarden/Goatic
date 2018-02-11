@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using TTengine.Comps;
 using Artemis.System;
@@ -19,7 +16,7 @@ namespace TTengine.Systems
         public override void Process(Entity entity, BlinkComp bc)
         {
             double tprev = bc.SimTime % bc.TimePeriod;
-            bc.SimTime += Dt;
+            ProcessTime(bc);
             double t = bc.SimTime % bc.TimePeriod;
             if (t <= bc.TimeOn)
             {

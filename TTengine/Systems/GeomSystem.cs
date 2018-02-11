@@ -19,6 +19,7 @@ namespace TTengine.Systems
 
         public override void Process(Entity entity, GeomComp sc)
         {
+            ProcessTime(sc);
         }
 
     }

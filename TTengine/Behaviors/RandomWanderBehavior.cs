@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System.Text;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using TreeSharp;
-using Artemis;
 using TTengine.Core;
 using TTengine.Comps;
-using TTengine.Util;
 
 namespace TTengine.Behaviors
 {

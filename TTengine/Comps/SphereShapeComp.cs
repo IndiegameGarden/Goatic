@@ -1,4 +1,5 @@
-﻿using System;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
 using System.Collections.Generic;
 using Artemis;
 using Artemis.Interface;

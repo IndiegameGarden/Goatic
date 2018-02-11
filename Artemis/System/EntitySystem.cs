@@ -39,6 +39,7 @@ namespace Artemis.System
     #region Using statements
 
     using global::System;
+    using global::System.Runtime.CompilerServices;
     using global::System.Collections.Generic;
     using global::System.Diagnostics;
 #if XBOX || WINDOWS_PHONE || PORTABLE
@@ -294,6 +295,13 @@ namespace Artemis.System
         /// <param name="entities">The entities.</param>
         protected virtual void ProcessEntities(IDictionary<int, Entity> entities)
         {
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected void ProcessTime(Comp c)
+        {
+            c.Dt = c.IsPaused ? 0 : Dt;
+            c.SimTime += c.Dt;
         }
 
         /// <summary>Removes the specified entity.</summary>

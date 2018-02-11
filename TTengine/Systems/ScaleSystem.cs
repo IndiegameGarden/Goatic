@@ -18,6 +18,7 @@ namespace TTengine.Systems
 
         public override void Process(Entity entity, ScaleComp sc)
         {
+            ProcessTime(sc);
             // scaling logic towards target
             if (sc.ScaleSpeed > 0)
             {

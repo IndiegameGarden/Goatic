@@ -57,6 +57,7 @@ namespace TTengine.Systems
         /// <param name="entity">The entity.</param>
         public override void Process(Entity entity, PositionComp pc, VelocityComp vc)
         {
+            ProcessTime(pc);
             pc.X += (float)(vc.X * Dt);
             pc.Y += (float)(vc.Y * Dt);
             pc._isPositionAbsSet = false;

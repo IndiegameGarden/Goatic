@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using System.Text;
-
-using TTengine.Core;
+using Artemis;
 
 namespace TTengine.Comps
 {
     public class BlinkComp : Comp
     {
-        /// <summary>Simulation time kept to control the blinking process</summary>
-        public double SimTime;
-
         public BlinkComp(double timePeriod, double dutyCycle)
         {
             this.TimePeriod = timePeriod;
@@ -76,5 +70,4 @@ namespace TTengine.Comps
         internal bool isVisible = true;
 
     }
-
 }

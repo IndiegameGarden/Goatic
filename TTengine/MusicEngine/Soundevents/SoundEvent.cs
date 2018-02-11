@@ -1,5 +1,6 @@
-// (c) 2010-2016 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
-﻿using System;
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,7 @@ namespace TTMusicEngine.Soundevents
         
         // class global vars
         static uint nextID = 1;
+
         // this defines a 'render margin' for which an event is still Render()ed even after its
         // duration has expired. Purpose: to be able eg for the SoundEvent to switch its state
         // to 'off' or to do some last tasks, before it is not called anymore. Now used for DSP type

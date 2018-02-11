@@ -1,6 +1,6 @@
 // (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using TTengine.Core;
+using Artemis;
 using TTengine.Factories.Shape3DFactoryItems;
 
 namespace TTengine.Comps

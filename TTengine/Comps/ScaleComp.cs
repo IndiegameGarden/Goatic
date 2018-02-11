@@ -1,5 +1,6 @@
 // (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
-using TTengine.Core;
+
+using Artemis;
 
 namespace TTengine.Comps
 {

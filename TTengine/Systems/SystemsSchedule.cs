@@ -15,6 +15,7 @@ namespace TTengine.Systems
             WorldSystem         = 0,        // world simulation goes depth-first.
             ScriptSystem        = 1,
             BTAISystem          = 1,
+            AudioSystem         = 1,
             MoveSystem          = 2,
             TargetMoveSystem    = 2,
             RotateSystem        = 2,

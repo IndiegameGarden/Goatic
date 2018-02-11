@@ -1,18 +1,28 @@
-﻿using System;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
 using System.Collections.Generic;
 using Artemis.Interface;
 
-namespace TTengine.Core
+namespace Artemis
 {
     /// <summary>
     /// optional base class for any components that implement IComponent. It provides 
-    /// parent/child component relations.
+    /// parent/child mutual component relations and SimTime keeping per component.
     /// TODO can be extended with OnNewParent() event.
     /// </summary>
     public abstract class Comp: IComponent
     {
-        /// <summary>Children components of this component; if null there are none</summary>
+        /// <summary>Children components of this component; if null there are none (yet)</summary>
         public List<Comp> Children = null;
+
+        /// <summary>Simulation time counter for this component, where 0 is time of creation.</summary>
+        public double SimTime = 0.0;
+
+        /// <summary>Delta time used in last simulation step for this Component, or 0 if not yet simulated or if paused.</summary>
+        public double Dt = 0.0;
+
+        /// <summary>If true, the Component is paused and SimTime does not advance.</summary>
+        public bool IsPaused = false;
 
         private Comp _parent = null;
 
@@ -42,6 +52,11 @@ namespace TTengine.Core
             c._parent = this;
         }
 
+        /// <summary>
+        /// Remove a Comp c as a child of this one. If c is not a child, does nothing. Parent of c
+        /// will be set to null.
+        /// </summary>
+        /// <param name="c">Child Comp to remove as a child.</param>
         public void RemoveChild(Comp c)
         {
             if (Children == null)

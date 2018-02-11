@@ -158,3 +158,6 @@
 /processorParam:TextureFormat=Color
 /build:clouds-texture.png
 
+#begin single-arpeggio-chord.wav
+/copy:single-arpeggio-chord.wav
+

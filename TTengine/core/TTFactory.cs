@@ -1,10 +1,8 @@
 ﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using Artemis;
 using TTengine.Comps;
 using TTengine.Modifiers;
@@ -208,10 +206,11 @@ namespace TTengine.Core
         /// </summary>
         /// <param name="text"></param>
         /// <param name="fontName"></param>
-        public Entity CreateText(Entity e, string text, string fontName = "TTDefaultFont")
+        public Entity CreateText(Entity e, string text, Vector3 pos, string fontName = "TTDefaultFont")
         {
             AddDrawable(e);
             if (!e.HasC<ScaleComp>())  e.AddC(new ScaleComp());
+            e.C<PositionComp>().Position = pos;
             var tc = new TextComp(text, fontName);
             e.AddC(tc);
             return e;
@@ -291,8 +290,7 @@ namespace TTengine.Core
         /// <returns></returns>
         public Entity CreateFrameRateCounter(Entity e, Color textColor, int pixelsOffsetVertical = 0)
         {
-            CreateText(e, "##", "TTFrameRateCounter");
-            e.C<PositionComp>().Position = new Vector3(2f, 2f + pixelsOffsetVertical,0f);
+            CreateText(e, "##", new Vector3(2f, 2f + pixelsOffsetVertical, 0f), "TTFrameRateCounter");
             e.C<DrawComp>().DrawColor = textColor;
             AddScript(e, new Util.FrameRateCounter(e.C<TextComp>()));
             return e;
