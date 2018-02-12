@@ -71,7 +71,7 @@ namespace TTengineTest
         {
             CreateText(e,text,new Vector3(pos.X,pos.Y,layerDepth));
             e.C<DrawComp>().DrawColor = col;
-            e.C<ScaleComp>().Scale = 0.8;
+            //e.C<ScaleComp>().Scale = 0.8;
             return e;
         }
 
