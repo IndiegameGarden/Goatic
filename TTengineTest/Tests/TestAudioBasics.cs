@@ -52,7 +52,6 @@ namespace TTengineTest
             dingHolderEv.Repeat = 3;
             soundScript.AddEvent(10.0, dingHolderEv);
 
-            soundScript.UpdateDuration(60); // FIXME should not be needed
             return soundScript;
         }
 
