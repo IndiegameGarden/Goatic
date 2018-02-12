@@ -11,10 +11,18 @@ namespace TTMusicEngine
     public class MusicEngine
     {
         /// <summary>
-        /// Maximum time in milliseconds that a playing sample can be misaligned to its ideal playing time. When larger,
+        /// Maximum time in milliseconds that an already-playing sample can be misaligned to its ideal playing time. When larger,
         /// sample play position correction will be applied automatically.
         /// </summary>
         public static int MAX_PLAY_MISALIGNMENT_MS = 100;
+
+        /// <summary>
+        /// Maximum time in milliseconds that a just-started sample can be misaligned to ideal rendering time. When larger,
+        /// sample play position will be set right at the start of sample play.
+        /// </summary>
+        public static int MAX_PLAY_MISALIGNMENT_AT_START_MS = 10;
+        public static double MAX_PLAY_MISALIGNMENT_AT_START_SEC = ((double)MAX_PLAY_MISALIGNMENT_AT_START_MS) / 1000.0;
+
 
         // use an audio engine
         private static FMOD.System _fmodEngine = null;

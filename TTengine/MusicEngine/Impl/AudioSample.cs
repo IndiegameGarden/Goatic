@@ -119,7 +119,7 @@ namespace TTMusicEngine.Impl
 
                 // set play position
                 uint tMs = (uint)Math.Round(rp.Time * 1000.0);
-                if (tMs > 0)
+                if (tMs > MusicEngine.MAX_PLAY_MISALIGNMENT_AT_START_MS)
                 {  // only set position if there is a need
                     r = channel.setPosition(tMs, FMOD.TIMEUNIT.MS);
 #if DEBUG
@@ -211,7 +211,7 @@ namespace TTMusicEngine.Impl
             }
             else
             {   // was not playing but should be rendered - hence, initiate playing now
-                if (rp.Time < _soundDuration - 0.050 ) // extra safety margin - do not start if close to end. TODO configurable time?
+                if (rp.Time < _soundDuration - MusicEngine.MAX_PLAY_MISALIGNMENT_AT_START_SEC ) // extra safety margin - do not start if close to end. TODO configurable time?
                 {
                     channel = PlaySample(rp, canvas, dspList);
                     channel.setLoopCount(audioRepeats - 1);
