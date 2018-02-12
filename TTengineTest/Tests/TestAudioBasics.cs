@@ -21,7 +21,7 @@ namespace TTengineTest
         {
             AddAudio(New(), TestScript());
             AddAudio(New(), TestRepeat());
-            CreateText(New(), new Vector2(100f, 100f), "Single chord at t =  3.0", Color.Blue );
+            CreateText(New(), new Vector2(100f, 100f), "Audio scripts:\n  3.0 Single chord\n 10.0 Repeat 3x chord", Color.Blue );
             var str = "Current time    t = ";
             var t = CreateText(New(), new Vector2(100f, 200f), str, Color.Red );
             AddScript(t, (ctx) => { ctx.Entity.C<TextComp>().Text = String.Format("Current time    t = {0:000.000}" , ctx.SimTime);  } );
@@ -46,7 +46,7 @@ namespace TTengineTest
         {
             SoundEvent soundScript = new SoundEvent("TestRepeat");
 
-            SampleSoundEvent evDing = new SampleSoundEvent("ambient-echoing-ding.wav");
+            SampleSoundEvent evDing = new SampleSoundEvent("single-arpeggio-chord.wav");
             SoundEvent dingHolderEv = new SoundEvent();
             dingHolderEv.AddEvent(0, evDing);
             dingHolderEv.Repeat = 3;
