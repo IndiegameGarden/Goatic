@@ -1,8 +1,4 @@
 // (c) 2010-2016 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
 
 namespace TTMusicEngine.Soundevents
 {

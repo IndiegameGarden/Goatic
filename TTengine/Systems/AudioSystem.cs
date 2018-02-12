@@ -3,7 +3,6 @@
 using TTengine.Core;
 using TTengine.Comps;
 using TTMusicEngine;
-
 using Artemis;
 using Artemis.Manager;
 using Artemis.Attributes;

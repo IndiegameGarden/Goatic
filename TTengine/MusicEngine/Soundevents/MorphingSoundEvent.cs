@@ -58,7 +58,7 @@ namespace TTMusicEngine.Soundevents
             {
                 // select one child effect random or in sequence, and see if it has to be played now
                 double myRpTime = rp.Time;
-                Random rnd = new Random();
+                Random rnd = new Random(); // FIXME single random gen for class.
                 int idx = rnd.Next(_children.Count());
                 KeyValuePair<double, List<SoundEvent>> kvPair = _children.ElementAt(idx);
                 List<SoundEvent> evs = kvPair.Value;
