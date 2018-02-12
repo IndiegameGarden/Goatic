@@ -57,10 +57,10 @@ namespace TTengine.Systems
         /// <param name="entity">The entity.</param>
         public override void Process(Entity entity, PositionComp pc, VelocityComp vc)
         {
+            pc.PositionAbsPrev = pc.PositionAbs;
             ProcessTime(pc);
-            pc.X += (float)(vc.X * Dt);
-            pc.Y += (float)(vc.Y * Dt);
-            pc._isPositionAbsSet = false;
+            pc.Position += (float)Dt * vc.Velocity ;
+            pc._isPositionAbsSet = false; // reset the 'positionAbs set' marker for the below system.            
         }
     }
 
@@ -72,6 +72,8 @@ namespace TTengine.Systems
         /// <param name="entity">The entity.</param>
         public override void Process(Entity entity, PositionComp pc)
         {
+            if (pc._isPositionAbsSet) return;   // skip processing if already processed through parent/child hierarchy.
+            
             if (pc.Parent == null)
                 pc._positionAbs = pc.Position ;
             else

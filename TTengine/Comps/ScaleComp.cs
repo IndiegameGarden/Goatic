@@ -10,11 +10,11 @@ namespace TTengine.Comps
     public class ScaleComp : Comp
     {
         public ScaleComp():
-            this(1.0)
+            this(1.0f)
         {
         }
 
-        public ScaleComp(double scale)
+        public ScaleComp(float scale)
         {
             this.Scale = scale;
         }
@@ -22,23 +22,23 @@ namespace TTengine.Comps
         /// <summary>
         /// the relative size scaling factor, 1.0 being normal scale
         /// </summary>
-        public double Scale = 1.0;
+        public float Scale = 1.0f;
 
         /// <summary>
         /// set a target for Scale value
         /// </summary>
-        public double ScaleTarget = 1.0;
+        public float ScaleTarget = 1.0f;
 
         /// <summary>
         /// speed for changing Scale towards ScaleTarget (speed can be 0: no change)
         /// </summary>
-        public double ScaleSpeed = 0.0;
+        public float ScaleSpeed = 0.0f;
 
         /// <summary>
         /// The absolute scale, obtained by multiplying this Entity's scale with its
         /// parent absolute scale.
         /// </summary>
-        public double ScaleAbs
+        public float ScaleAbs
         {
             get
             {
@@ -49,5 +49,6 @@ namespace TTengine.Comps
             }
         }
 
+        public float ScaleAbsPrev = 0.0f;
     }
 }

@@ -19,7 +19,7 @@ namespace TTengine.Systems
 
     #endregion
 
-    /// <summary>The system for rendering animated sprites</summary>
+    /// <summary>The system for rendering animated sprites. FIXME: convert class to frame rate independent animation; supply an FPS parameter per sprite.</summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.AnimatedSpriteSystemDraw)]
     public class AnimatedSpriteSystem : EntityComponentProcessingSystem<AnimatedSpriteComp, PositionComp, DrawComp>
     {

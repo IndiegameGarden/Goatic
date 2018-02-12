@@ -23,7 +23,7 @@ namespace TTengineTest
         /// </summary>
         /// <param name="radius">the relative size scaling, 1 is normal</param>
         /// <returns></returns>
-        public Entity CreateBall(Entity e, double radius, float layerDepth = 0.5f)
+        public Entity CreateBall(Entity e, float radius, float layerDepth = 0.5f)
         {
             CreateSprite(e,this.BallSprite);
             e.C<PositionComp>().Depth = layerDepth;
@@ -36,7 +36,7 @@ namespace TTengineTest
         /// create an active ball with given position and random velocity and some weird (AI) behaviors
         /// </summary>
         /// <returns></returns>
-        public Entity CreateMovingBall(Entity e, Vector2 pos, Vector2 velo, double radius = 1.0, float layerDepth = 0.5f)
+        public Entity CreateMovingBall(Entity e, Vector2 pos, Vector2 velo, float radius = 1.0f, float layerDepth = 0.5f)
         {
             var ball = CreateBall(e,radius,layerDepth);
 
@@ -51,16 +51,16 @@ namespace TTengineTest
             return CreateMovingBall(e, new Vector2(pos.X, pos.Y), velo);
         }
 
-        public Entity CreateRotatingBall(Entity e, Vector2 pos, Vector2 velo, double rotSpeed)
+        public Entity CreateRotatingBall(Entity e, Vector2 pos, Vector2 velo, float rotSpeed)
         {
             var ball = CreateMovingBall(e, pos, velo);
-            ball.C<ScaleComp>().Scale = 0.7;
+            ball.C<ScaleComp>().Scale = 0.7f;
             var rc = new RotateComp { RotateSpeed = rotSpeed };
             ball.AddC(rc);
             return ball;
         }
 
-        public Entity CreateRotatingScalingBall(Entity e, Vector2 pos, Vector2 velo, double rotSpeed)
+        public Entity CreateRotatingScalingBall(Entity e, Vector2 pos, Vector2 velo, float rotSpeed)
         {
             var ball = CreateRotatingBall(e, pos, velo, rotSpeed);
             AddFunctionScript(e, (sc, v) => { sc.Entity.C<ScaleComp>().Scale = v; }, new SineFunction { Offset = 0.7, Amplitude = 0.05} );

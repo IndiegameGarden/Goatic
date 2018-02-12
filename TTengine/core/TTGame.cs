@@ -120,7 +120,7 @@ namespace TTengine.Core
             // see http://gameprogrammingpatterns.com/game-loop.html
             TimeLag += gameTime.ElapsedGameTime.TotalSeconds;
 
-            while (TimeLag >= dt)
+            while (TimeLag > 0)
             {
                 RootWorld.Update(TargetElapsedTime);
                 this.GameTime += dt;

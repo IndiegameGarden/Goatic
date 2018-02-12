@@ -45,13 +45,13 @@ namespace TTengineTest
             // ball 3
             var b3 = CreateMovingBall(New(), new Vector2(895f, 250f), new Vector2(-1f, 0.3f));
             var f = new SineFunction();
-            AddScript(b3, (sc) => { b3.C<ScaleComp>().Scale = 0.43 * f.Value(sc) + 2.0; } );
+            AddScript(b3, (sc) => { b3.C<ScaleComp>().Scale = 0.43f * (float)f.Value(sc) + 2.0f; } );
 
         }
 
         void MyScaleModifierScript(ScriptComp ctx, double value)
         {
-            ctx.Entity.C<ScaleComp>().Scale = (0.4 + value * 0.3);            
+            ctx.Entity.C<ScaleComp>().Scale = (0.4f + (float)value * 0.3f);            
         }
 
         void MyRotateModifierScript(ScriptComp ctx, double value)

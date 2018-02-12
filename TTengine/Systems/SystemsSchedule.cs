@@ -22,8 +22,6 @@ namespace TTengine.Systems
             ScaleSystem         = 2,
             GeomSystem          = 2,
             MoveAbsSystem       = 3,
-            ScaleToDrawscaleSystem = 3,
-            RotateToDrawrotateSystem = 3,
             BlinkSystem         = 3,
             ExpirationSystem    = 3,
             CollisionSystem     = 4,
@@ -34,6 +32,7 @@ namespace TTengine.Systems
             WorldSystemDraw         = 0,        // world drawing goes depth-first.
             ScreenPreSystemDraw     = 1,
             AudioSystemDraw         = 1,
+            DrawSystemDraw          = 1,
             ScriptSystemDraw        = 2,
             SpriteRenderSystemDraw  = 2,
             GeomSystemDraw          = 4,

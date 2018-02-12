@@ -395,7 +395,7 @@ namespace TTengine.Core
         /// <summary>
         /// Add Entity scalability
         /// </summary>
-        public Entity AddScalable(Entity e, double initialScale = 1.0)
+        public Entity AddScalable(Entity e, float initialScale = 1.0f)
         {
             if (!e.HasC<ScaleComp>()) e.AddC(new ScaleComp(initialScale));
             return e;

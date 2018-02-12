@@ -25,7 +25,7 @@ namespace TTengineTest
             var s = AddScalable( CreateSphere(New(),new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f),250.0f) );
             AddFunctionScript(s, (ctx, v) =>
                 {
-                    s.C<ScaleComp>().Scale = v;
+                    s.C<ScaleComp>().Scale = (float)v;
                 }, new SineFunction { Amplitude = 0.12, Offset = 1.0, Frequency = 0.333 }
             );
             var pic = new PlayerInputComp();

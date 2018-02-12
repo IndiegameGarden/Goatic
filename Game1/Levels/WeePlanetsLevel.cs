@@ -27,7 +27,7 @@ namespace Game1.Levels
             var pc = waterPlanet.C<PositionComp>();
             pc.PositionXY = new Vector2(400f,400f); // TODO in constructor args?
             var rc = new RotateComp();
-            rc.RotateSpeed = 0.1; // TODO in constructor args?
+            rc.RotateSpeed = 0.1f; // TODO in constructor args?
             waterPlanet.AddC(rc);
             Finalize(waterPlanet);
 

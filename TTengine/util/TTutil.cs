@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace TTengine.Util
 {
-    /**
-     * general utility methods that are handy in creating your games
-     */
+    /// <summary>
+    /// general utility methods that are handy in creating your games
+    /// </summary>
     public class TTUtil
     {
         /// <summary>
@@ -51,5 +51,6 @@ namespace TTengine.Util
         {
             return new Color(new Vector3(1f, 1f, 1f) - c.ToVector3());
         }
+
     }
 }

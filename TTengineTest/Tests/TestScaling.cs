@@ -34,7 +34,7 @@ namespace TTengineTest
                     m.Phase = RandomMath.RandomBetween(0f, MathHelper.TwoPi);
                     m.Offset = RandomMath.RandomBetween(0.45f, 0.8f);
                     AddFunctionScript(b, delegate(ScriptComp ctx, double value)
-                        {ctx.Entity.C<ScaleComp>().Scale = value;} , m);
+                        {ctx.Entity.C<ScaleComp>().Scale = (float)value;} , m);
 
                     i++;
                 }

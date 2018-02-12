@@ -44,7 +44,7 @@ namespace Game1
         public Entity CreateShip(Entity e)
         {
             CreateSprite(e, "ball");
-            e.AddC(new ScaleComp(2.0));
+            e.AddC(new ScaleComp(2.0f));
             e.AddC(new PlayerInputComp());
             e.AddC(new InputToMotionComp());
             return e;
@@ -55,12 +55,12 @@ namespace Game1
             var fx = CreateFx(New(), "Nova");
             CreateSprite(e, "supernova"+type);
             e.C<SpriteComp>().CenterToMiddle();
-            var sc = new ScaleComp { Scale = 2, ScaleSpeed = 0.01 };
+            var sc = new ScaleComp { Scale = 2, ScaleSpeed = 0.01f };
             e.AddC(sc);
             e.C<PositionComp>().Position = new Vector3(x, y, 0.5f);
-            var rc = new RotateComp { RotateSpeed = 0.1 };
+            var rc = new RotateComp { RotateSpeed = 0.1f };
             e.AddC(rc);
-            AddScript(e, (ctx) => { e.C<ScaleComp>().ScaleTarget *= 1.001; } );            
+            AddScript(e, (ctx) => { e.C<ScaleComp>().ScaleTarget *= 1.001f; } );            
             e.C<DrawComp>().DrawScreen = fx.C<ScreenComp>(); // draw nova onto the Shader/FX screen
             return e;
         }
@@ -70,7 +70,7 @@ namespace Game1
         /// </summary>
         /// <param name="radius">the relative size scaling, 1 is normal</param>
         /// <returns></returns>
-        public Entity CreateBall(Entity e, double radius)
+        public Entity CreateBall(Entity e, float radius)
         {
             CreateSprite(e, "paul-hardman_circle-four");
             e.AddC(new ScaleComp(radius));
@@ -97,10 +97,10 @@ namespace Game1
             return CreateMovingBall(e, new Vector2(pos.X, pos.Y), velo);
         }
 
-        public Entity CreateRotatingBall(Entity e, Vector2 pos, Vector2 velo, double rotSpeed)
+        public Entity CreateRotatingBall(Entity e, Vector2 pos, Vector2 velo, float rotSpeed)
         {
             CreateMovingBall(e, pos, velo);
-            e.C<ScaleComp>().Scale = 0.7;
+            e.C<ScaleComp>().Scale = 0.7f;
             var rc = new RotateComp();
             rc.RotateSpeed = rotSpeed;
             e.AddC(rc);

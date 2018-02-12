@@ -53,6 +53,8 @@ namespace TTengine.Comps
             }
         }
 
+        public Vector3 PositionAbsPrev;
+
         /// <summary>
         /// The X, Y coordinates of Position
         /// </summary>

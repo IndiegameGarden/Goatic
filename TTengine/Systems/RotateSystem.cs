@@ -1,10 +1,9 @@
-// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using Artemis;
 using Artemis.Attributes;
 using Artemis.Manager;
 using Artemis.System;
-using Microsoft.Xna.Framework;
 using TTengine.Comps;
 
 namespace TTengine.Systems
@@ -16,19 +15,8 @@ namespace TTengine.Systems
         public override void Process(Entity entity, RotateComp rc)
         {
             ProcessTime(rc);
-            rc.Rotate += rc.RotateSpeed * Dt;            
+            rc.RotateAbsPrev = rc.RotateAbs;
+            rc.Rotate += rc.RotateSpeed * (float)Dt;            
         }
     }
-
-    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.RotateToDrawrotateSystem)]
-    public class RotateToDrawrotateSystem : EntityComponentProcessingSystem<RotateComp, DrawComp>
-    {
-
-        public override void Process(Entity entity, RotateComp rotComp, DrawComp drawComp)
-        {
-            drawComp.DrawRotation = (float)rotComp.RotateAbs;
-        }
-
-    }
-
 }

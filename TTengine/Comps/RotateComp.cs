@@ -14,17 +14,17 @@ namespace TTengine.Comps
         }
 
         /// <summary>Rotation angle in radians</summary>
-        public double Rotate = 0;
+        public float Rotate = 0;
 
         /// <summary>
         /// Rotation speed i.e. change of rotation, in radians/sec. 0 means no change.
         /// </summary>
-        public double RotateSpeed = 0;
+        public float RotateSpeed = 0;
 
         /// <summary>
         /// Get the absolute value of rotation, also based on parent's rotation.
         /// </summary>
-        public double RotateAbs
+        public float RotateAbs
         {
             get
             {
@@ -34,6 +34,8 @@ namespace TTengine.Comps
                     return (Parent as RotateComp).RotateAbs;
             }
         }
+
+        public float RotateAbsPrev = 0;
 
     }
 }
