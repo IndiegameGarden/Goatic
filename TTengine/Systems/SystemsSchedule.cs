@@ -13,19 +13,21 @@ namespace TTengine.Systems
         // Systems in UPDATE loop
         public const int
             WorldSystem         = 0,        // world simulation goes depth-first.
-            ScriptSystem        = 1,
-            BTAISystem          = 1,
-            AudioSystem         = 1,
-            PositionSystem          = 2,
+            PositionSystem      = 2,
             TargetMoveSystem    = 2,
             RotateSystem        = 2,
             ScaleSystem         = 2,
             GeomSystem          = 2,
-            PositionSystemPosAbs       = 3,
-            BlinkSystem         = 3,
-            ExpirationSystem    = 3,
-            CollisionSystem     = 4,
-            BuilderSystem       = 5;
+            PositionSystemPosAbs = 3,
+            RotateSystemAbs     = 3,
+            ScaleSystemAbs      = 3,
+            BlinkSystem         = 4,
+            ExpirationSystem    = 4,
+            ScriptSystem        = 4,
+            BTAISystem          = 4,
+            AudioSystem         = 4,
+            CollisionSystem     = 5,
+            BuilderSystem       = 6;
 
         // Systems in DRAW loop
         public const int
@@ -35,10 +37,10 @@ namespace TTengine.Systems
             DrawSystemDraw          = 1,
             ScriptSystemDraw        = 2,
             SpriteRenderSystemDraw  = 2,
-            GeomSystemDraw          = 4,
             AnimatedSpriteSystemDraw = 2,
-            TextRenderSystemDraw    = 2,
-            ScreenPostSystemDraw    = 3;
+            TextRenderSystemDraw = 2,
+            ScreenPostSystemDraw    = 3,
+            GeomSystemDraw = 4;
 
     }
 }

@@ -27,11 +27,17 @@ namespace TTengine.Comps
         public float RotateAbs
         {
             get
-            {
+            {                
                 if (Parent == null)
                     return Rotate;
+                else if (_isRotateAbsSet)
+                    return _rotateAbs;
                 else
-                    return (Parent as RotateComp).RotateAbs;
+                {
+                    _isRotateAbsSet = true;
+                    _rotateAbs = Rotate + (Parent as RotateComp).RotateAbs;
+                    return _rotateAbs;
+                }
             }
         }
 
@@ -40,5 +46,7 @@ namespace TTengine.Comps
         /// </summary>
         public float RotateAbsPrev = 0;
 
+        internal float _rotateAbs = 0;
+        internal bool _isRotateAbsSet = false;
     }
 }

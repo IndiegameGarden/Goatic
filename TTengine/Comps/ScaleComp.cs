@@ -44,8 +44,14 @@ namespace TTengine.Comps
             {
                 if (Parent == null)
                     return Scale;
+                else if (_isScaleAbsSet)
+                    return _scaleAbs;
                 else
-                    return Scale * (Parent as ScaleComp).ScaleAbs;                
+                {
+                    _isScaleAbsSet = true;
+                    _scaleAbs = Scale * (Parent as ScaleComp).ScaleAbs;
+                    return _scaleAbs;
+                }
             }
         }
 
@@ -53,5 +59,8 @@ namespace TTengine.Comps
         /// Previous update cycle's value of ScaleAbs.
         /// </summary>
         public float ScaleAbsPrev = 0.0f;
+
+        internal float _scaleAbs = 0;
+        internal bool _isScaleAbsSet = false;
     }
 }

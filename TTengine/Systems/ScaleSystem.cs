@@ -24,7 +24,7 @@ namespace TTengine.Systems
             {
                 if (sc.Scale < sc.ScaleTarget)
                 {
-                    sc.Scale += sc.ScaleSpeed * (sc.ScaleTarget - sc.Scale); 
+                    sc.Scale += sc.ScaleSpeed * (sc.ScaleTarget - sc.Scale);
                     if (sc.Scale > sc.ScaleTarget)
                     {
                         sc.Scale = sc.ScaleTarget;
@@ -32,7 +32,7 @@ namespace TTengine.Systems
                 }
                 else if (sc.Scale > sc.ScaleTarget)
                 {
-                    sc.Scale += sc.ScaleSpeed * (sc.ScaleTarget - sc.Scale); 
+                    sc.Scale += sc.ScaleSpeed * (sc.ScaleTarget - sc.Scale);
                     if (sc.Scale < sc.ScaleTarget)
                     {
                         sc.Scale = sc.ScaleTarget;
@@ -42,4 +42,20 @@ namespace TTengine.Systems
         }
 
     }
+
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.ScaleSystemAbs)]
+    public class ScaleSystemAbs : EntityComponentProcessingSystem<ScaleComp>
+    {
+        public override void Process(Entity entity, ScaleComp sc)
+        {
+            if (sc._isScaleAbsSet) return;   // skip processing if already processed through parent/child hierarchy.
+
+            if (sc.Parent == null)
+                sc._scaleAbs = sc.Scale;
+            else
+                sc._scaleAbs = sc.Scale *  (sc.Parent as RotateComp).RotateAbs;
+            sc._isScaleAbsSet = true;
+        }
+    }
+
 }

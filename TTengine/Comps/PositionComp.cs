@@ -48,9 +48,11 @@ namespace TTengine.Comps
                 if (_isPositionAbsSet)
                     return _positionAbs;
                 else if (Parent != null)
-                    return Position + (Parent as PositionComp).PositionAbs;
+                    _positionAbs = Position + (Parent as PositionComp).PositionAbs;
                 else
-                    return Position;
+                    _positionAbs = Position;
+                _isPositionAbsSet = true;
+                return _positionAbs;
             }
         }
 
