@@ -106,7 +106,7 @@
     <Compile Include="Systems\SystemsSchedule.cs" />
     <Compile Include="Systems\TextRenderSystem.cs" />
     <Compile Include="Systems\ExpirationSystem.cs" />
-    <Compile Include="Systems\MovementSystem.cs" />
+    <Compile Include="Systems\PositionSystem.cs" />
     <Compile Include="Systems\SpriteRenderSystem.cs" />
     <Compile Include="Systems\ScaleSystem.cs" />
     <Compile Include="Systems\WorldSystem.cs" />

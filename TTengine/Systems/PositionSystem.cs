@@ -49,8 +49,8 @@ namespace TTengine.Systems
 
     #endregion
 
-    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.MoveSystem)]
-    public class MovementSystem : EntityComponentProcessingSystem<PositionComp, VelocityComp>
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.PositionSystem)]
+    public class PositionSystem : EntityComponentProcessingSystem<PositionComp, VelocityComp>
     {
 
         /// <summary>Processes the specified entity.</summary>
@@ -65,8 +65,8 @@ namespace TTengine.Systems
     }
 
     /// <summary>The separate system to update PositionAbs.</summary>
-    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.MoveAbsSystem)]
-    public class MovementSystemPosAbs : EntityComponentProcessingSystem<PositionComp>
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.PositionSystemPosAbs)]
+    public class PositionSystemPosAbs : EntityComponentProcessingSystem<PositionComp>
     {
         /// <summary>Processes the specified entity.</summary>
         /// <param name="entity">The entity.</param>
