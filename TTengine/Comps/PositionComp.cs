@@ -18,16 +18,17 @@ namespace TTengine.Comps
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="PositionComp" /> class at given x,y position and z (depth).</summary>
+        /// <summary>Initializes a new instance of the <see cref="PositionComp" /> class at given x,y coordinates and z (depth).</summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
+        /// <param name="depth">The depth (layer-depth for sprites), or z coordinate in general.</param>
         public PositionComp(float x, float y, float depth = 0.5f)
         {
             this.Position = new Vector3(x,y,depth);
         }
 
         /// <summary>Initializes a new instance of the <see cref="PositionComp" /> class.</summary>
-        /// <param name="position">The position (x,y,depth).</param>
+        /// <param name="position">The position (x,y,z=depth).</param>
         public PositionComp(Vector3 position)
         {
             this.Position = position;
@@ -53,10 +54,13 @@ namespace TTengine.Comps
             }
         }
 
+        /// <summary>
+        /// Previous update cycle's value of PositionAbs.
+        /// </summary>
         public Vector3 PositionAbsPrev;
 
         /// <summary>
-        /// The X, Y coordinates of Position
+        /// The X, Y coordinates of Position as Vector2.
         /// </summary>
         public Vector2 PositionXY
         {
@@ -84,7 +88,10 @@ namespace TTengine.Comps
         /// </summary>
         public float Depth { get { return Position.Z; } set { Position.Z = value; } }
 
-        public void CleanUp()
+        /// <summary>
+        /// Clear the position vector to 0.
+        /// </summary>
+        public void Clear()
         {
             this.Position = Vector3.Zero;
         }

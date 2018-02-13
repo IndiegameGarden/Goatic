@@ -35,6 +35,9 @@ namespace TTengine.Comps
             }
         }
 
+        /// <summary>
+        /// Previous update cycle's value of RotateAbs.
+        /// </summary>
         public float RotateAbsPrev = 0;
 
     }

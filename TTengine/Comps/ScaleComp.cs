@@ -49,6 +49,9 @@ namespace TTengine.Comps
             }
         }
 
+        /// <summary>
+        /// Previous update cycle's value of ScaleAbs.
+        /// </summary>
         public float ScaleAbsPrev = 0.0f;
     }
 }
