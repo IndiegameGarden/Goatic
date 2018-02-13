@@ -29,7 +29,7 @@ namespace TTengineTest
             {
                 var s = CreateSprite(New(), "Quest14-Level1.png");
                 s.C<SpriteComp>().Center = new Vector2(532f, 227f);
-                s.AddC(new ScaleComp(1.0));
+                s.AddC(new ScaleComp(1.0f));
                 var targFunc = new MoveToTargetFunction
                 {
                     CurrentValue = new Vector3(1.0f, 0f, 0f),

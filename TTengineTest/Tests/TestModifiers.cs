@@ -30,7 +30,7 @@ namespace TTengineTest
 
             // ball 2
             var b2 = CreateMovingBall(New(), new Vector2(695f, 450f), velo);
-            b2.C<ScaleComp>().Scale = 0.5;
+            b2.C<ScaleComp>().Scale = 0.5f;
 
             // script with anonymous delegate code block - for rotation
             AddScript(b2, ctx => { b2.C<DrawComp>().DrawRotation = (float)ctx.SimTime; });

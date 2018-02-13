@@ -36,7 +36,7 @@ namespace TTengineTest
                 });
 
             // 2D ball follows the 3D one in (x,y)
-            var b = CreateRotatingBall(New(), Vector2.Zero, Vector2.Zero, 0.05);
+            var b = CreateRotatingBall(New(), Vector2.Zero, Vector2.Zero, 0.05f);
             AddScalable(b,2);            
             AddScript(b, (ctx) => { b.C<PositionComp>().Position = s.C<PositionComp>().Position; });
         }

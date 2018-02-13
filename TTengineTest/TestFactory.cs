@@ -63,7 +63,7 @@ namespace TTengineTest
         public Entity CreateRotatingScalingBall(Entity e, Vector2 pos, Vector2 velo, float rotSpeed)
         {
             var ball = CreateRotatingBall(e, pos, velo, rotSpeed);
-            AddFunctionScript(e, (sc, v) => { sc.Entity.C<ScaleComp>().Scale = v; }, new SineFunction { Offset = 0.7, Amplitude = 0.05} );
+            AddFunctionScript(e, (sc, v) => { sc.Entity.C<ScaleComp>().Scale = (float) v; }, new SineFunction { Offset = 0.7, Amplitude = 0.05} );
             return ball;
         }
 

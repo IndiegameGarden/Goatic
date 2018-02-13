@@ -23,22 +23,22 @@ namespace TTengineTest
 
             var fx1 = CreateFx(New(), "Grayscale");
             using (BuildTo(fx1))
-                CreateRotatingScalingBall(New(), pos: new Vector2(100f, 100f), velo: new Vector2(5f, 5f), rotSpeed: 0.1);
+                CreateRotatingScalingBall(New(), pos: new Vector2(100f, 100f), velo: new Vector2(5f, 5f), rotSpeed: 0.1f);
 
             var fx2 = CreateFx(New(), "RandomColor");
             using (BuildTo(fx2))
-                CreateRotatingScalingBall(New(), new Vector2(500f, 400f), new Vector2(5f, 5f), 0.1);
+                CreateRotatingScalingBall(New(), new Vector2(500f, 400f), new Vector2(5f, 5f), 0.1f);
 
             var fx3 = CreateFx(New(), "FixedColor");
             using (BuildTo(fx3))
-                CreateRotatingScalingBall(New(), new Vector2(1100f, 300f), new Vector2(1f, -2f), -0.1);
+                CreateRotatingScalingBall(New(), new Vector2(1100f, 300f), new Vector2(1f, -2f), -0.1f);
 
             var fx4 = CreateFx(New(), "Bloom1");
             using (BuildTo(fx4))
-                CreateRotatingScalingBall(New(), new Vector2(900f, 680f), new Vector2(-1f, -1f), 0.1);
+                CreateRotatingScalingBall(New(), new Vector2(900f, 680f), new Vector2(-1f, -1f), 0.1f);
 
             // no shader effect
-            CreateRotatingScalingBall(New(), new Vector2(900f, 100f), new Vector2(5f, 5f), -0.1);
+            CreateRotatingScalingBall(New(), new Vector2(900f, 100f), new Vector2(5f, 5f), -0.1f);
         }
 
     }

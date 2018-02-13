@@ -15,7 +15,7 @@ namespace TTengineTest
         public override void BuildAll()
         {
             BallSprite = "paul-hardman_circle-four";
-            double spd = 0.2;
+            float spd = 0.2f;
             for (float x = 250f; x < 800f; x += 200f)
             {
                 for (float y = 150f; y < 668f; y += 200f)
@@ -27,7 +27,7 @@ namespace TTengineTest
                     var rc = new RotateComp();
                     rc.RotateSpeed = spd;
                     ball.AddC(rc);
-                    spd *= 1.678;
+                    spd *= 1.678f;
                 }
             }
         }
