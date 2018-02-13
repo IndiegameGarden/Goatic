@@ -40,9 +40,14 @@ namespace TTengine.Core
         public double TimeLag = 0.0;
 
         /// <summary>
-        /// total Game Time in seconds
+        /// total Game Time in seconds, as noted in the last Update() or Draw() call that took place.
         /// </summary>
         public double GameTime = 0.0;
+
+        /// <summary>
+        /// Simulation time for world updates, which tries to keep close to GameTime (a bit ahead of GameTime is the target - allows interpolation rendering).
+        /// </summary>
+        public double SimTime = 0.0;
 
         /// <summary>When true, loop time profiling using below CountingTimers is enabled.</summary>
         public bool IsProfiling = false;
@@ -67,6 +72,7 @@ namespace TTengine.Core
             GraphicsMgr = new GraphicsDeviceManager(this);
             GraphicsMgr.GraphicsProfile = GraphicsProfile.HiDef;
             IsFixedTimeStep = false; // handle own fixed timesteps in Update() code
+            TargetElapsedTime = TimeSpan.FromMilliseconds(10); // the time step per Update() call
             Content.RootDirectory = "Content";
 #if DEBUG
             IsProfiling = true;
@@ -115,18 +121,25 @@ namespace TTengine.Core
                 ProfilingTimerUpdate.Start();
                 ProfilingTimerUpdate.CountUp();
             }
+
+            // keep record of the latest GameTime
             this.GameTime = gameTime.TotalGameTime.TotalSeconds;
+            // simulation fixed time step dt
             double dt = TargetElapsedTime.TotalSeconds;
             // see http://gameprogrammingpatterns.com/game-loop.html
+            // advance our TimeLag by the amount of real time passed since Update().
             TimeLag += gameTime.ElapsedGameTime.TotalSeconds;
 
-            while (TimeLag > 0)
+            // run one or more World.Update() rounds with fixed time step, to catch
+            // up the TimeLag and even be slightly ahead into the future (TimeLag < 0 goal)
+            while (TimeLag >= 0)
             {
-                RootWorld.Update(TargetElapsedTime);
-                this.GameTime += dt;
+                RootWorld.Update(TargetElapsedTime /* = dt */ );
+                this.SimTime += dt;
                 TimeLag -= dt;
             }
             base.Update(gameTime);
+
             if (IsProfiling)
             {
                 ProfilingTimerUpdate.Update();
@@ -141,12 +154,15 @@ namespace TTengine.Core
                 ProfilingTimerDraw.Start();
                 ProfilingTimerDraw.CountUp();
             }
+            
+            // keep track of the latest GameTime seen in a Draw() or Update() call
             this.GameTime = gameTime.TotalGameTime.TotalSeconds;
             RootScreen.SpriteBatch.BeginParameterized();
             RootWorld.Draw();   // draw world including all sub-worlds/sub-channels
             GraphicsDevice.SetRenderTarget(null);
             RootScreen.SpriteBatch.End();
             base.Draw(gameTime);
+
             if (IsProfiling)
             {
                 ProfilingTimerDraw.Update();
