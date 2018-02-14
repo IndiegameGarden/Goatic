@@ -27,7 +27,7 @@ namespace TTengine.Systems
 			// Prev update is associated to GameTime = game.SimTime - Dt
 			// Latest update is associated to GameTime = game.SimTime
 			// Time of Draw() is game.GameTime.TotalSeconds. TODO: from world?
-            this.alpha = MathHelper.Clamp( (float)(1.0 - (  (game.SimTime - game.GameTime.TotalSeconds) / this.Dt )) ,0f,1f);
+            this.alpha = MathHelper.Clamp( (float)(1.0 - (  (game.SimTime - game.GameTime) / this.Dt )) ,0f,1f);
         }
 
         public override void Process(Entity e, DrawComp bc)

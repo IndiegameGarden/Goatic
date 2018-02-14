@@ -76,7 +76,7 @@ namespace TTengine.Core
             Content.RootDirectory = "Content";
 #if DEBUG
             IsProfiling = true;
-            GraphicsMgr.SynchronizeWithVerticalRetrace = false; // FPS: as fast as possible, FIXME make that selectable
+            GraphicsMgr.SynchronizeWithVerticalRetrace = true; // false -> FPS as fast as possible, FIXME make that selectable
 #else
             IsProfiling = false;
             GraphicsMgr.SynchronizeWithVerticalRetrace = true;
