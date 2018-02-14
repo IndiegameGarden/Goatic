@@ -16,7 +16,8 @@ namespace TTengine.Systems
         {
             ProcessTime(rc);
             rc.RotateAbsPrev = rc.RotateAbs;
-            rc.Rotate += rc.RotateSpeed * (float)Dt;            
+            rc.Rotate += rc.RotateSpeed * (float)Dt;
+            rc._isRotateAbsSet = false; // reset the 'set' marker for the below system.            
         }
     }
 

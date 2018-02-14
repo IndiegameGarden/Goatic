@@ -19,6 +19,7 @@ namespace TTengine.Systems
         {
             ProcessTime(sc);
             sc.ScaleAbsPrev = sc.ScaleAbs;
+            sc._isScaleAbsSet = false; // reset the 'set' marker for the below system.            
             // scaling logic towards target
             if (sc.ScaleSpeed > 0)
             {
