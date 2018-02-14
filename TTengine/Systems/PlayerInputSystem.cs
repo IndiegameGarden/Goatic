@@ -60,7 +60,7 @@ namespace TTengine.Systems
                     pic.Direction += -Vector2.UnitX;
                 else if (kb.IsKeyDown(Keys.Right))
                     pic.Direction += Vector2.UnitX;
-                else if (kb.IsKeyDown(Keys.Up))
+                if (kb.IsKeyDown(Keys.Up))
                     pic.Direction -= Vector2.UnitY;
                 else if (kb.IsKeyDown(Keys.Down))
                     pic.Direction += Vector2.UnitY;
@@ -72,7 +72,7 @@ namespace TTengine.Systems
                     pic.Direction += -Vector2.UnitX;
                 else if (kb.IsKeyDown(Keys.Right) && !kbOld.IsKeyDown(Keys.Right))
                     pic.Direction += Vector2.UnitX;
-                else if (kb.IsKeyDown(Keys.Up) && !kbOld.IsKeyDown(Keys.Up))
+                if (kb.IsKeyDown(Keys.Up) && !kbOld.IsKeyDown(Keys.Up))
                     pic.Direction -= Vector2.UnitY;
                 else if (kb.IsKeyDown(Keys.Down) && !kbOld.IsKeyDown(Keys.Down))
                     pic.Direction += Vector2.UnitY;

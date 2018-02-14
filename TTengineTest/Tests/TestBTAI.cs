@@ -21,7 +21,7 @@ namespace TTengineTest
         {
             var ball = CreateBall(New(),1);
             ball.C<PositionComp>().Position = new Vector3(300f, 300f, 0.5f);
-            ball.C<VelocityComp>().VelocityXY = new Vector2(25f, 25f);
+            ball.C<VelocityComp>().VelocityXY = new Vector2(60f, 60f);
 
             // Behavior Tree AI
             BTAIComp ai = new BTAIComp();
