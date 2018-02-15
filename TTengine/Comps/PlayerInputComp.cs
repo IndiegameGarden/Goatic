@@ -26,6 +26,11 @@ namespace TTengine.Comps
         public Vector2 Direction = Vector2.Zero;
 
         /// <summary>
+        /// Previous direction of user input
+        /// </summary>
+        public Vector2 DirectionPrev = Vector2.Zero;
+
+        /// <summary>
         /// For which player the input is tracked
         /// </summary>
         public PlayerIndex Player;

@@ -33,6 +33,9 @@ namespace TTengine.Systems
         /// <param name="entity">The entity.</param>
         public override void Process(Entity entity, PlayerInputComp pic)
         {
+            bool DL = false, DR = false , DU = false , DD = false;
+
+            pic.DirectionPrev = pic.Direction;            
             pic.Direction = Vector2.Zero;
             if (pic.Player != PlayerIndex.One)  // TODO handle input for >1 players
                 return;
@@ -40,30 +43,44 @@ namespace TTengine.Systems
             // gamepad input
             if (pad.IsConnected)
             {
-                if (pad.IsButtonDown(Buttons.DPadLeft) )
-                    pic.Direction = -Vector2.UnitX;
-                else if (pad.IsButtonDown(Buttons.DPadRight) )
-                    pic.Direction = Vector2.UnitX;
-                else if (pad.IsButtonDown(Buttons.DPadUp) )
-                    pic.Direction = -Vector2.UnitY;
-                else if (pad.IsButtonDown(Buttons.DPadDown) )
-                    pic.Direction = Vector2.UnitY;
-                var stks = pad.ThumbSticks.Left + pad.ThumbSticks.Right;
+                DL |= pad.IsButtonDown(Buttons.DPadLeft);
+                DR |= pad.IsButtonDown(Buttons.DPadRight);
+                DU |= pad.IsButtonDown(Buttons.DPadUp);
+                DD |= pad.IsButtonDown(Buttons.DPadDown);
+
+                // joysticks input
+                Vector2 stks = pad.ThumbSticks.Left;
                 stks.Y = -stks.Y;
-                pic.Direction += stks;
+                DL |= (stks.X < -0.01f);
+                DR |= (stks.X > +0.01f);
+                DU |= (stks.Y < -0.01f);
+                DD |= (stks.Y > +0.01f);
+
+                stks = pad.ThumbSticks.Right;
+                stks.Y = -stks.Y;
+                DL |= (stks.X < -0.01f);
+                DR |= (stks.X > +0.01f);
+                DU |= (stks.Y < -0.01f);
+                DD |= (stks.Y > +0.01f);
             }
 
             // keyboard input
             if (kb.Equals(kbOld))
             {
-                if (kb.IsKeyDown(Keys.Left))
+                if (kb.IsKeyDown(Keys.Left) && kb.IsKeyDown(Keys.Right))
+                    pic.Direction.X += pic.DirectionPrev.X; // both keys down -> keep old direction vector
+                else if (kb.IsKeyDown(Keys.Left))
                     pic.Direction += -Vector2.UnitX;
                 else if (kb.IsKeyDown(Keys.Right))
                     pic.Direction += Vector2.UnitX;
-                if (kb.IsKeyDown(Keys.Up))
+
+                if (kb.IsKeyDown(Keys.Up) && kb.IsKeyDown(Keys.Down))
+                    pic.Direction.Y += pic.DirectionPrev.Y; // both keys down -> keep old direction vector
+                else if (kb.IsKeyDown(Keys.Up))
                     pic.Direction -= Vector2.UnitY;
                 else if (kb.IsKeyDown(Keys.Down))
                     pic.Direction += Vector2.UnitY;
+
             }
             else
             {
