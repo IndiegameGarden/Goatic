@@ -43,57 +43,63 @@ namespace TTengine.Systems
             // gamepad input
             if (pad.IsConnected)
             {
+                // D-Pad
                 DL |= pad.IsButtonDown(Buttons.DPadLeft);
                 DR |= pad.IsButtonDown(Buttons.DPadRight);
                 DU |= pad.IsButtonDown(Buttons.DPadUp);
                 DD |= pad.IsButtonDown(Buttons.DPadDown);
 
-                // joysticks input
-                Vector2 stks = pad.ThumbSticks.Left;
+                // analog joysticks input
+                Vector2 stks = pad.ThumbSticks.Left + pad.ThumbSticks.Right;
                 stks.Y = -stks.Y;
-                DL |= (stks.X < -0.01f);
-                DR |= (stks.X > +0.01f);
-                DU |= (stks.Y < -0.01f);
-                DD |= (stks.Y > +0.01f);
-
-                stks = pad.ThumbSticks.Right;
-                stks.Y = -stks.Y;
-                DL |= (stks.X < -0.01f);
-                DR |= (stks.X > +0.01f);
-                DU |= (stks.Y < -0.01f);
-                DD |= (stks.Y > +0.01f);
+                pic.Direction += stks;
             }
 
-            // keyboard input
+            // keyboard arrow keys and WASD
             if (kb.Equals(kbOld))
             {
-                if (kb.IsKeyDown(Keys.Left) && kb.IsKeyDown(Keys.Right))
-                    pic.Direction.X += pic.DirectionPrev.X; // both keys down -> keep old direction vector
-                else if (kb.IsKeyDown(Keys.Left))
-                    pic.Direction += -Vector2.UnitX;
-                else if (kb.IsKeyDown(Keys.Right))
-                    pic.Direction += Vector2.UnitX;
+                DL |= kb.IsKeyDown(Keys.Left);
+                DR |= kb.IsKeyDown(Keys.Right);
+                DU |= kb.IsKeyDown(Keys.Up);
+                DD |= kb.IsKeyDown(Keys.Down);
 
-                if (kb.IsKeyDown(Keys.Up) && kb.IsKeyDown(Keys.Down))
-                    pic.Direction.Y += pic.DirectionPrev.Y; // both keys down -> keep old direction vector
-                else if (kb.IsKeyDown(Keys.Up))
-                    pic.Direction -= Vector2.UnitY;
-                else if (kb.IsKeyDown(Keys.Down))
-                    pic.Direction += Vector2.UnitY;
-
+                DL |= kb.IsKeyDown(Keys.A);
+                DR |= kb.IsKeyDown(Keys.D);
+                DU |= kb.IsKeyDown(Keys.W);
+                DD |= kb.IsKeyDown(Keys.S);
             }
             else
             {
-                // key change - adapt to new key smoothly
-                if (kb.IsKeyDown(Keys.Left) && !kbOld.IsKeyDown(Keys.Left))
-                    pic.Direction += -Vector2.UnitX;
-                else if (kb.IsKeyDown(Keys.Right) && !kbOld.IsKeyDown(Keys.Right))
-                    pic.Direction += Vector2.UnitX;
-                if (kb.IsKeyDown(Keys.Up) && !kbOld.IsKeyDown(Keys.Up))
-                    pic.Direction -= Vector2.UnitY;
-                else if (kb.IsKeyDown(Keys.Down) && !kbOld.IsKeyDown(Keys.Down))
-                    pic.Direction += Vector2.UnitY;
+                // key change - look at what's last pressed
+                DL |= kb.IsKeyDown(Keys.Left) && !kbOld.IsKeyDown(Keys.Left);
+                DR |= kb.IsKeyDown(Keys.Right) && !kbOld.IsKeyDown(Keys.Right);
+                DU |= kb.IsKeyDown(Keys.Up) && !kbOld.IsKeyDown(Keys.Up);
+                DD |= kb.IsKeyDown(Keys.Down) && !kbOld.IsKeyDown(Keys.Down);
+
+                DL |= kb.IsKeyDown(Keys.A) && !kbOld.IsKeyDown(Keys.A);
+                DR |= kb.IsKeyDown(Keys.D) && !kbOld.IsKeyDown(Keys.D);
+                DU |= kb.IsKeyDown(Keys.W) && !kbOld.IsKeyDown(Keys.W);
+                DD |= kb.IsKeyDown(Keys.S) && !kbOld.IsKeyDown(Keys.S);
             }
+
+
+            // act on the input
+            if (DL && DR)
+                pic.Direction.X += pic.DirectionPrev.X; // both keys down -> keep old direction vector
+            else if (DL)
+                pic.Direction += -Vector2.UnitX;
+            else if (DR)
+                pic.Direction += Vector2.UnitX;
+
+            if (DU && DD)
+                pic.Direction.Y += pic.DirectionPrev.Y; // both keys down -> keep old direction vector
+            else if (DU)
+                pic.Direction -= Vector2.UnitY;
+            else if (DD)
+                pic.Direction += Vector2.UnitY;
+
+            if (pic.Direction != Vector2.Zero)
+                pic.Direction.Normalize();
         }
     }
 
