@@ -17,7 +17,11 @@ namespace TTengine.Comps
     {
         public AnimationType AnimType = AnimationType.NORMAL;
 
+        /// <summary>The current animation frame to be rendered</summary>
         public int CurrentFrame { get; set; }
+
+        /// <summary>The previous animation frame (update before last).</summary>
+        public int PrevFrame { get; set; }
 
         /// <summary>The lowest frame that will be rendered (default 0)</summary>
         public int MinFrame { get; set; }
@@ -25,6 +29,10 @@ namespace TTengine.Comps
         /// <summary>The highest frame that will be rendered (default (TotalFrames-1) )</summary>
         public int MaxFrame { get; set; }
 
+        /// <summary>Time remaining to display CurrentFrame; when &lt= 0 will switch to next frame.</summary>
+        public double FrameTimeRemaining = 0;
+
+        /// <summary>The total number of frames in the animation sequence.</summary>
         public int TotalFrames
         {
             get
@@ -33,8 +41,8 @@ namespace TTengine.Comps
             }
         }
 
-        /// <summary>The number of screen draws that a single animation frame stays on (normally 1=fastest)</summary>
-        public int SlowdownFactor { get; set; }
+        /// <summary>The time that a single animation frame stays on, 1/Animation-FPS.</summary>
+        public double FrameDt { get; set; }
 
         internal int totalFrames = 0, px, py, Nx, Ny, pingpongDelta=1, frameSkipCounter = 1 ;
 
@@ -51,7 +59,8 @@ namespace TTengine.Comps
             this.Ny = Ny;
             this.MinFrame = 0;
             this.CurrentFrame = 0;
-            this.SlowdownFactor = 1;
+            this.FrameDt = 0.050; // 20 FPS default
+            this.FrameTimeRemaining = this.FrameDt;
             px = Texture.Width / Nx;
             py = Texture.Height / Ny;
             totalFrames = Nx * Ny;

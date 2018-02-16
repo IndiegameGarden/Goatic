@@ -1,87 +1,90 @@
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
+using Artemis;
+using Artemis.Attributes;
+using Artemis.Manager;
+using Artemis.System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using TTengine.Core;
+using TTengine.Comps;
 
 namespace TTengine.Systems
 {
-    #region Using statements
-
-    using System;
-
-    using Artemis;
-    using Artemis.Attributes;
-    using Artemis.Manager;
-    using Artemis.System;
-
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Content;
-    using Microsoft.Xna.Framework.Graphics;
-
-    using TTengine.Core;
-    using TTengine.Comps;
-
-    #endregion
-
-    /// <summary>The system for rendering animated sprites. FIXME: convert class to frame rate independent animation; supply an FPS parameter per sprite.</summary>
-    [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.AnimatedSpriteSystemDraw)]
+    /// <summary>The system for rendering animated sprites.</summary>
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.AnimatedSpriteSystem)]
     public class AnimatedSpriteSystem : EntityComponentProcessingSystem<AnimatedSpriteComp, PositionComp, DrawComp>
     {
 
-        /// <summary>Processes the specified entity.</summary>
-        /// <param name="entity">The entity.</param>
-        public override void Process(Entity entity, AnimatedSpriteComp spriteComp, PositionComp posComp, DrawComp drawComp)
+        public override void Process(Entity entity, AnimatedSpriteComp asc, PositionComp pc, DrawComp dc)
         {
-            if (!drawComp.IsVisible)
-                return;
+            asc.FrameTimeRemaining -= Dt;
+            asc.PrevFrame = asc.CurrentFrame;
 
-            var scr = drawComp.DrawScreen;
-
-            // update drawpos - FIXME
-            drawComp.DrawPosition = posComp.PositionAbs;
-
-            spriteComp.frameSkipCounter--;
-            if (spriteComp.frameSkipCounter == 0)
+            while (asc.FrameTimeRemaining <= 0)
             {
-                spriteComp.frameSkipCounter = spriteComp.SlowdownFactor;
-
-                // update frame counter - one per frame
-                switch (spriteComp.AnimType)
+                // Next frame
+                switch (asc.AnimType)
                 {
                     case AnimationType.NORMAL:
-                        spriteComp.CurrentFrame++;
-                        if (spriteComp.CurrentFrame > spriteComp.MaxFrame || spriteComp.CurrentFrame == spriteComp.TotalFrames)
-                            spriteComp.CurrentFrame = spriteComp.MinFrame;
+                        asc.CurrentFrame++;
+                        if (asc.CurrentFrame > asc.MaxFrame || asc.CurrentFrame == asc.TotalFrames)
+                            asc.CurrentFrame = asc.MinFrame;
                         break;
 
                     case AnimationType.REVERSE:
-                        spriteComp.CurrentFrame--;
-                        if (spriteComp.CurrentFrame < spriteComp.MinFrame || spriteComp.CurrentFrame < 0)
-                            spriteComp.CurrentFrame = spriteComp.MaxFrame;
+                        asc.CurrentFrame--;
+                        if (asc.CurrentFrame < asc.MinFrame || asc.CurrentFrame < 0)
+                            asc.CurrentFrame = asc.MaxFrame;
                         break;
 
                     case AnimationType.PINGPONG:
-                        spriteComp.CurrentFrame += spriteComp.pingpongDelta;
-                        if (spriteComp.CurrentFrame > spriteComp.MaxFrame || spriteComp.CurrentFrame == spriteComp.TotalFrames)
+                        asc.CurrentFrame += asc.pingpongDelta;
+                        if (asc.CurrentFrame > asc.MaxFrame || asc.CurrentFrame == asc.TotalFrames)
                         {
-                            spriteComp.CurrentFrame -= 2;
-                            spriteComp.pingpongDelta = -spriteComp.pingpongDelta;
+                            asc.CurrentFrame -= 2;
+                            asc.pingpongDelta = -asc.pingpongDelta;
                         }
-                        else if (spriteComp.CurrentFrame < spriteComp.MinFrame || spriteComp.CurrentFrame < 0)
+                        else if (asc.CurrentFrame < asc.MinFrame || asc.CurrentFrame < 0)
                         {
-                            spriteComp.CurrentFrame += 2;
-                            spriteComp.pingpongDelta = -spriteComp.pingpongDelta;
+                            asc.CurrentFrame += 2;
+                            asc.pingpongDelta = -asc.pingpongDelta;
                         }
                         break;
                 }
-            }
+                // give time again to new frame
+                asc.FrameTimeRemaining += asc.FrameDt;
+
+            } // while
+        }
+
+    }
+
+    /// <summary>The draw system for rendering animated sprites.</summary>
+    [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.AnimatedSpriteSystemDraw)]
+    public class AnimatedSpriteSystemDraw : EntityComponentProcessingSystem<AnimatedSpriteComp, PositionComp, DrawComp>
+    {
+
+        public override void Process(Entity entity, AnimatedSpriteComp asc, PositionComp pc, DrawComp dc)
+        {
+            ScreenComp scr = dc.DrawScreen;
+
+            // apply the "alpha" linear interpolation between Update() states - then decide which animation frame is closest to show.
+            int frame;
+            if (dc.DrawLerp >= 0.5f)
+                frame = asc.CurrentFrame;
+            else
+                frame = asc.PrevFrame;
 
             // draw sprite from sprite atlas
             TTSpriteBatch sb = scr.SpriteBatch;
-            int row = (int)((float)spriteComp.CurrentFrame / (float)spriteComp.Nx);
-            int column = spriteComp.CurrentFrame % spriteComp.Nx;
-            Rectangle sourceRectangle = new Rectangle(spriteComp.px * column, spriteComp.py * row, spriteComp.px, spriteComp.py);
+            int row = (int)((float)frame / (float)asc.Nx);
+            int column = frame % asc.Nx;
+            Rectangle sourceRectangle = new Rectangle(asc.px * column, asc.py * row, asc.px, asc.py);
 
-            sb.Draw(spriteComp.Texture, drawComp.DrawPositionXY, sourceRectangle, drawComp.DrawColor,
-                drawComp.DrawRotation, spriteComp.Center, drawComp.DrawScale, SpriteEffects.None, drawComp.LayerDepth);
+            sb.Draw(asc.Texture, dc.DrawPositionXY, sourceRectangle, dc.DrawColor,
+                dc.DrawRotation, asc.Center, dc.DrawScale, SpriteEffects.None, dc.LayerDepth);
 
         }
-
     }
 }

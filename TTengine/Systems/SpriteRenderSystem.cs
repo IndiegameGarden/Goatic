@@ -61,18 +61,9 @@ namespace TTengine.Systems
         /// <param name="entity">The entity.</param>
         public override void Process(Entity entity, SpriteComp spriteComp, PositionComp posComp, DrawComp drawComp)
         {
-            if (!drawComp.IsVisible)
-                return;
+            if (!drawComp.IsVisible) return;
 
             var scr = drawComp.DrawScreen;
-            
-            // update drawpos interpolated - FIXME dont do this repeatedly in systems
-            var p = posComp.PositionAbs;
-            float tlag = (float)TTGame.Instance.TimeLag;
-            if (tlag > 0f && entity.HasC<VelocityComp>())
-                p += tlag * entity.C<VelocityComp>().Velocity;
-            drawComp.DrawPosition = p; 
-
             TTSpriteBatch sb = scr.SpriteBatch;
 
             // draw sprite
@@ -96,23 +87,11 @@ namespace TTengine.Systems
             dummyTexture.SetData<Color>(data);
         }
 
-        /// <summary>Processes the specified entity.</summary>
-        /// <param name="entity">The entity.</param>
         public override void Process(Entity entity, SpriteRectComp sprComp, PositionComp pc, DrawComp dc)
         {
-            if (!dc.IsVisible)
-                return;
+            if (!dc.IsVisible) return;
 
             var scr = dc.DrawScreen;
-
-            // update drawpos interpolated FIXME do only once instead of in multiple systems.
-            var p = pc.PositionAbs;
-            float tlag = (float)TTGame.Instance.TimeLag;
-            if (tlag > 0f && entity.HasC<VelocityComp>())
-                p += tlag * entity.C<VelocityComp>().Velocity;
-            dc.DrawPosition = p;
-            dc.LayerDepth = pc.Depth;
-
             TTSpriteBatch sb = scr.SpriteBatch;
 
             // draw rect sprite

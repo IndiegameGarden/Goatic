@@ -28,9 +28,6 @@ namespace TTengine.Systems
             
             var scr = drawComp.DrawScreen;
 
-            // update drawpos FIXME - should one system do this, now it's two? or make a helper method.
-            drawComp.DrawPosition = posComp.PositionAbs;
-
             // draw sprite
             TTSpriteBatch sb = scr.SpriteBatch;
             sb.DrawString(textComp.Font, textComp.Text, drawComp.DrawPositionXY, drawComp.DrawColor, 0f, 

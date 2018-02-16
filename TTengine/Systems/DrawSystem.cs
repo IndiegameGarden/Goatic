@@ -31,15 +31,16 @@ namespace TTengine.Systems
         }
 
         public override void Process(Entity e, DrawComp bc)
-        {            
+        {
+            bc.DrawLerp = this.alpha;
 			// see which draw-related components are there
             var pc = e.C<PositionComp>();
             var rc = e.C<RotateComp>();
             var sc = e.C<ScaleComp>();
 			// perform the linear interpolation per component that's available
-            if (pc != null) bc.DrawPosition = Vector3.Lerp(pc.PositionAbsPrev, pc.PositionAbs, alpha);
-            if (rc != null) bc.DrawRotation = MathHelper.Lerp(rc.RotateAbsPrev, rc.RotateAbs, alpha); // TODO check if inlining helps
-            if (sc != null) bc.DrawScale = MathHelper.Lerp(sc.ScaleAbsPrev, sc.ScaleAbs, alpha);
+            if (pc != null) bc.DrawPosition = Vector3.Lerp(pc.PositionAbsPrev, pc.PositionAbs, this.alpha);
+            if (rc != null) bc.DrawRotation = MathHelper.Lerp(rc.RotateAbsPrev, rc.RotateAbs, this.alpha); // TODO check if inlining helps
+            if (sc != null) bc.DrawScale = MathHelper.Lerp(sc.ScaleAbsPrev, sc.ScaleAbs, this.alpha);
         }
     }
 }

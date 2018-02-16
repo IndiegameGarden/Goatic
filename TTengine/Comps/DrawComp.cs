@@ -6,8 +6,9 @@ using Artemis.Interface;
 namespace TTengine.Comps
 {
     /// <summary>
-    /// Component that allows drawing of the gamelet, including basic drawing parameters
-    /// like drawing position, layer depth, drawing color, etc
+    /// Component that allows drawing of the Entity, including basic drawing parameters
+    /// like drawing position, layer depth, drawing color, etc. Most properties of this component
+    /// are written into it by the DrawSystem.
     /// </summary>
     public class DrawComp: IComponent
     {
@@ -91,6 +92,12 @@ namespace TTengine.Comps
         {
             get { return new Vector2(DrawPosition.X, DrawPosition.Y); }
         }
+
+        /// <summary>
+        /// The linear interpolation (Lerp) Alpha constant that mixes the previous Update state (UpdatesLerp = 0) with the new
+        /// Update state (UpdatesLerp = 1).
+        /// </summary>
+        public float DrawLerp = 0f;
 
         // internal vars
         internal Color drawColor = Color.White;

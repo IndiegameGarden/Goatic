@@ -31,10 +31,6 @@ namespace TTengine.Systems
 
             // check which screen to render to
             ScreenComp scr = drawComp.DrawScreen;
-
-            // update drawpos - FIXME , repeated in systems?
-            drawComp.DrawPosition = posComp.PositionAbs;
-
             TTSpriteBatch sb = scr.SpriteBatch;
 
             // topleft corner and grid size

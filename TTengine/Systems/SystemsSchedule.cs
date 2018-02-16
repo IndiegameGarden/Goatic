@@ -1,7 +1,4 @@
-﻿// (c) 2010-2015 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
-
-using System;
-using System.Collections.Generic;
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 namespace TTengine.Systems
 {
@@ -21,6 +18,7 @@ namespace TTengine.Systems
             PositionSystemPosAbs = 3,
             RotateSystemAbs     = 3,
             ScaleSystemAbs      = 3,
+            AnimatedSpriteSystem = 3,
             BlinkSystem         = 4,
             ExpirationSystem    = 4,
             ScriptSystem        = 4,
@@ -41,6 +39,5 @@ namespace TTengine.Systems
             TextRenderSystemDraw = 2,
             ScreenPostSystemDraw    = 3,
             GeomSystemDraw = 4;
-
     }
 }

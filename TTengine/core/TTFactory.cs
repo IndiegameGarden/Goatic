@@ -169,16 +169,15 @@ namespace TTengine.Core
         /// <param name="atlasBitmapFile">Filename of the sprite atlas bitmap</param>
         /// <param name="NspritesX">Number of sprites in horizontal direction (X) in the atlas</param>
         /// <param name="NspritesY">Number of sprites in vertical direction (Y) in the atlas</param>
-        /// <param name="animType">Animation type chosen from AnimationType class</param>
-        /// <param name="slowDownFactor">Slowdown factor for animation, default = 1</param>
+        /// <param name="animType">Animation type chosen from AnimationType class; default AnimationType.NORMAL</param>
+        /// <param name="frameDt">Display time per frame in seconds; default 50 ms (for 20 FPS animation)</param>
         public Entity CreateAnimatedSprite(Entity e, string atlasBitmapFile, int NspritesX, int NspritesY, 
-                                                     AnimationType animType = AnimationType.NORMAL,
-                                                     int slowDownFactor = 1)
+                                                     AnimationType animType = AnimationType.NORMAL, double frameDt = 0.050)
         {
             AddDrawable(e);
             var sc = new AnimatedSpriteComp(atlasBitmapFile,NspritesX,NspritesY);
             sc.AnimType = animType;
-            sc.SlowdownFactor = slowDownFactor;
+            sc.FrameDt = frameDt;
             e.AddC(sc);
             return e;
         }

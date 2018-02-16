@@ -29,21 +29,12 @@ namespace TTengine.Systems
     {
         public override void Process(Entity e, GeomComp sc, DrawComp dc, PositionComp pc)
         {
-            if (!dc.IsVisible)
-                return;
+            if (!dc.IsVisible) return;
 
             var g = sc.Geom;
             var scr = dc.DrawScreen;
+            var v = dc.DrawPosition;
 
-            // FIXME use common code between spriteRenderSystem and this
-            // update drawpos interpolated
-            var p = pc.PositionAbs;
-            float tlag = (float)TTGame.Instance.TimeLag;
-            if (tlag > 0f && e.HasC<VelocityComp>())
-                p += tlag * e.C<VelocityComp>().Velocity;
-            dc.DrawPosition = p;
-
-            var v = new Vector3(dc.DrawPosition.X, dc.DrawPosition.Y, dc.LayerDepth); // TODO
             // world, view, projection , color
             //var wm = Matrix.CreateTranslation(v);
             var wm = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Left);
