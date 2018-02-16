@@ -1,4 +1,4 @@
-﻿// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
 using Microsoft.Xna.Framework;
@@ -72,7 +72,7 @@ namespace TTengine.Core
             GraphicsMgr = new GraphicsDeviceManager(this);
             GraphicsMgr.GraphicsProfile = GraphicsProfile.HiDef;
             IsFixedTimeStep = false; // handle own fixed timesteps in Update() code
-            TargetElapsedTime = TimeSpan.FromMilliseconds(10); // the time step per Update() call
+            TargetElapsedTime = TimeSpan.FromMilliseconds(8); // the time step per Update() call
             Content.RootDirectory = "Content";
 #if DEBUG
             IsProfiling = true;

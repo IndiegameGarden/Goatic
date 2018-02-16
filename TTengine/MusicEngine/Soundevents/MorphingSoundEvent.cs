@@ -16,6 +16,7 @@ namespace TTMusicEngine.Soundevents
     {
 
         SoundEvent _childSelected = null;
+        protected Random random = new Random();
 
         public MorphingSoundEvent()
             : base()
@@ -58,11 +59,10 @@ namespace TTMusicEngine.Soundevents
             {
                 // select one child effect random or in sequence, and see if it has to be played now
                 double myRpTime = rp.Time;
-                Random rnd = new Random(); // FIXME single random gen for class.
-                int idx = rnd.Next(_children.Count());
+                int idx = random.Next(_children.Count());
                 KeyValuePair<double, List<SoundEvent>> kvPair = _children.ElementAt(idx);
                 List<SoundEvent> evs = kvPair.Value;
-                idx = rnd.Next(evs.Count());
+                idx = random.Next(evs.Count());
                 _childSelected = evs.ElementAt(idx);
             }
 

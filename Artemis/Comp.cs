@@ -21,7 +21,7 @@ namespace Artemis
         /// <summary>Delta time used in last simulation step for this Component, or 0 if not yet simulated or if paused.</summary>
         public double Dt = 0.0;
 
-        /// <summary>If true, the Component is paused and SimTime does not advance.</summary>
+        /// <summary>If true, the Component is paused and its SimTime does not advance.</summary>
         public bool IsPaused = false;
 
         private Comp _parent = null;
