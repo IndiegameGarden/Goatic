@@ -87,8 +87,10 @@ namespace TTengine.Factories.Shape3DFactoryItems
         /// Once all the geometry has been specified by calling AddVertex and AddIndex,
         /// this method copies the vertex and index data into GPU format buffers, ready
         /// for efficient rendering.
-        protected void InitializePrimitive(GraphicsDevice graphicsDevice)
+        protected void InitializePrimitive()
         {
+            var graphicsDevice = TTGame.Instance.GraphicsDevice;
+
             // Create a vertex declaration, describing the format of our vertex data.
             // see http://virtuallyprogramming.com/Fundamentals/VerticesAndIndicies.html
 

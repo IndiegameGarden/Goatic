@@ -69,10 +69,9 @@
     <Compile Include="Core\FactoryState.cs" />
     <Compile Include="Core\IUpdate.cs" />
     <Compile Include="Core\TargetVector.cs" />
-    <Compile Include="Factories\Shape3DFactory.cs" />
-    <Compile Include="Factories\Shape3DFactoryItems\GeometricPrimitive.cs" />
-    <Compile Include="Factories\Shape3DFactoryItems\SpherePrimitive.cs" />
-    <Compile Include="Factories\Shape3DFactoryItems\VertexPositionNormal.cs" />
+    <Compile Include="Core\GeometricPrimitive.cs" />
+    <Compile Include="Core\SpherePrimitive.cs" />
+    <Compile Include="Core\VertexPositionNormal.cs" />
     <Compile Include="Modifiers\IVectorFunction.cs" />
     <Compile Include="Modifiers\UnityFunction.cs" />
     <Compile Include="Modifiers\VectorModifierScript.cs" />

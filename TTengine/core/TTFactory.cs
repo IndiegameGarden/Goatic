@@ -299,7 +299,7 @@ namespace TTengine.Core
         {
             AddDrawable(e);
             e.C<PositionComp>().Position = pos;
-            var gc = new GeomComp(new SpherePrimitive(BuildScreen.SpriteBatch.GraphicsDevice , diameter, tesselation));
+            var gc = new GeomComp(new SpherePrimitive(diameter, tesselation));
             e.AddC(gc);
             return e;
         }

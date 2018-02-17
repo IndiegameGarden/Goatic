@@ -25,8 +25,8 @@ namespace TTengine.Factories.Shape3DFactoryItems
         /// <summary>
         /// Constructs a new sphere primitive, using default settings.
         /// </summary>
-        public SpherePrimitive(GraphicsDevice graphicsDevice)
-            : this(graphicsDevice, 10, 16)
+        public SpherePrimitive()
+            : this(10, 16)
         {
         }
 
@@ -35,7 +35,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
         /// Constructs a new sphere primitive,
         /// with the specified size and tessellation level.
         /// </summary>
-        public SpherePrimitive(GraphicsDevice graphicsDevice, float diameter, int tessellation)
+        public SpherePrimitive(float diameter, int tessellation)
         {
             if (tessellation < 3)
                 throw new ArgumentOutOfRangeException("tessellation");
@@ -108,7 +108,7 @@ namespace TTengine.Factories.Shape3DFactoryItems
                 AddIndex(CurrentVertex - 2 - i);
             }
 
-            InitializePrimitive(graphicsDevice);
+            InitializePrimitive();
         }
     }
 }
