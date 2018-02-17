@@ -1,7 +1,7 @@
-// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+// (c) 2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using Artemis;
-using TTengine.Factories.Shape3DFactoryItems;
+using TTengine.Core;
 
 namespace TTengine.Comps
 {
@@ -15,6 +15,7 @@ namespace TTengine.Comps
             this.Geom = g;
         }
 
+        /// <summary>The geometric primitive to draw. (Single one, could be a list in the future.)</summary>
         public GeometricPrimitive Geom;
        
     }

@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Graphics;
 using TTengine.Core;
 #endregion
 
-namespace TTengine.Factories.Shape3DFactoryItems
+namespace TTengine.Core
 {
     /// <summary>
     /// Base class for simple geometric primitive models. This provides a vertex

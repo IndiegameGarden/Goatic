@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace TTengine.Factories.Shape3DFactoryItems
+namespace TTengine.Core
 {
     /// <summary>
     /// Geometric primitive class for drawing spheres.

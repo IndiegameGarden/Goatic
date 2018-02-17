@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace TTengine.Factories.Shape3DFactoryItems
+namespace TTengine.Core
 {
     /// <summary>
     /// Custom vertex type for vertices that have just a
