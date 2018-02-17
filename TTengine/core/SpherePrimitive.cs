@@ -5,6 +5,8 @@
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
+// (c) 2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
 #endregion
 
 #region Using Statements
