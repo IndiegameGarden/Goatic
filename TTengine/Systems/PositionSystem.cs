@@ -45,6 +45,7 @@ namespace TTengine.Systems
     using Artemis.Manager;
     using Artemis.System;
     using Microsoft.Xna.Framework;
+    using TTengine.Core;
     using TTengine.Comps;
 
     #endregion

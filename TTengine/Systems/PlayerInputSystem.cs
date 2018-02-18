@@ -1,20 +1,17 @@
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+
+using Microsoft.Xna.Framework.Input;
+using Artemis;
+using Artemis.Attributes;
+using Artemis.Manager;
+using Artemis.System;
+using Microsoft.Xna.Framework;
+using TTengine.Core;
+using TTengine.Comps;
 
 namespace TTengine.Systems
 {
-    #region Using statements
-
-    using System;
-    using Microsoft.Xna.Framework.Input;
-    using Artemis;
-    using Artemis.Attributes;
-    using Artemis.Manager;
-    using Artemis.System;
-    using Microsoft.Xna.Framework;
-    using TTengine.Comps;
-
-    #endregion
-
-    /// <summary>The movement system.</summary>
+    /// <summary>Player (keyboard/gamepad) input system. Maps various inputs to a clear direction vector.</summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.RotateSystem)]
     public class PlayerInputSystem : EntityComponentProcessingSystem<PlayerInputComp>
     {

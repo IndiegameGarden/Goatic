@@ -1,6 +1,6 @@
 ﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-namespace TTengine.Systems
+namespace TTengine.Core
 {
     /// <summary>
     /// Defines the order in which all TTengine Systems are executed

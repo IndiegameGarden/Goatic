@@ -27,6 +27,9 @@
 //     The views and conclusions contained in the software and documentation are those of the
 //     authors and should not be interpreted as representing official policies, either expressed
 //     or implied, of GAMADU.COM.
+//
+// (c) 2013-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+//
 // </copyright>
 // <summary>
 //   The collision system.
@@ -34,31 +37,24 @@
 // --------------------------------------------------------------------------------------------------------------------
 #endregion File description
 
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Artemis;
+using Artemis.Attributes;
+using Artemis.Manager;
+using Artemis.System;
+using Microsoft.Xna.Framework;
+using TTengine.Core;
+using TTengine.Comps;
+
 namespace TTengine.Systems
 {
-    #region Using statements
-
-    using System.Collections.Generic;
-
-    using Artemis;
-    using Artemis.Attributes;
-    using Artemis.Manager;
-    using Artemis.System;
-    using Artemis.Utils;
-
-    using Microsoft.Xna.Framework;
-
-    using TTengine.Comps;
-
-    #endregion
-
     /// <summary>A collision system for sphere/circular shapes.</summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.CollisionSystem)]
     public class SphereCollisionSystem : EntitySystem
     {
         private List<Entity> allObj = new List<Entity>();
 
-        /// <summary>Initializes a new instance of the <see cref="SphereCollisionSystem" /> class.</summary>
         public SphereCollisionSystem()
             : base(Aspect.All(typeof(PositionComp),typeof(SphereShapeComp)))
         {
@@ -76,15 +72,15 @@ namespace TTengine.Systems
             allObj.Add(entity);
         }
 
-        /// <summary>Processes the entities.</summary>
-        /// <param name="entities">The entities.</param>
         protected override void ProcessEntities(IDictionary<int, Entity> entities)
         {
             int cnt = allObj.Count;
+            // clear previous round "colliders" information
             foreach (Entity e in entities.Values)
             {
                 e.C<SphereShapeComp>().Colliders.Clear();
             }
+            // go over the allObj entities efficiently, and check for all mutual collissions.
             for (int i1 = 0; i1 < cnt; i1++ )
             {
                 for (int i2 = i1+1; i2 < cnt; i2++ )
@@ -98,10 +94,11 @@ namespace TTengine.Systems
             }
         }
 
-        /// <summary>The collision exists.</summary>
+        /// <summary>Check if a collision exists.</summary>
         /// <param name="entity1">The entity 1.</param>
         /// <param name="entity2">The entity 2.</param>
-        /// <returns>The <see cref="bool" />.</returns>
+        /// <returns>True if a collission exists between entities, false if not.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool CollisionExists(Entity entity1, Entity entity2)
         {
             var p1 = entity1.C<PositionComp>();

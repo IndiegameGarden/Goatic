@@ -1,18 +1,21 @@
 ﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
-using TTengine.Comps;
+using Artemis;
 using Artemis.System;
 using Artemis.Attributes;
 using Artemis.Manager;
-using Artemis;
+using TTengine.Core;
+using TTengine.Comps;
 
 namespace TTengine.Systems
 {
-    // TODO consider a soft (faded) blink as well.
+    /// <summary>
+    /// System to blink an Entity's DrawComp.IsVisible on and off with regular pattern.
+    /// TODO consider a soft (faded) blink as well.
+    /// </summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.BlinkSystem)]
     public class BlinkSystem : EntityComponentProcessingSystem<BlinkComp>
     {
-        // TODO: check if non-active entities are also called in this process method. For all systems.
         public override void Process(Entity entity, BlinkComp bc)
         {
             double tprev = bc.SimTime % bc.TimePeriod;

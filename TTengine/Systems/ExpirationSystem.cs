@@ -38,13 +38,11 @@ namespace TTengine.Systems
 {
     #region Using statements
 
-    using System;
-    using System.Collections.Generic;
     using Artemis;
     using Artemis.Attributes;
     using Artemis.System;
     using Artemis.Manager;
-
+    using TTengine.Core;
     using TTengine.Comps;
 
     #endregion

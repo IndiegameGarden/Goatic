@@ -1,11 +1,11 @@
-﻿// (c) 2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+﻿// (c) 2017-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System.Collections.Generic;
 using System.Threading;
-
 using Artemis.Attributes;
 using Artemis.Manager;
 using Artemis.System;
+using TTengine.Core;
 using TTengine.Comps;
 
 namespace TTengine.Systems
@@ -18,7 +18,7 @@ namespace TTengine.Systems
 
         public override void LoadContent()
         {
-            //SetQueueProcessingLimit(1, typeof(ScriptThreadedSystem));
+            //SetQueueProcessingLimit(1, typeof(ScriptThreadedSystem)); // can set a limit of nr of entities per Update() that are sent to bgBuilder.
             bgBuilder = new BackgroundBuilder();
             base.LoadContent();
         }

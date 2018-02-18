@@ -102,7 +102,7 @@
     <Compile Include="Systems\RotateSystem.cs" />
     <Compile Include="Systems\ScriptSystems.cs" />
     <Compile Include="Systems\ScreenSystem.cs" />
-    <Compile Include="Systems\SystemsSchedule.cs" />
+    <Compile Include="Core\SystemsSchedule.cs" />
     <Compile Include="Systems\TextRenderSystem.cs" />
     <Compile Include="Systems\ExpirationSystem.cs" />
     <Compile Include="Systems\PositionSystem.cs" />
