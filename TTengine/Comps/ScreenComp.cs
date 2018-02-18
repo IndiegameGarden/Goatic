@@ -28,7 +28,8 @@ namespace TTengine.Comps
                     x = TTGame.Instance.GraphicsDevice.PresentationParameters.BackBufferWidth;
                     y = TTGame.Instance.GraphicsDevice.PresentationParameters.BackBufferHeight;
                 }
-                renderTarget = new RenderTarget2D(TTGame.Instance.GraphicsDevice, x, y);
+                renderTarget = new RenderTarget2D(TTGame.Instance.GraphicsDevice, x, y, true, 
+                    SurfaceFormat.Color,DepthFormat.Depth24Stencil8,0,RenderTargetUsage.DiscardContents); // http://xboxforums.create.msdn.com/forums/t/99090.aspx
             }
             InitScreenDimensions();
         }

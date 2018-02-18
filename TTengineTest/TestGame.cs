@@ -38,9 +38,9 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            DoTest(new TestGeom3D());
             DoTest(new TestAnimatedSprite());
             DoTest(new TestGamepad());
-            DoTest(new TestGeom3D());
             DoTest(new TestAudioBasics());
             DoTest(new TestFxSprite());
             DoTest(new TestFxSprite2());

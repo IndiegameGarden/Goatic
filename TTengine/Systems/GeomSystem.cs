@@ -11,6 +11,9 @@ using Artemis.System;
 
 namespace TTengine.Systems
 {
+    /// <summary>
+    /// 3D Geometry system Update cycle
+    /// </summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Update, Layer = SystemsSchedule.GeomSystem)]
     public class GeomSystem : EntityComponentProcessingSystem<GeomComp>
     {
@@ -22,6 +25,10 @@ namespace TTengine.Systems
 
     }
 
+    /// <summary>
+    /// 3D Geometry system draw cycle, which draws the shapes.
+    /// More info on issues: http://xboxforums.create.msdn.com/forums/t/99090.aspx 
+    /// </summary>
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.GeomSystemDraw)]
     public class GeomDrawSystem : EntityComponentProcessingSystem<GeomComp, DrawComp, PositionComp>
     {
