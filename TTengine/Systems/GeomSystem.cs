@@ -25,6 +25,11 @@ namespace TTengine.Systems
     [ArtemisEntitySystem(GameLoopType = GameLoopType.Draw, Layer = SystemsSchedule.GeomSystemDraw)]
     public class GeomDrawSystem : EntityComponentProcessingSystem<GeomComp, DrawComp, PositionComp>
     {
+        protected override void Begin()
+        {
+            TTGame.Instance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+        }
+
         public override void Process(Entity e, GeomComp sc, DrawComp dc, PositionComp pc)
         {
             if (!dc.IsVisible) return;
@@ -37,17 +42,13 @@ namespace TTengine.Systems
             var wm = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Left);
             wm *= Matrix.CreateScale(dc.DrawScale);
             wm *= Matrix.CreateTranslation(dc.DrawPosition); // apply position
-            this.Draw(g, g.Fx, wm, scr.ViewM, scr.ProjM, dc.DrawColor);
+            this.Draw(g, wm, scr.ViewM, scr.ProjM, dc.DrawColor);
         }
 
         /// <summary>
-        /// Draws the primitive model, using a BasicEffect shader with default
-        /// lighting. Unlike the other Draw overload where you specify a custom
-        /// effect, this method sets important renderstates to sensible values
-        /// for 3D model rendering, so you do not need to set these states before
-        /// you call it.
+        /// Draws the primitive model, using a BasicEffect shader g.Fx
         /// </summary>
-        public void Draw(GeometricPrimitive g, Effect fx, Matrix world, Matrix view, Matrix projection, Color color)
+        public void Draw(GeometricPrimitive g, Matrix world, Matrix view, Matrix projection, Color color)
         {
             // Set BasicEffect parameters.
             g.Fx.World = world; // * Matrix.CreateRotationY(-MathHelper.PiOver2);
@@ -56,8 +57,8 @@ namespace TTengine.Systems
             g.Fx.DiffuseColor = color.ToVector3();
             g.Fx.Alpha = color.A / 255.0f;
 
-            GraphicsDevice device = fx.GraphicsDevice;
-            device.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice device = g.Fx.GraphicsDevice;
+            //device.DepthStencilState = DepthStencilState.Default;  // enable depth-buffer
             //device.SamplerStates[1].AddressU = TextureAddressMode.Wrap;
             //device.SamplerStates[1].AddressV = TextureAddressMode.Wrap;
 
@@ -72,22 +73,17 @@ namespace TTengine.Systems
                 device.BlendState = BlendState.Opaque;
             }
 
-            /// <summary>
-            /// Draws the primitive model, using the specified effect. Unlike the other
-            /// Draw overload where you just specify the world/view/projection matrices
-            /// and color, this method does not set any renderstates, so you must make
-            /// sure all states are set to sensible values before you call it.
-            /// </summary>
+            /// Draws the primitive model, using the specified effect. 
+            /// any renderstatesmust be set before you doing this.
 
             // Set our vertex declaration, vertex buffer, and index buffer.
             device.SetVertexBuffer(g.vertexBuffer);
             device.Indices = g.indexBuffer;
             int primitiveCount = g.indices.Count / 3;
 
-            foreach (EffectPass effectPass in fx.CurrentTechnique.Passes)
+            foreach (EffectPass effectPass in g.Fx.CurrentTechnique.Passes)
             {
                 effectPass.Apply();
-                //graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertices.Count, 0, primitiveCount);
                 device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, primitiveCount);
             }
 
