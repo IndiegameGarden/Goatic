@@ -161,10 +161,13 @@ namespace TTengineTest
             Factory.CreateChannel(test.Channel, test.BackgroundColor);
             test.FontColor = TTUtil.InvertColor(test.BackgroundColor);
            
-            test.BuildAllInBackground(isActivatePostBuild);  // TODO experimental create all the test's content in background thread
-            //test.BuildTo(test.Channel); // build test to the new channel (test.Channel)
-            //test.BuildAll();
+            //test.BuildAllInBackground(isActivatePostBuild);  // TODO experimental create all the test's content in background thread
+            test.BuildTo(test.Channel); // build test to the new channel (test.Channel)
+            test.BuildAll();
             tests.Add(test);
+
+            if (isActivatePostBuild)        // only for non-threaded build of test
+                Factory.Finalize(test.Channel);
 
         }
 
