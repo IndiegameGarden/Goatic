@@ -67,8 +67,9 @@ namespace TTengine.Core
                     float dx = (float)Math.Cos(longitude) * dxz;
                     float dz = (float)Math.Sin(longitude) * dxz;
 
-                    Vector3 normal = new Vector3(dx, dy, dz);                    
-                    Vector2 texCoord = Nrepeats * new Vector2( ((float)j)/((float)horizontalSegments) , 1f-((float)i/((float)verticalSegments)) ) ;
+                    Vector3 normal = new Vector3(dx, dy, dz);
+                    Vector2 texCoord = Nrepeats * new Vector2( (float)j / horizontalSegments , 1f-( (float)i/verticalSegments) ) ;
+                    //Vector2 texCoord = Nrepeats * new Vector2( 1f-( (float)i/verticalSegments) , (float)j / horizontalSegments);
                     AddVertex(normal * radius, normal, texCoord);
                 }
             }
