@@ -16,9 +16,11 @@ namespace TTengine.Comps
     /// </summary>
     public class ScreenComp: IComponent
     {
-        /// <summary>create a ScreenComp of given dimensions with optionally a RenderTarget.
-        /// If (0,0) given, uses default backbuffer size </summary>
-        public ScreenComp(bool hasRenderBuffer, int x = 0, int y = 0)
+        /// <summary>create a ScreenComp for a screen of given dimensions, with optionally a RenderTarget2D rendering buffer.</summary>
+        /// <param name="hasRenderBuffer">If true creates a render buffer; if false uses the game's default render (back)buffer.</param>
+        /// <param name="x">Width of render buffer, or 0 to use current screen size.</param>
+        /// <param name="y">Height of render buffer, or 0 to use current screen size.</param>
+        public ScreenComp(bool hasRenderBuffer = false, int x = 0, int y = 0)
         {
             SpriteBatch = new TTSpriteBatch(TTGame.Instance.GraphicsDevice);
             if (hasRenderBuffer)
@@ -29,11 +31,15 @@ namespace TTengine.Comps
                     y = TTGame.Instance.GraphicsDevice.PresentationParameters.BackBufferHeight;
                 }
                 renderTarget = new RenderTarget2D(TTGame.Instance.GraphicsDevice, x, y, true, 
-                    SurfaceFormat.Color,DepthFormat.Depth24Stencil8,0,RenderTargetUsage.DiscardContents); // http://xboxforums.create.msdn.com/forums/t/99090.aspx
+                    SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents); // for 3D: http://xboxforums.create.msdn.com/forums/t/99090.aspx
             }
             InitScreenDimensions();
         }
 
+        /// <summary>
+        /// Create a new ScreenComp that renders to the given RenderTarget2D.
+        /// </summary>
+        /// <param name="renderTarget">Render buffer to render this screen's contents to.</param>
         public ScreenComp(RenderTarget2D renderTarget)
         {
             SpriteBatch = new TTSpriteBatch(TTGame.Instance.GraphicsDevice);
@@ -41,28 +47,27 @@ namespace TTengine.Comps
             InitScreenDimensions();
         }
 
+        /// <summary>Background color for screen</summary>
         public Color BackgroundColor = Color.Transparent;
 
+        /// <summary>Visibility status of screen (used when rendering)</summary>
         public bool IsVisible = true;
 
         /// <summary>The center pixel coordinate of the screen</summary>
         public Vector2 Center { get; private set; }
 
         /// <summary>The zoom-in factor, used for showing only a part of a screen and for translation 
-        /// of other coordinate systems to pixel coordinates.</summary>
+        /// of other coordinate systems to pixel coordinates. FIXME zoom or camera manipulation?</summary>
         public float Zoom = 1.0f;
 
-        /// <summary>The center coordinate, in either pixel or custom coordinates, for applying Zoom</summary>
+        /// <summary>The center coordinate, in either pixel or custom coordinates, for applying Zoom. FIXME zoom or camera manipulation?</summary>
         public Vector2 ZoomCenter;
 
-        /// <summary>Get the RenderTarget. If null, the screen renders to the default backbuffer.
+        /// <summary>Get the RenderTarget for this screen. If null, the screen renders to the Game's default backbuffer.
         /// </summary>
         public RenderTarget2D RenderTarget
         {
-            get
-            {
-                return renderTarget;
-            }
+            get { return renderTarget; }
         }
 
         /// <summary>Width of screen in pixels</summary>
@@ -74,6 +79,9 @@ namespace TTengine.Comps
         /// <summary>Screen aspectratio</summary> 
         public float AspectRatio { get { return aspectRatio;  } }
 
+        /// <summary>
+        /// The Field of View (FOV) for the default camera that's used when rendering objects on this screen.
+        /// </summary>
         public float FOV
         {
             get { return fov;}
@@ -85,13 +93,15 @@ namespace TTengine.Comps
                 ProjM = Matrix.CreatePerspectiveFieldOfView(fov, aspectRatio, 0.1f, 9500f); // TODO near and far planes setting logic                
             }
         }
-        /// <summary>The default spritebatch associated to this screen, for drawing to it</summary>
-        public TTSpriteBatch SpriteBatch;
 
         /// <summary>
         /// View and Projection matrices used for the 3D objects on this screen
+        /// <seealso cref="FOV"/>
         /// </summary>
-        public  Matrix ViewM, ProjM;
+        public Matrix ViewM, ProjM;
+
+        /// <summary>The default spritebatch associated to this screen, for drawing to it</summary>
+        public TTSpriteBatch SpriteBatch;
 
         #region Private and internal variables        
         private int screenWidth = 0;
