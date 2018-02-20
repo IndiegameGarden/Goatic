@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Artemis;
 using TTengine.Comps;
+using TTengine.Systems;
 using TTengine.Modifiers;
 using TTMusicEngine.Soundevents;
 
@@ -431,6 +432,18 @@ namespace TTengine.Core
         public Entity AddScript(Entity e, ScriptDelegate scriptCode)
         {
             return AddScript(e,new BasicScript(scriptCode));
+        }
+
+        /// <summary>
+        /// Add a script to an Entity that runs in the background using ScriptThreadedSystem
+        /// </summary>
+        /// <param name="e">The Entity to add script to</param>
+        /// <param name="scriptCode">Script to run, as delegate code</param>
+        public Entity AddBackgroundScript(Entity e, ScriptDelegate scriptCode)
+        {
+            var job = new ScriptJob(scriptCode, e);
+            ScriptThreadedSystem.AddToQueue(job);
+            return e;
         }
 
         /// <summary>

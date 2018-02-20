@@ -36,39 +36,41 @@ namespace TTengineTest
         {
             base.LoadContent();
 
-            // Here all the tests are created
-            //DoTest(new TestPostEffects()); //FIXME
-            DoTest(new TestGeom3D());
-            DoTest(new TestAnimatedSprite());
-            DoTest(new TestGamepad());
-            DoTest(new TestAudioBasics());
-            DoTest(new TestFxSprite());
-            DoTest(new TestFxSprite2());
-            DoTest(new TestCrtEffect());
-            DoTest(new TestMixedShaders());            
-            DoTest(new TestTextureSamplingShader());
-            DoTest(new TestBasicShader());
-            DoTest(new TestLinearMotion());
-            DoTest(new TestRotation());
-            DoTest(new TestModifiers());
-            DoTest(new TestScriptThreadedSystemForBuilding());
-            DoTest(new TestTransparentChannels());
-            DoTest(new TestRelativeMotion());
-            DoTest(new TestMultiChannels());
-            DoTest(new TestZoomedScreen());            
-            DoTest(new TestContentLoad());
-            DoTest(new TestTargetMotion());
-            DoTest(new TestScaling());            
-            DoTest(new TestBTAI());
-            DoTest(new TestSphereCollision());
-            DoTest(new TestSpritePixelGetSet());
+            using (Factory.BuildToRoot())
+            {
+                // Here all the tests are created
+                //DoTest(new TestPostEffects()); //FIXME
+                DoTest(new TestGeom3D() , true);
+                DoTest(new TestAnimatedSprite());
+                DoTest(new TestGamepad());
+                DoTest(new TestAudioBasics());
+                DoTest(new TestFxSprite());
+                DoTest(new TestFxSprite2());
+                DoTest(new TestCrtEffect());
+                DoTest(new TestMixedShaders());
+                DoTest(new TestTextureSamplingShader());
+                DoTest(new TestBasicShader());
+                DoTest(new TestLinearMotion());
+                DoTest(new TestRotation());
+                DoTest(new TestModifiers());
+                DoTest(new TestScriptThreadedSystemForBuilding());
+                DoTest(new TestTransparentChannels());
+                DoTest(new TestRelativeMotion());
+                DoTest(new TestMultiChannels());
+                DoTest(new TestZoomedScreen());
+                DoTest(new TestContentLoad());
+                DoTest(new TestTargetMotion());
+                DoTest(new TestScaling());
+                DoTest(new TestBTAI());
+                DoTest(new TestSphereCollision());
+                DoTest(new TestSpritePixelGetSet());
 
-            // create the text overlay channel
-            this.textOverlayChannel = CreateTextOverlayChannel();
+                // create the text overlay channel that overlays any test's channel.
+                this.textOverlayChannel = CreateTextOverlayChannel();
 
-            // pick the initial one and activate it
-            ZapChannel(0);
-
+                // pick the initial one and activate it
+                //ZapChannel(0);
+            }
         }
 
         protected override void UnloadContent()
@@ -151,17 +153,17 @@ namespace TTengineTest
             return ch;
         }
 
-        private void DoTest(Test test)
+        private void DoTest(Test test , bool isActivatePostBuild = false)
         {
             Factory.BuildToRoot();
 
-            var ch = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
-            Factory.CreateChannel(ch, test.BackgroundColor);
+            test.Channel = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
+            Factory.CreateChannel(test.Channel, test.BackgroundColor);
             test.FontColor = TTUtil.InvertColor(test.BackgroundColor);
-
-            test.Channel = ch;
-            test.BuildTo(ch); // build test to the new channel (test.Channel)
-            test.BuildAll();  // create all the test's content
+           
+            test.BuildAllInBackground(isActivatePostBuild);  // TODO experimental create all the test's content in background thread
+            //test.BuildTo(test.Channel); // build test to the new channel (test.Channel)
+            //test.BuildAll();
             tests.Add(test);
 
         }

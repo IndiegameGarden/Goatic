@@ -68,7 +68,7 @@ namespace TTengine.Systems
         {
             thread = new Thread(new ThreadStart(RunSystemMainloop));
             thread.Name = "BackgroundBuilder";
-            thread.Priority = ThreadPriority.BelowNormal;
+            thread.Priority = ThreadPriority.Lowest;
             thread.Start();
         }
 

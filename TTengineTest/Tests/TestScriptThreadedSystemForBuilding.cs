@@ -26,8 +26,7 @@ namespace TTengineTest
 
             // add builder entity (test building in background thread)
             // this content is added while the 'game' plays
-            var e = New();
-            AddScript(e, new EntityScriptTriggersBuilding1(this) );
+            AddScript(New(), new EntityScriptTriggersBuilding1(this) );
         }
 
         /// <summary>

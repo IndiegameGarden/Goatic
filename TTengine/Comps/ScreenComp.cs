@@ -1,4 +1,4 @@
-// (c) 2010-2015 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,7 +27,7 @@ namespace TTengine.Comps
             {
                 if (x == 0 && y == 0)
                 {
-                    x = TTGame.Instance.GraphicsDevice.PresentationParameters.BackBufferWidth;
+                    x = TTGame.Instance.GraphicsDevice.PresentationParameters.BackBufferWidth; // TODO or use .ViewPort.Width https://stackoverflow.com/questions/8396800/when-to-use-presentationparameters-backbufferwidth-vs-viewport-width
                     y = TTGame.Instance.GraphicsDevice.PresentationParameters.BackBufferHeight;
                 }
                 renderTarget = new RenderTarget2D(TTGame.Instance.GraphicsDevice, x, y, true, 
