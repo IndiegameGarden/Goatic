@@ -26,14 +26,13 @@ namespace TTengine.Core
     /// </summary>
     public class TTFactory
     {
-        protected EntityWorld buildWorld;
+        protected EntityWorld buildWorld = null;
 
-        protected ScreenComp buildScreen;
+        protected ScreenComp buildScreen = null;
 
         public TTFactory()
         {
-            this.buildWorld = TTGame.Instance.RootWorld;
-            this.buildScreen = TTGame.Instance.RootScreen;
+            //
         }
 
         public TTFactory(TTFactory parent)

@@ -99,7 +99,7 @@ namespace TTengine.Core
             Factory.BuildTo(RootWorld);
 
             // make root screen and build to it
-            RootScreen = new ScreenComp(false, 0, 0);
+            RootScreen = new ScreenComp();
             Factory.BuildTo(RootScreen);
 
             // the MusicEngine

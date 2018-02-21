@@ -21,6 +21,7 @@ namespace TTengineTest
     public class TestGame : TTGame
     {
         public static TestFactory Factory;
+
         KeyboardState kbOld = Keyboard.GetState();
         int channel = 0;
         List<Test> tests = new List<Test>();
@@ -36,41 +37,41 @@ namespace TTengineTest
         {
             base.LoadContent();
 
-            using (Factory.BuildToRoot())
-            {
-                // Here all the tests are created
-                //DoTest(new TestPostEffects()); //FIXME
-                DoTest(new TestGeom3D() , true);
-                DoTest(new TestAnimatedSprite());
-                DoTest(new TestGamepad());
-                DoTest(new TestAudioBasics());
-                DoTest(new TestFxSprite());
-                DoTest(new TestFxSprite2());
-                DoTest(new TestCrtEffect());
-                DoTest(new TestMixedShaders());
-                DoTest(new TestTextureSamplingShader());
-                DoTest(new TestBasicShader());
-                DoTest(new TestLinearMotion());
-                DoTest(new TestRotation());
-                DoTest(new TestModifiers());
-                DoTest(new TestScriptThreadedSystemForBuilding());
-                DoTest(new TestTransparentChannels());
-                DoTest(new TestRelativeMotion());
-                DoTest(new TestMultiChannels());
-                DoTest(new TestZoomedScreen());
-                DoTest(new TestContentLoad());
-                DoTest(new TestTargetMotion());
-                DoTest(new TestScaling());
-                DoTest(new TestBTAI());
-                DoTest(new TestSphereCollision());
-                DoTest(new TestSpritePixelGetSet());
+            Factory = new TestFactory();
+            Factory.BuildToRoot();
 
-                // create the text overlay channel that overlays any test's channel.
-                this.textOverlayChannel = CreateTextOverlayChannel();
+            // Here all the tests are created
+            //DoTest(new TestPostEffects()); //FIXME
+            AddTest(new TestGeom3D());
+            AddTest(new TestAnimatedSprite());
+            AddTest(new TestGamepad());
+            AddTest(new TestAudioBasics());
+            AddTest(new TestFxSprite());
+            AddTest(new TestFxSprite2());
+            AddTest(new TestCrtEffect());
+            AddTest(new TestMixedShaders());
+            AddTest(new TestTextureSamplingShader());
+            AddTest(new TestBasicShader());
+            AddTest(new TestLinearMotion());
+            AddTest(new TestRotation());
+            AddTest(new TestModifiers());
+            AddTest(new TestScriptThreadedSystemForBuilding());
+            AddTest(new TestTransparentChannels());
+            AddTest(new TestRelativeMotion());
+            AddTest(new TestMultiChannels());
+            AddTest(new TestZoomedScreen());
+            AddTest(new TestContentLoad());
+            AddTest(new TestTargetMotion());
+            AddTest(new TestScaling());
+            AddTest(new TestBTAI());
+            AddTest(new TestSphereCollision());
+            AddTest(new TestSpritePixelGetSet());
 
-                // pick the initial one and activate it
-                //ZapChannel(0);
-            }
+            // create the text overlay channel that overlays any test's channel.
+            this.textOverlayChannel = CreateTextOverlayChannel();
+
+            // pick the initial one and activate it
+            ZapChannel(0);
         }
 
         protected override void UnloadContent()
@@ -82,15 +83,20 @@ namespace TTengineTest
             base.UnloadContent();
         }
 
-        protected override void Initialize()
-        {
-            Factory = new TestFactory();
-            base.Initialize();
-        }
-
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            // check if test content has been built already.
+            var test = tests[channel];
+            if (!test.IsBuilt)
+            {
+                test.IsBuilt = true;
+                using (test.BuildTo(test.Channel))  // since the test class is the factory for itself, needed.
+                {
+                    test.BuildAll();
+                }
+            }
 
             KeyboardState kb = Keyboard.GetState();
             if (kb.IsKeyDown(Keys.Escape) && !kbOld.IsKeyDown(Keys.Escape))
@@ -111,6 +117,7 @@ namespace TTengineTest
             kbOld = kb;
         }
 
+        // cycle through the list of tests by an amount delta, activating the new channel and de-activating the old one.
         private void ZapChannel(int delta)
         {
             int nch = channel + delta;
@@ -123,52 +130,43 @@ namespace TTengineTest
                 tests[channel].Channel.IsEnabled = false;
                 tests[channel].Channel.Refresh();
             }
-            tests[nch].Channel.IsEnabled = true;
-            tests[nch].Channel.Refresh();
             channel = nch;
+            var test = tests[channel];
+            test.Channel.IsEnabled = true;
+            test.Channel.Refresh();
 
-            // update text overlays with font color of the test
-            // TBD
+            // update text overlays with font color of the test and show name of test
             Bag<Entity> t = this.textOverlayChannel.C<WorldComp>().World.EntityManager.GetEntities(Aspect.All(new Type[]{ typeof(TextComp) }));
             foreach (Entity e in t)
             {
-                e.C<DrawComp>().DrawColor = tests[channel].FontColor;
-                e.C<TextComp>().Text = tests[channel].GetType().Name;
+                e.C<DrawComp>().DrawColor = test.FontColor;
+                e.C<TextComp>().Text = test.GetType().Name;
             }
 
         }
 
+        // create a text overlay with test info
         private Entity CreateTextOverlayChannel()
         {
-            Factory.BuildToRoot();
             var ch = Factory.CreateChannel(Factory.New(), Color.Transparent);
-            Factory.BuildTo(ch);
+            using (Factory.BuildTo(ch))
+            {
+                // create framerate counter stats
+                Factory.CreateFrameRateCounter(Factory.New(), Color.White, 20);
 
-            // create framerate counter stats
-            Factory.CreateFrameRateCounter(Factory.New(), Color.White, 20);
-
-            // add test info as text
-            Factory.CreateText(Factory.New(), new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight - 40f), "TestGame", Color.White, 0f);
-
+                // add test info as text
+                Factory.CreateText(Factory.New(), new Vector2(2f, GraphicsMgr.PreferredBackBufferHeight - 40f), "TestGame", Color.White, 0f);
+            }
             return ch;
         }
 
-        private void DoTest(Test test , bool isActivatePostBuild = false)
+        // add a new test to the list, not building the content yet.
+        private void AddTest(Test test )
         {
-            Factory.BuildToRoot();
-
-            test.Channel = Factory.NewDisabled(); // a channel is disabled by default - only one turned on later.
+            test.Channel = Factory.NewDisabled(); // a channel is disabled by default - turned on later.
             Factory.CreateChannel(test.Channel, test.BackgroundColor);
             test.FontColor = TTUtil.InvertColor(test.BackgroundColor);
-           
-            //test.BuildAllInBackground(isActivatePostBuild);  // TODO experimental create all the test's content in background thread
-            test.BuildTo(test.Channel); // build test to the new channel (test.Channel)
-            test.BuildAll();
             tests.Add(test);
-
-            if (isActivatePostBuild)        // only for non-threaded build of test
-                Factory.Finalize(test.Channel);
-
         }
 
     }

@@ -21,34 +21,8 @@ namespace TTengineTest
         /// <summary>The Channel onto which this Test will render</summary>
         public Entity Channel;
 
-        /// <summary>
-        /// Create all the entities for this specific test in a background building process,
-        /// through calling BuildAll(). FIXME experimental.
-        /// </summary>
-        public void BuildAllInBackground(bool isActivatePostBuild)
-        {
-            if (isActivatePostBuild)
-                AddBackgroundScript(New(), BuildAllInBackgroundScriptWithActivate );
-            else
-                AddBackgroundScript(New(), BuildAllInBackgroundScript);
-        }
-
-        private void BuildAllInBackgroundScript(ScriptComp ctx)
-        {
-            using (BuildTo(Channel))
-            {
-                this.BuildAll();
-            }
-        }
-
-        private void BuildAllInBackgroundScriptWithActivate(ScriptComp ctx)
-        {
-            using (BuildTo(Channel))
-            {
-                this.BuildAll();
-                Finalize(Channel);
-            }
-        }
+        /// <summary>True if content for this test is already built; false if not.</summary>
+        public bool IsBuilt = false;
 
         /// <summary>
         /// Create all the entities for this specific test
