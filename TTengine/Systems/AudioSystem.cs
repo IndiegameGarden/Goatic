@@ -16,7 +16,7 @@ namespace TTengine.Systems
         RenderParams rp = new RenderParams();
         MusicEngine audioEngine = null;
 
-        protected override void Begin()
+        public override void LoadContent()
         {
             audioEngine = TTGame.Instance.AudioEngine;
         }

@@ -1,4 +1,4 @@
-// (c) 2010-2017 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
+// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using System;
 using System.Collections.Generic;
@@ -42,6 +42,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            AddTest(new TestMidiInput());
             AddTest(new TestGeom3D());
             AddTest(new TestAnimatedSprite());
             AddTest(new TestGamepad());
