@@ -18,11 +18,12 @@ namespace TTengineTest
         {
             var b = CreateBall(New(), 1f);
             var pc = b.C<PositionComp>();
+            var sc = b.C<ScaleComp>();
             pc.Y = BuildScreen.Height / 2f;
             var mc = new MidiInputComp();
             b.AddC(mc);
             var w = BuildScreen.Width;
-            AddScript(b, (ctx) => { if (mc.knob >= 0) { pc.X = w * mc.knob; }  });
+            AddScript(b, (ctx) => { if (mc.IsActive) { pc.X = w * mc.Slider[0]; sc.Scale = 1f + mc.Slider[1];  }  });
 
             Test t = new TestSphereCollision();
             t.BuildLike(this);

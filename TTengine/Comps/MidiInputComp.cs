@@ -1,7 +1,6 @@
 ﻿// (c) 2010-2018 IndiegameGarden.com. Distributed under the FreeBSD license in LICENSE.txt
 
 using Artemis;
-using TTMusicEngine.Soundevents;
 
 namespace TTengine.Comps
 {
@@ -10,6 +9,11 @@ namespace TTengine.Comps
     /// </summary>
     public class MidiInputComp: Comp
     {
-        public float knob = -1f;    // negative means invalid
+        public bool IsActive = false;
+
+        public float[] Slider;
+
+        public float[] Knob;
+
     }
 }
