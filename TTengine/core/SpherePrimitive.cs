@@ -60,7 +60,7 @@ namespace TTengine.Core
                 float dxz = (float)Math.Cos(latitude);
 
                 // Create a single ring of vertices at this latitude.
-                for (int j = 0; j < horizontalSegments; j++)
+                for (int j = 0; j < horizontalSegments/2; j++)
                 {
                     float longitude = j * MathHelper.TwoPi / horizontalSegments;
 
