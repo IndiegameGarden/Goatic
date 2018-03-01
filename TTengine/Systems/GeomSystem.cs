@@ -47,6 +47,7 @@ namespace TTengine.Systems
             // world, view, projection , color
             //var wm = Matrix.CreateTranslation(v);
             var wm = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Left);
+            wm *= Matrix.CreateRotationY(dc.DrawRotation);
             wm *= Matrix.CreateScale(dc.DrawScale);
             wm *= Matrix.CreateTranslation(dc.DrawPosition); // apply position
             this.Draw(g, wm, scr.ViewM, scr.ProjM, dc.DrawColor);

@@ -49,7 +49,7 @@ namespace TTengine.Core
             int Nrepeats = 1;
 
             // Start with a single vertex at the bottom of the sphere.
-            AddVertex(Vector3.Down * radius, Vector3.Down, Nrepeats * new Vector2(0.5f,1f));
+            AddVertex(Vector3.Left * radius, Vector3.Left, Nrepeats * new Vector2(0.5f,0f));
 
             // Create rings of vertices at progressively higher latitudes.
             for (int i = 0; i < verticalSegments - 1; i++)
@@ -60,22 +60,22 @@ namespace TTengine.Core
                 float dxz = (float)Math.Cos(latitude);
 
                 // Create a single ring of vertices at this latitude.
-                for (int j = 0; j < horizontalSegments/2; j++)
+                for (int j = 0; j < horizontalSegments ; j++)
                 {
                     float longitude = j * MathHelper.TwoPi / horizontalSegments;
 
                     float dx = (float)Math.Cos(longitude) * dxz;
                     float dz = (float)Math.Sin(longitude) * dxz;
 
-                    Vector3 normal = new Vector3(dx, dy, dz);
-                    Vector2 texCoord = Nrepeats * new Vector2( (float)j / horizontalSegments , 1f-( (float)i/verticalSegments) ) ;
+                    Vector3 normal = new Vector3(dy, dx, dz);
+                    Vector2 texCoord = Nrepeats * new Vector2( (float)j / horizontalSegments , ( (float)i/verticalSegments) ) ;
                     //Vector2 texCoord = Nrepeats * new Vector2( 1f-( (float)i/verticalSegments) , (float)j / horizontalSegments);
                     AddVertex(normal * radius, normal, texCoord);
                 }
             }
 
             // Finish with a single vertex at the top of the sphere.
-            AddVertex(Vector3.Up * radius, Vector3.Up, Nrepeats * new Vector2(0.5f,0f));
+            AddVertex(Vector3.Right * radius, Vector3.Right, Nrepeats * new Vector2(0.5f,1f));
 
             // Create a fan connecting the bottom vertex to the bottom latitude ring.
             for (int i = 0; i < horizontalSegments; i++)

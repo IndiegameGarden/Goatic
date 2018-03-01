@@ -24,6 +24,7 @@ namespace TTengineTest
             // 3D sphere 1: Earth
             var s = AddScalable( CreateSphere(New(), pos: new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f), diameter : 550.0f, tesselation : 24) );
             s.C<GeomComp>().Geom.Texture = TTGame.Instance.Content.Load<Texture2D>("earth8k");
+            s.AddC( new RotateComp() { RotateSpeed = 0.04f } );
             AddFunctionScript(s, (ctx, v) => { s.C<ScaleComp>().Scale = (float)v; }, new SineFunction { Amplitude = 0.12, Offset = 1.0, Frequency = 0.04 } );
             PlayerInputComp pic;
             s.AddC(pic = new PlayerInputComp());
