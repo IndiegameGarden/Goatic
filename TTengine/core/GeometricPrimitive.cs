@@ -26,25 +26,6 @@ namespace TTengine.Core
     /// </summary>
     public abstract class GeometricPrimitive : IDisposable
     {
-        /// <summary>
-        /// The Effect used to render this shape, e.g. a BasicEffect. If not given by subclass, it
-        /// will initialize to a standard BasicEffect.
-        /// </summary>
-        public BasicEffect Fx = null;
-        
-        /// <summary>
-        /// Get/set the texture for this shape. Returns null if no texture set (yet).
-        /// </summary>
-        public Texture2D Texture
-        {
-            get { return (Fx != null) ? Fx.Texture : null; }
-            set
-            {
-                Fx.Texture = value;
-                Fx.TextureEnabled = true;
-            }
-        }
-
         // During the process of constructing a primitive model, vertex
         // and index data is stored on the CPU in these managed lists.
         internal List<VertexPositionNormalTexture> vertices = new List<VertexPositionNormalTexture>();
@@ -62,7 +43,10 @@ namespace TTengine.Core
         /// Adds a new vertex to the primitive model. This should only be called
         /// during the initialization process, before InitializePrimitive.
         /// </summary>
-        protected void AddVertex(Vector3 position, Vector3 normal, Vector2 texCoord)
+        /// <param name="position">vertex position</param>
+        /// <param name="normal">normal vector to surface for this vertex</param>
+        /// <param name="texCoord">texture coordinate to map to vertex</param>
+        protected void AddVertex(Vector3 position, Vector3 normal, Vector2 texCoord )
         {
             vertices.Add(new VertexPositionNormalTexture(position, normal, texCoord));
         }
@@ -109,20 +93,6 @@ namespace TTengine.Core
 
             indexBuffer.SetData(indices.ToArray());
 
-            // Create a BasicEffect, which will be used to render the primitive.
-            if (Fx == null)
-            {
-                // https://developer.xamarin.com/guides/cross-platform/game_development/monogame/3d/part2/
-                Fx = new BasicEffect(graphicsDevice)
-                {
-                    Alpha = 1f,
-                    PreferPerPixelLighting = false,
-                    TextureEnabled = false,
-                    LightingEnabled = true, // http://www.gamefromscratch.com/post/2015/08/20/Monogame-Tutorial-Beginning-3D-Programming.aspx
-                    FogEnabled = false
-                };
-                Fx.EnableDefaultLighting();
-            }
         }
 
         /// <summary>
@@ -154,9 +124,6 @@ namespace TTengine.Core
 
                 if (indexBuffer != null)
                     indexBuffer.Dispose();
-
-                if (Fx != null)
-                    Fx.Dispose();
             }
         }
 

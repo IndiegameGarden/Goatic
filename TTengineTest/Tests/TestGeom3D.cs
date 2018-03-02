@@ -23,7 +23,7 @@ namespace TTengineTest
 
             // 3D sphere 1: Earth
             var s = AddScalable( CreateSphere(New(), pos: new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f), diameter : 550.0f, tesselation : 24) );
-            s.C<GeomComp>().Geom.Texture = TTGame.Instance.Content.Load<Texture2D>("earth8k");
+            s.C<GeomComp>().Texture = Content.Load<Texture2D>("earth8k");
             s.AddC( new RotateComp() { RotateSpeed = 0.04f } );
             AddFunctionScript(s, (ctx, v) => { s.C<ScaleComp>().Scale = (float)v; }, new SineFunction { Amplitude = 0.12, Offset = 1.0, Frequency = 0.04 } );
             PlayerInputComp pic;
@@ -41,6 +41,11 @@ namespace TTengineTest
             AddScalable(b,2);
             s.C<PositionComp>().AddChild(b.C<PositionComp>());
             AddScript(b, (ctx) => { b.C<PositionComp>().Position.X = 400f * (float)Math.Sin(0.5f* (float)ctx.SimTime); } );
+
+            // 3D cube
+            var c = CreateCube(New(), pos: new Vector3(100f, 100f, 50f), width: 85.0f);
+            c.AddC(new RotateComp() { RotateSpeed = 0.22f });
+            c.C<GeomComp>().Texture = Content.Load<Texture2D>("earth8k");
         }
 
     }

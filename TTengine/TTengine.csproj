@@ -64,11 +64,12 @@
     <Compile Include="Comps\TextComp.cs" />
     <Compile Include="Comps\VelocityComp.cs" />
     <Compile Include="Comps\WorldComp.cs" />
-    <Content Include="Content\clouds.fx" />
-    <Content Include="Content\crt-lottes.fx" />
+    <None Include="Content\clouds.fx" />
+    <None Include="Content\crt-lottes.fx" />
     <Compile Include="Comps\TargetMotionComp.cs" />
     <Compile Include="Core\FactoryState.cs" />
     <Compile Include="Core\IUpdate.cs" />
+    <Compile Include="Core\CubePrimitive.cs" />
     <Compile Include="Core\TargetVector.cs" />
     <Compile Include="Core\GeometricPrimitive.cs" />
     <Compile Include="Core\SpherePrimitive.cs" />

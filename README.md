@@ -7,12 +7,14 @@ notices in individual source files and packages.
 
 ## TODO items
 
-- Refactor GeomComp to contain more things, Texture and Effect out of GeometricPrimitive
+- [done] Refactor GeomComp to contain more things, Texture and Effect out of GeometricPrimitive
 - Earth texture bugfix - try wrap mode http://community.monogame.net/t/set-texture-sampler-state-in-custom-effect/9558
 - 3D rotations for 3D objects in RotateComp
-- Add Cube primitive
+- [done] Add Cube primitive
+- Cube primite texture orientations fix
 - MIDI knobs usable
 - remove trivial Add...() factory methods
 - Include PXengine in tests
 - More AI behaviors in test
 - More physics tests (forces, acceleration)
+- Update Modifiers package to shorter functions (Func..., Func.Sin(), etc.)

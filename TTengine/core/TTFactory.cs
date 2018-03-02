@@ -3,6 +3,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using Artemis;
 using TTengine.Comps;
 using TTengine.Systems;
@@ -56,6 +57,9 @@ namespace TTengine.Core
 
         /// <summary>The Screen that newly built Entities in this Factory will render to.</summary>
         public ScreenComp BuildScreen {  get { return buildScreen;  } }
+
+        /// <summary>The ContentManager used by the Game currently, to use for loading content by this factory.</summary>
+        public ContentManager Content {  get { return TTGame.Instance.Content; } }
 
         /// <summary>
         /// Switch factory's building output to the root channel of the game.
@@ -299,6 +303,15 @@ namespace TTengine.Core
             AddDrawable(e);
             e.C<PositionComp>().Position = pos;
             var gc = new GeomComp(new SpherePrimitive(diameter, tesselation));
+            e.AddC(gc);
+            return e;
+        }
+
+        public Entity CreateCube(Entity e, Vector3 pos, float width = 1.0f)
+        {
+            AddDrawable(e);
+            e.C<PositionComp>().Position = pos;
+            var gc = new GeomComp(new CubePrimitive(width));
             e.AddC(gc);
             return e;
         }

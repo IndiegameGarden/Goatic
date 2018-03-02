@@ -23,7 +23,7 @@ namespace TTengineTest
             throw new NotImplementedException();
 
             /*
-            //ch1.PostEffects.Add( TTGame.Instance.Content.Load<Effect>("FixedColor") );
+            //ch1.PostEffects.Add( Content.Load<Effect>("FixedColor") );
             t1.Create();
 
             // main channel: shows the child channels as sprites
