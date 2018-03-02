@@ -28,7 +28,7 @@ namespace TTengine.Core
         /// Constructs a new sphere primitive, using default settings.
         /// </summary>
         public SpherePrimitive()
-            : this(10, 16)
+            : this(diameter : 10, tessellation : 16)
         {
         }
 
@@ -67,7 +67,7 @@ namespace TTengine.Core
                     float dx = (float)Math.Cos(longitude) * dxz;
                     float dz = (float)Math.Sin(longitude) * dxz;
 
-                    Vector3 normal = new Vector3(dy, dx, dz);
+                    Vector3 normal = new Vector3(dy, dx, dz);  // Note: reversal of x/y coords to get right default model rendering in "Spritebatch coordinates and default camera"
                     Vector2 texCoord = Nrepeats * new Vector2( (float)j / horizontalSegments , ( (float)i/verticalSegments) ) ;
                     //Vector2 texCoord = Nrepeats * new Vector2( 1f-( (float)i/verticalSegments) , (float)j / horizontalSegments);
                     AddVertex(normal * radius, normal, texCoord);
