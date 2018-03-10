@@ -22,7 +22,8 @@ namespace TTengineTest
             this.BallSprite = "Op-art-circle_Marco-Braun";
 
             // 3D sphere 1: Earth
-            var s = AddScalable( CreateSphere(New(), pos: new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f), diameter : 550.0f, tesselation : 24) );
+            var s = CreateSphere(New(), pos: new Vector3(BuildScreen.Center.X,BuildScreen.Center.Y,0f), diameter : 550.0f, tesselation : 24);
+            s.AddC<ScaleComp>(new ScaleComp());
             s.C<GeomComp>().Texture = Content.Load<Texture2D>("earth8k");
             s.AddC( new RotateComp() { RotateSpeed = 0.04f } );
             AddFunctionScript(s, (ctx, v) => { s.C<ScaleComp>().Scale = (float)v; }, new SineFunction { Amplitude = 0.12, Offset = 1.0, Frequency = 0.04 } );
@@ -38,7 +39,7 @@ namespace TTengineTest
 
             // 2D ball - follows the 3D one in (x,y)
             var b = CreateRotatingBall(New(), new Vector2(-300f,-300f), Vector2.Zero, 0.12f);
-            AddScalable(b,2);
+            b.AddC<ScaleComp>(new ScaleComp(0.7f));
             s.C<PositionComp>().AddChild(b.C<PositionComp>());
             AddScript(b, (ctx) => { b.C<PositionComp>().Position.X = 400f * (float)Math.Sin(0.5f* (float)ctx.SimTime); } );
 

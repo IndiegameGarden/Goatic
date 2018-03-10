@@ -34,7 +34,7 @@ namespace TTengine.Systems
     {
         protected override void Begin()
         {
-            TTGame.Instance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            TTGame.Instance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;   // enable depth-buffer
         }
 
         public override void Process(Entity e, GeomComp gc, DrawComp dc, PositionComp pc)
@@ -64,7 +64,7 @@ namespace TTengine.Systems
             Fx.Alpha = color.A / 255.0f;
 
             GraphicsDevice device = Fx.GraphicsDevice;
-            //device.DepthStencilState = DepthStencilState.Default;  // enable depth-buffer
+            //device.DepthStencilState = DepthStencilState.Default;  
             //device.SamplerStates[1].AddressU = TextureAddressMode.Wrap;
             //device.SamplerStates[1].AddressV = TextureAddressMode.Wrap;
 

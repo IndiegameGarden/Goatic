@@ -404,15 +404,6 @@ namespace TTengine.Core
         }
 
         /// <summary>
-        /// Add Entity scalability
-        /// </summary>
-        public Entity AddScalable(Entity e, float initialScale = 1.0f)
-        {
-            if (!e.HasC<ScaleComp>()) e.AddC(new ScaleComp(initialScale));
-            return e;
-        }
-
-        /// <summary>
         /// Add audio script to Entity
         /// </summary>
         public Entity AddAudio(Entity e, SoundEvent soundScript)
