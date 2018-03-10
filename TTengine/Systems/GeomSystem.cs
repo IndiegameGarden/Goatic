@@ -64,9 +64,9 @@ namespace TTengine.Systems
             Fx.Alpha = color.A / 255.0f;
 
             GraphicsDevice device = Fx.GraphicsDevice;
-            //device.DepthStencilState = DepthStencilState.Default;  
-            //device.SamplerStates[1].AddressU = TextureAddressMode.Wrap;
-            //device.SamplerStates[1].AddressV = TextureAddressMode.Wrap;
+            // texture samplers (0-15): https://gist.github.com/Jjagg/096c5218d21c5e2944a88dbc1b6947b3
+            // device.SamplerStates[0] = SamplerState.LinearWrap;
+            // TODO: check why all rendering uses only texture sampler 0 (more could be more efficient?)
 
             if (color.A < 255)
             {
