@@ -7,10 +7,9 @@ notices in individual source files and packages.
 
 ## TODO items
 
-- [done] Refactor GeomComp to contain more things, Texture and Effect out of GeometricPrimitive
-- Earth texture bugfix - try wrap mode http://community.monogame.net/t/set-texture-sampler-state-in-custom-effect/9558
+- [done] Earth texture bugfix - try wrap mode http://community.monogame.net/t/set-texture-sampler-state-in-custom-effect/9558
+- [done] Use TTGame class initializers to get features; used from Program.cs
 - 3D rotations for 3D objects in RotateComp
-- [done] Add Cube primitive
 - Cube primite texture orientations fix
 - MIDI knobs usable
 - remove trivial Add...() factory methods
