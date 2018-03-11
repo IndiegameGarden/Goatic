@@ -24,15 +24,11 @@ namespace Game1
 
         public Entity Ship;
 
-        public Game1()
-        {
-            Instance = this;
-            IsAudio = false;    // set to true if audio by MusicEngine is needed
-        }
-
         protected override void LoadContent()
         {
+            Instance = this;
             Factory = new Game1Factory();
+            Factory.BuildToRoot();
 
             // create level/background channels
             BackgroundChannel = Factory.CreateChannel(Factory.New(), Color.Black);
@@ -57,18 +53,6 @@ namespace Game1
             root.Build();
 
             base.LoadContent();
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            KeyboardState kb = Keyboard.GetState();
-            if (kb.IsKeyDown(Keys.Escape))
-            {
-                UnloadContent();
-                Exit();
-            }
-
-            base.Update(gameTime);
         }
 
         protected override void UnloadContent()

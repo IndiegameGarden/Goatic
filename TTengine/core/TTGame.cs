@@ -3,6 +3,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Artemis;
 using TTengine.Comps;
 using TTengine.Util;
@@ -18,8 +19,14 @@ namespace TTengine.Core
         /// <summary>The currently running (single) instance of TTGame</summary>
         public static TTGame Instance;
 
-        /// <summary>If set to true in Game's constructor, starts both the MusicEngine and AudioSystem</summary>
-        protected bool IsAudio = false;
+        /// <summary>If true, starts both the MusicEngine and AudioSystem during init.</summary>
+        public bool IsAudio = true;
+
+        /// <summary>If true, will use standard ESC-key-to-exit routine.</summary>
+        public bool IsEscapeToExit = true;
+
+        /// <summary>When true, loop time profiling using CountingTimers is enabled.</summary>
+        public bool IsProfiling = false;
 
         /// <summary>The XNA GraphicsDeviceManager for this Game</summary>
         public GraphicsDeviceManager GraphicsMgr;
@@ -27,10 +34,10 @@ namespace TTengine.Core
         /// <summary>The audio/music engine, or null if none initialized</summary>
         public MusicEngine AudioEngine;
 
-        /// <summary>The one root World into which everything else lives, including the MainChannel</summary>
+        /// <summary>The one root Artemis World into which everything else lives</summary>
         public EntityWorld RootWorld;
 
-        /// <summary>Root screen where the MainChannel is drawn to.</summary>
+        /// <summary>Root screen where everything is drawn to.</summary>
         public ScreenComp RootScreen;
 
         /// <summary>
@@ -48,9 +55,6 @@ namespace TTengine.Core
         /// Simulation time for world updates, which tries to keep close to GameTime (a bit ahead of GameTime is the target - allows interpolation rendering).
         /// </summary>
         public double SimTime = 0.0;
-
-        /// <summary>When true, loop time profiling using below CountingTimers is enabled.</summary>
-        public bool IsProfiling = false;
 
         /// <summary>Timer used for profiling: recording duration of total Update() cycle</summary>
         public CountingTimer ProfilingTimerUpdate = new CountingTimer();
@@ -78,7 +82,6 @@ namespace TTengine.Core
             IsProfiling = true;
             GraphicsMgr.SynchronizeWithVerticalRetrace = true; // false -> FPS as fast as possible
 #else
-            IsProfiling = false;
             GraphicsMgr.SynchronizeWithVerticalRetrace = true;
 #endif
             int myWindowWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -138,6 +141,15 @@ namespace TTengine.Core
                 this.SimTime += dt;
                 TimeLag -= dt;
             }
+
+            // check for ESC key to exit
+            KeyboardState kb = Keyboard.GetState();
+            if (IsEscapeToExit && kb.IsKeyDown(Keys.Escape))
+            {
+                UnloadContent();
+                Exit();
+            }
+
             base.Update(gameTime);
 
             if (IsProfiling)

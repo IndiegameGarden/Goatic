@@ -4,11 +4,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
 using TTengine.Core;
 using TTengine.Comps;
 using TTengine.Util;
-
 using Artemis;
 using Artemis.Utils;
 
