@@ -12,8 +12,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TTengine.Core;
 
-namespace TTengine.Core
+namespace TTengine.Geom
 {
     /// <summary>
     /// Base class for simple geometric primitive models. This provides a vertex

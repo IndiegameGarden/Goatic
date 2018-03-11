@@ -69,11 +69,11 @@
     <Compile Include="Comps\TargetMotionComp.cs" />
     <Compile Include="Core\FactoryState.cs" />
     <Compile Include="Core\IUpdate.cs" />
-    <Compile Include="Core\CubePrimitive.cs" />
+    <Compile Include="Geom\CubePrimitive.cs" />
     <Compile Include="Core\TargetVector.cs" />
-    <Compile Include="Core\GeometricPrimitive.cs" />
-    <Compile Include="Core\SpherePrimitive.cs" />
-    <Compile Include="Core\VertexPositionNormal.cs" />
+    <Compile Include="Geom\GeometricPrimitive.cs" />
+    <Compile Include="Geom\SpherePrimitive.cs" />
+    <Compile Include="Geom\VertexPositionNormal.cs" />
     <Compile Include="Modifiers\IVectorFunction.cs" />
     <Compile Include="Modifiers\UnityFunction.cs" />
     <Compile Include="Modifiers\VectorModifierScript.cs" />

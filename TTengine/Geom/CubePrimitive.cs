@@ -4,7 +4,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TTengine.Core
+namespace TTengine.Geom
 {
     /// <summary>
     /// Geometric primitive class for drawing cubes.

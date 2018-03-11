@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace TTengine.Core
+namespace TTengine.Geom
 {
     /// <summary>
     /// Custom vertex type for vertices that have just a

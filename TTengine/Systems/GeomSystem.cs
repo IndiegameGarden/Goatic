@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TTengine.Core;
 using TTengine.Comps;
+using TTengine.Geom;
 using Artemis;
 using Artemis.Manager;
 using Artemis.Attributes;

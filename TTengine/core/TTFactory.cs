@@ -8,6 +8,7 @@ using Artemis;
 using TTengine.Comps;
 using TTengine.Systems;
 using TTengine.Modifiers;
+using TTengine.Geom;
 using TTMusicEngine.Soundevents;
 
 namespace TTengine.Core
