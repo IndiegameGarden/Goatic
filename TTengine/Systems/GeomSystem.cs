@@ -34,7 +34,7 @@ namespace TTengine.Systems
     {
         protected override void Begin()
         {
-            TTGame.Instance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;   // enable depth-buffer
+            TTGame.Instance.GraphicsDevice.DepthStencilState = DepthStencilState.Default;   // enable depth-buffer: required for 3d rendering
         }
 
         public override void Process(Entity e, GeomComp gc, DrawComp dc, PositionComp pc)
@@ -57,7 +57,7 @@ namespace TTengine.Systems
         public void Draw(GeometricPrimitive g, BasicEffect Fx, Matrix world, Matrix view, Matrix projection, Color color)
         {
             // Set BasicEffect parameters.
-            Fx.World = world; // * Matrix.CreateRotationY(-MathHelper.PiOver2);
+            Fx.World = world;
             Fx.View = view;
             Fx.Projection = projection;
             Fx.DiffuseColor = color.ToVector3();

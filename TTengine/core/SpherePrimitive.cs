@@ -60,15 +60,15 @@ namespace TTengine.Core
                 float dxz = (float)Math.Cos(latitude);
 
                 // Create a single ring of vertices at this latitude.
-                for (int j = 0; j < horizontalSegments ; j++)
+                for (int j = 0; j < horizontalSegments; j++)
                 {
-                    float longitude = j * MathHelper.TwoPi / horizontalSegments;
+                    float longitude = j * MathHelper.TwoPi / (horizontalSegments -1);
 
                     float dx = (float)Math.Cos(longitude) * dxz;
                     float dz = (float)Math.Sin(longitude) * dxz;
 
                     Vector3 normal = new Vector3(dy, dx, dz);  // Note: reversal of x/y coords to get right default model rendering in "Spritebatch coordinates and default camera"
-                    Vector2 texCoord = Nrepeats * new Vector2( (float)j / (horizontalSegments) , ( (float)i/(verticalSegments)) ) ;
+                    Vector2 texCoord = Nrepeats * new Vector2( (float)j / (horizontalSegments-1) , ( (float)i/(verticalSegments)) ) ;
                     //Vector2 texCoord = Nrepeats * new Vector2( 1f-( (float)i/verticalSegments) , (float)j / horizontalSegments);
                     AddVertex(normal * radius, normal, texCoord);
                 }
@@ -92,6 +92,9 @@ namespace TTengine.Core
                 {
                     int nextI = i + 1;
                     int nextJ = (j + 1) % horizontalSegments;
+
+                    if (nextJ < j)  // don't connect back to the longitude=0 points, to avoid "texture interpolation backwards"
+                        continue;
 
                     AddIndex(1 + i * horizontalSegments + j);
                     AddIndex(1 + i * horizontalSegments + nextJ);
