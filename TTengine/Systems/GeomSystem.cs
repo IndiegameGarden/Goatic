@@ -66,7 +66,7 @@ namespace TTengine.Systems
 
             GraphicsDevice device = Fx.GraphicsDevice;
             // texture samplers (0-15): https://gist.github.com/Jjagg/096c5218d21c5e2944a88dbc1b6947b3
-            // device.SamplerStates[0] = SamplerState.LinearWrap;
+            device.SamplerStates[0] = SamplerState.LinearWrap;
             // TODO: check why all rendering uses only texture sampler 0 (more could be more efficient?)
 
             if (color.A < 255)

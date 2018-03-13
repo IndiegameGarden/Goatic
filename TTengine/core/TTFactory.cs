@@ -299,11 +299,11 @@ namespace TTengine.Core
             return e;
         }
 
-        public Entity CreateSphere(Entity e, Vector3 pos, float diameter = 1.0f, int tesselation = 16)
+        public Entity CreateSphere(Entity e, Vector3 pos, float diameter = 1.0f, int tesselation = 16, int textureRepeat = 1)
         {
             AddDrawable(e);
             e.C<PositionComp>().Position = pos;
-            var gc = new GeomComp(new SpherePrimitive(diameter, tesselation));
+            var gc = new GeomComp(new SpherePrimitive(diameter, tesselation, textureRepeat));
             e.AddC(gc);
             return e;
         }

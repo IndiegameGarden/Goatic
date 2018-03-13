@@ -47,6 +47,16 @@ namespace TTengineTest
             var c = CreateCube(New(), pos: new Vector3(100f, 100f, 50f), width: 85.0f);
             c.AddC(new RotateComp() { RotateSpeed = 0.22f });
             c.C<GeomComp>().Texture = Content.Load<Texture2D>("earth8k");
+
+            // tesselated spheres with repeated texture
+            for (int i=0; i <= 16; i+=2 )
+            {
+                var ts = CreateSphere(New(), pos: new Vector3(200f + i * 100f, 800f, 650f), diameter: 150f, tesselation: 3 + i, textureRepeat: 8);
+                ts.C<GeomComp>().Texture = Content.Load<Texture2D>("checkerboard");
+
+                var ts2 = CreateSphere(New(), pos: new Vector3(200f + i * 100f, 950f, 650f), diameter: 150f, tesselation: 3 + i, textureRepeat: 1);
+                ts2.C<GeomComp>().Texture = Content.Load<Texture2D>("earth8k");
+            }
         }
 
     }

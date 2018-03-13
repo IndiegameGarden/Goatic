@@ -7,7 +7,8 @@ notices in individual source files and packages.
 
 ## TODO items
 
-- [done] Geometry classes to TTGame.Geom package
+- [done] move test content to TTengineTest
+- [done] show tesselation and repeat texture in TestGeom3D
 - 3D rotations for 3D objects in RotateComp
 - Cube primite texture orientations fix
 - MIDI knobs usable
