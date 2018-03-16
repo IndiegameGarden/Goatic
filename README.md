@@ -12,7 +12,7 @@ notices in individual source files and packages.
 - 3D rotations for 3D objects in RotateComp
 - Cube primite texture orientations fix
 - MIDI knobs usable
-- Include PXengine in tests
+- [ongoing] Include PXengine in tests
 - More AI behaviors in test
 - More physics tests (forces, acceleration)
 - Update Modifiers package to shorter functions (Func..., Func.Sin(), etc.)

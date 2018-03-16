@@ -25,6 +25,9 @@ namespace TTengine.Core
         /// <summary>If true, will use standard ESC-key-to-exit routine.</summary>
         public bool IsEscapeToExit = true;
 
+        /// <summary>If true, will immediately exit from main loop.</summary>
+        public bool IsExit = false;
+
         /// <summary>When true, loop time profiling using CountingTimers is enabled.</summary>
         public bool IsProfiling = false;
 
@@ -144,7 +147,7 @@ namespace TTengine.Core
 
             // check for ESC key to exit
             KeyboardState kb = Keyboard.GetState();
-            if (IsEscapeToExit && kb.IsKeyDown(Keys.Escape))
+            if (IsExit || (IsEscapeToExit && kb.IsKeyDown(Keys.Escape)))
             {
                 UnloadContent();
                 Exit();

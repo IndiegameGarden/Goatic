@@ -67,8 +67,8 @@ namespace TTengine.Systems
         /// <returns>The <see cref="bool" />.</returns>
         private bool CollisionExists(Entity entity1, Entity entity2)
         {
-            //var p1 = entity1.GetComponent<PositionComp>();
-            //var p2 = entity2.GetComponent<PositionComp>();
+            //var p1 = entity1.C<PositionComp>();
+            //var p2 = entity2.C<PositionComp>();
             var d1 = entity1.C<DrawComp>();
             var d2 = entity2.C<DrawComp>();
             var s1 = entity1.C<SpriteComp>();
