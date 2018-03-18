@@ -41,6 +41,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\AvoidBehavior.cs" />
     <Compile Include="Behaviors\RandomWanderBehavior.cs" />
     <Compile Include="Comps\AnimatedSpriteComp.cs" />
     <Compile Include="Comps\MidiInputComp.cs" />

@@ -35,7 +35,7 @@ namespace TTengine.Systems
 
             if (bc.Root.LastStatus == null)
                 bc.Root.Start(ctx);
-            else if (bc.Root.LastStatus == RunStatus.Success)
+            else if (bc.Root.LastStatus == RunStatus.Success || bc.Root.LastStatus == RunStatus.Failure)
                 bc.Root.Start(ctx);
             bc.Root.Tick(ctx);
 

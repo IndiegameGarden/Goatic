@@ -8,11 +8,14 @@ using TTengine.Comps;
 
 namespace TTengine.Behaviors
 {
+    /// <summary>
+    /// Random wandering behavior implemented by periodic direction change of Entity.
+    /// Direction changes at random moments within a defined change interval.
+    /// </summary>
     public class RandomWanderBehavior : TreeNode
     {
         /// <summary>
-        /// Random wandering behavior implemented by periodic direction change of Entity.
-        /// Direction changes at random moments within the defined change interval.
+        /// Create new random wandering behavior
         /// </summary>
         /// <param name="minDirectionChangeTime">the lowest time value (seconds) of the random change interval.</param>
         /// <param name="maxDirectionChangeTime">the highest time value (seconds) of the random change interval.</param>
@@ -22,6 +25,9 @@ namespace TTengine.Behaviors
             this.MaxDirectionChangeTime = maxDirectionChangeTime;
         }
 
+        /// <summary>
+        /// Current direction the Entity is wandering to
+        /// </summary>
         public Vector2 CurrentDirection = Vector2.Zero;
 
         /// <summary>the lowest time value (seconds) of the random change interval. Can be modified during operation.</summary>

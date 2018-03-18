@@ -91,6 +91,17 @@ namespace TTengine.Core
                 (float)Math.Sin(angle));
         }
 
+        /// <summary>
+        /// Generate a random direction vector.
+        /// </summary>
+        /// <returns>A random direction vector in 3D space, with Z=0.</returns>
+        public static Vector3 RandomDirection3()
+        {
+            float angle = RandomBetween(0, MathHelper.TwoPi);
+            return new Vector3((float)Math.Cos(angle),
+                (float)Math.Sin(angle), 0f);
+        }
+
 
         /// <summary>
         /// Generate a random direction vector within constraints.
@@ -120,5 +131,15 @@ namespace TTengine.Core
             return new Color(RandomUnit(), RandomUnit(), RandomUnit());
         }
 
+        /// <summary>
+        /// generate a random position on a screen with given width/height
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns>random x/y position with Z set to default 0.5</returns>
+        public static Vector3 RandomPosition(int width, int height)
+        {
+            return new Vector3(RandomBetween(0, width), RandomBetween(0, height), 0.5f);
+        }
     }
 }

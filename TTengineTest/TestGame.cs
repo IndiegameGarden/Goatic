@@ -40,6 +40,7 @@ namespace TTengineTest
 
             // Here all the tests are created
             //DoTest(new TestPostEffects()); //FIXME
+            AddTest(new TestBTAI());
             AddTest(new TestGeom3D());
             AddTest(new TestMidiInput());
             AddTest(new TestAnimatedSprite());
@@ -62,7 +63,6 @@ namespace TTengineTest
             AddTest(new TestContentLoad());
             AddTest(new TestTargetMotion());
             AddTest(new TestScaling());
-            AddTest(new TestBTAI());
             AddTest(new TestSphereCollision());
             AddTest(new TestSpritePixelGetSet());
 
