@@ -15,10 +15,10 @@ namespace TTengine.Behaviors
     /// </summary>
     public class AvoidBehavior : TreeNode
     {
-        public AvoidBehavior(float minDistance, float maxVelocity, List<Entity> avoidEntities)
+        public AvoidBehavior(float minDistance, float maxForce, List<Entity> avoidEntities)
         {
             this.MinDistance = minDistance;
-            this.MaxVelocity = maxVelocity;
+            this.MaxForce = maxForce;
             this.AvoidEntities = avoidEntities;
         }
 
@@ -26,7 +26,7 @@ namespace TTengine.Behaviors
 
         public float MinDistance = 0f;
 
-        public float MaxVelocity = 1f;
+        public float MaxForce = 1f;
 
         public List<Entity> AvoidEntities = new List<Entity>();
 
@@ -38,7 +38,7 @@ namespace TTengine.Behaviors
             var me = ctx.Entity;
             var pme = me.C<PositionComp>().Position;
 
-            Vector3 v = Vector3.Zero;
+            Vector3 f = Vector3.Zero;   // force vector
             bool isAvoid = false;
             foreach(Entity e in AvoidEntities)
             {
@@ -49,26 +49,25 @@ namespace TTengine.Behaviors
                 {
                     isAvoid = true;
                     if (dist > 0f)
-                        v += 1/(dist*dist) * (pme - pe);
+                        f += 1/(dist*dist) * (pme - pe);    // TODO set linear, quadratic, maxForce, etc avoidance.
                     else
-                        v = RandomMath.RandomDirection3();
+                        f = RandomMath.RandomDirection3();
                 }
             }
 
             if (!isAvoid)
             {
-                me.C<VelocityComp>().Velocity = Vector3.Zero;
                 this.CurrentDirection = Vector2.Zero;
                 yield return RunStatus.Failure;
             }
 
             // normalize the avoidance direction vector
-            v.Normalize();
-            this.CurrentDirection = TTUtil.Vec2(v);
-            v *= MaxVelocity;
+            f.Normalize();
+            this.CurrentDirection = TTUtil.Vec2(f);
+            f *= MaxForce;
 
-            // set it as my velocity
-            me.C<VelocityComp>().Velocity = v;
+            // set it as my force
+            me.C<ForcesComp>().Force += f;
 
             yield return RunStatus.Success;
         }

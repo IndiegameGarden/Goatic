@@ -9,7 +9,7 @@ namespace TTengine.Comps
     /// <summary>Velocity and acceleration of an Entity, contributing to its position change</summary>
     public class VelocityComp : IComponent
     {
-        /// <summary>Initializes a new instance of the <see cref="VelocityComp" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="VelocityComp" /> class to zero velocity.</summary>
         public VelocityComp()
             : this(0f, 0f, 0f)
         {
@@ -17,14 +17,16 @@ namespace TTengine.Comps
 
         /// <summary>Initializes a new instance of the <see cref="VelocityComp" /> class.</summary>
         /// <param name="velocity">The velocity.</param>
-        public VelocityComp(float x, float y, float z)
+        public VelocityComp(float x, float y, float z = 0f)
         {
             Velocity = new Vector3(x, y, z);
         }
 
-        /// <summary>Gets or sets the velocity.</summary>
-        /// <value>The velocity.</value>
+        /// <summary>Gets or sets the velocity vector.</summary>
         public Vector3 Velocity;
+
+        /// <summary>Maximum bound for the speed (velocity vector magnitude)</summary>
+        public float MaxSpeed = float.MaxValue;
 
         /// <summary>Gets or sets the velocity X and Y components.</summary>
         /// <value>The 2D velocity.</value>
@@ -42,32 +44,23 @@ namespace TTengine.Comps
             }
         }
 
-        public float X { get { return Velocity.X; }  set { Velocity.X = value; } }
+        public float X { get { return Velocity.X; } set { Velocity.X = value; } }
         public float Y { get { return Velocity.Y; } set { Velocity.Y = value; } }
         public float Z { get { return Velocity.Z; } set { Velocity.Z = value; } }
 
-        /// <summary>Gets or sets the speed.</summary>
-        /// <value>The speed.</value>
+        /// <summary>Gets or sets the speed, adapting the magnitude of the velocity vector.</summary>
         public float Speed
         {
             get
             {
-                return (float)Math.Sqrt(X * X + Y * Y);
+                return Velocity.Length();
             }
             set
             {
-                // TODO
-                throw new NotImplementedException();
+                Velocity.Normalize();
+                Velocity *= value;
             }
         }
 
-        /*
-        /// <summary>The add angle.</summary>
-        /// <param name="angle">The angle.</param>
-        public void AddAngle(float angle)
-        {
-            this.Angle = (this.Angle + angle) % 360;
-        }
-         */
     }
 }

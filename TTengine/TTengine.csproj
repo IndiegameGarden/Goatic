@@ -63,6 +63,7 @@
     <Compile Include="Comps\SpriteRectComp.cs" />
     <Compile Include="Comps\SpriteFieldComp.cs" />
     <Compile Include="Comps\TextComp.cs" />
+    <Compile Include="Comps\ForcesComp.cs" />
     <Compile Include="Comps\VelocityComp.cs" />
     <Compile Include="Comps\WorldComp.cs" />
     <None Include="Content\clouds.fx" />
@@ -95,6 +96,7 @@
     <Compile Include="Systems\BlinkSystem.cs" />
     <Compile Include="Systems\AudioFadingSystem.cs" />
     <Compile Include="Systems\GeomSystem.cs" />
+    <Compile Include="Systems\VelocitySystem.cs" />
     <Compile Include="Systems\ScriptThreadedSystem.cs" />
     <Compile Include="Systems\SpriteCollisionSystem.cs" />
     <Compile Include="Systems\PlayerInputSystem.cs" />

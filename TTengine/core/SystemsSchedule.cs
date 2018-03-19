@@ -9,35 +9,38 @@ namespace TTengine.Core
     {
         // Systems in UPDATE loop
         public const int
-            WorldSystem         = 0,        // world simulation goes depth-first.
-            PositionSystem      = 2,
-            TargetMoveSystem    = 2,
-            RotateSystem        = 2,
-            ScaleSystem         = 2,
-            GeomSystem          = 2,
-            PositionSystemPosAbs = 3,
-            RotateSystemAbs     = 3,
-            ScaleSystemAbs      = 3,
-            AnimatedSpriteSystem = 3,
-            BlinkSystem         = 4,
-            ExpirationSystem    = 4,
-            ScriptSystem        = 4,
-            BTAISystem          = 4,
-            AudioSystem         = 4,
-            CollisionSystem     = 5,
-            BuilderSystem       = 6;
+            WorldSystem         =  0,        // world simulation goes depth-first.
+            ForcesPreSystem     = 10,            
+            TargetMoveSystem    = 50,
+            RotateSystem        = 50,
+            ScaleSystem         = 50,
+            GeomSystem          = 50,
+            PositionSystemPosAbs= 60,
+            RotateSystemAbs     = 60,
+            ScaleSystemAbs      = 60,
+            AnimatedSpriteSystem= 60,
+            BlinkSystem         = 70,
+            ExpirationSystem    = 70,
+            ScriptSystem        = 70,
+            BTAISystem          = 70,
+            AudioSystem         = 70,
+            CollisionSystem     = 70,
+            BuilderSystem       = 80,
+            ForcesSystem        = 85,
+            VelocitySystem      = 90,
+            PositionSystem      = 100;
 
         // Systems in DRAW loop
         public const int
-            WorldSystemDraw         = 0,        // world drawing goes depth-first.
-            ScreenPreSystemDraw     = 1,
-            AudioSystemDraw         = 1,
-            DrawSystemDraw          = 1,
-            ScriptSystemDraw        = 2,
-            SpriteRenderSystemDraw  = 2,
-            AnimatedSpriteSystemDraw = 2,
-            TextRenderSystemDraw = 2,
-            ScreenPostSystemDraw    = 3,
-            GeomSystemDraw = 4;
+            WorldSystemDraw         =  0,        // world drawing goes depth-first.
+            ScreenPreSystemDraw     = 10,
+            AudioSystemDraw         = 10,
+            DrawSystemDraw          = 10,
+            ScriptSystemDraw        = 20,
+            SpriteRenderSystemDraw  = 20,
+            AnimatedSpriteSystemDraw= 20,
+            TextRenderSystemDraw    = 20,
+            ScreenPostSystemDraw    = 30,
+            GeomSystemDraw          = 40;
     }
 }

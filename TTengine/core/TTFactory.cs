@@ -391,6 +391,7 @@ namespace TTengine.Core
         {
             if (!e.HasC<PositionComp>()) e.AddC(new PositionComp());
             if (!e.HasC<VelocityComp>()) e.AddC(new VelocityComp());
+            if (!e.HasC<ForcesComp>())   e.AddC(new ForcesComp());
             return e;
         }
 

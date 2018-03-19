@@ -49,8 +49,8 @@ namespace TTengineTest
                 // Behavior Tree AI: avoid big balls with hi prio, avoid small balls with lower prio and slower.
                 BTAIComp ai = new BTAIComp();
                 ai.Root = new PrioritySelector(new TreeNode[] {
-                                        new AvoidBehavior(minDistance: 160f, maxVelocity: 320f, avoidEntities: avoidList),
-                                        new AvoidBehavior(minDistance: 80f, maxVelocity: 120f, avoidEntities: avoidList2)
+                                        new AvoidBehavior(minDistance: 160f, maxForce: 320f, avoidEntities: avoidList),
+                                        new AvoidBehavior(minDistance: 80f, maxForce: 120f, avoidEntities: avoidList2)
                               } );
                 ball.AddC(ai);
 
